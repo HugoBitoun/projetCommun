@@ -1,0 +1,40 @@
+<!--
+  Generated template for the AuthPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Connexion</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+  <form>
+    <ion-list>
+
+      <ion-item>
+        <ion-label floating>Identifiant</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Mot de passe</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+
+      <div padding style="text-align: center">
+        <button ion-button (click)="doConnection()">Connexion</button>
+        <p>ou</p>
+        <button ion-button (click)="signIn()" >Inscription</button>
+      </div>
+
+    </ion-list>
+  </form>
+</ion-content>
