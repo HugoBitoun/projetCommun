@@ -6,6 +6,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {AuthPage} from "../pages/auth/auth";
+import * as firebase from 'firebase';
+import {environment} from "../environments/environment";
 
 @Component({
   templateUrl: 'app.html'
@@ -31,6 +33,7 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
+      firebase.initializeApp(environment.firebase);
       this.splashScreen.hide();
     });
   }

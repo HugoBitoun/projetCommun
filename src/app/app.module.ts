@@ -10,6 +10,10 @@ import { AuthPage } from '../pages/auth/auth';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {SignInPage} from "../pages/sign-in/sign-in";
+import { HttpClientModule } from '@angular/common/http';
+import {AuthProvider} from "../providers/auth/auth";
+
+
 
 @NgModule({
   declarations: [
@@ -22,6 +26,9 @@ import {SignInPage} from "../pages/sign-in/sign-in";
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+      HttpClientModule
+
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -34,7 +41,8 @@ import {SignInPage} from "../pages/sign-in/sign-in";
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthProvider
   ]
 })
 export class AppModule {}

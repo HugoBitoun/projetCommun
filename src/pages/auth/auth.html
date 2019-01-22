@@ -16,17 +16,19 @@
 <ion-content padding>
 
 
-  <form>
+  <form (ngSubmit)="doConnection()" [formGroup]="loginForm">
     <ion-list>
 
       <ion-item>
-        <ion-label floating>Identifiant</ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-label floating>Email</ion-label>
+        <ion-input type="text" formControlName="email"></ion-input>
       </ion-item>
+
+
 
       <ion-item>
         <ion-label floating>Mot de passe</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input formControlName="password" type="password"></ion-input>
       </ion-item>
 
       <div padding style="text-align: center">
@@ -34,7 +36,6 @@
         <p>ou</p>
         <button ion-button (click)="signIn()" >Inscription</button>
       </div>
-
     </ion-list>
   </form>
 </ion-content>
