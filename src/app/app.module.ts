@@ -12,8 +12,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {SignInPage} from "../pages/sign-in/sign-in";
 import { HttpClientModule } from '@angular/common/http';
 import {AuthProvider} from "../providers/auth/auth";
-
-
+import { AssociationsProvider } from '../providers/associations/associations';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import {environment} from "../environments/environment";
+import {AssociationsPage} from "../pages/associations/associations";
 
 @NgModule({
   declarations: [
@@ -21,12 +24,15 @@ import {AuthProvider} from "../providers/auth/auth";
     HomePage,
     ListPage,
       AuthPage,
-      SignInPage
+      SignInPage,
+      AssociationsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-      HttpClientModule
+      HttpClientModule,
+      AngularFireModule.initializeApp(environment.firebase),
+      AngularFirestoreModule
 
 
   ],
@@ -36,13 +42,15 @@ import {AuthProvider} from "../providers/auth/auth";
     HomePage,
     ListPage,
       AuthPage,
-      SignInPage
+      SignInPage,
+      AssociationsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider
+    AuthProvider,
+    AssociationsProvider
   ]
 })
 export class AppModule {}
