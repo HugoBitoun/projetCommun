@@ -19,9 +19,16 @@
 <ion-content padding>
   <ion-list>
     <ion-card *ngFor="let association of listAssociations">
-      <ion-card-header>{{association.Name}}</ion-card-header>
-      <ion-card-content>
+      <ion-card-title>{{association.Name}}</ion-card-title>
+      <ion-card-header>
         {{association.Description}}
+        {{association.id}}
+
+
+      </ion-card-header>
+      <ion-card-content>
+        <ion-icon *ngIf="!association.isSubscriber" (click)="subscribe(association)" name="checkmark" type="primary"></ion-icon>
+        <ion-icon *ngIf="association.isSubscriber" (click)="subscribe(association)" name="checkmark-circle" type="secondary"></ion-icon>
       </ion-card-content>
     </ion-card>
   </ion-list>

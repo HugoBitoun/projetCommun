@@ -35,7 +35,7 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      firebase.initializeApp(environment.firebase);
+      //firebase.initializeApp(environment.firebase);
       this.splashScreen.hide();
     });
   }

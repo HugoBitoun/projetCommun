@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {IonicPage, List, NavController, NavParams} from 'ionic-angular';
-import {HomePage} from "../home/home";
 import {SignInPage} from "../sign-in/sign-in";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {AuthProvider} from "../../providers/auth/auth";
+import {AuthService} from "../../providers/auth/authService";
+import {HomePage} from "../home/home";
 
 
 /**
@@ -18,7 +18,7 @@ import {AuthProvider} from "../../providers/auth/auth";
   selector: 'page-auth',
   templateUrl: 'auth.html',
     providers : [
-        AuthProvider
+        AuthService
     ]
 })
 export class AuthPage {
@@ -26,7 +26,7 @@ export class AuthPage {
  loginForm : FormGroup;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fb : FormBuilder, public authProvider : AuthProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fb : FormBuilder, public aServ : AuthService) {
 
     this.loginForm = this.fb.group({
         email: ['', Validators.compose([Validators.required,Validators.email])],
@@ -43,6 +43,7 @@ export class AuthPage {
 
   doConnection(){
 
+
       let data = this.loginForm.value;
 
       if(!data.email){
@@ -54,12 +55,16 @@ export class AuthPage {
           password: data.password
       };
 
+      this.aServ.oAuthLogin(credentials).then(
+          success =>{
+              this.navCtrl.setRoot(HomePage);
+          },
+          err => {
+              console.log("ne marche pas");
+          }
+      );
 
-      if ( this.authProvider.doRegister(credentials)){
-          this.navCtrl.setRoot(HomePage);
-      } else {
 
-      }
   }
 
   signIn(){

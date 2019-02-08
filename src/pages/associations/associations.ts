@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {Observable} from "rxjs/Observable";
 import {AssociationsProvider} from "../../providers/associations/associations";
+import {UserProvider} from "../../providers/user/user";
+import {Association} from "../../assets/utils/Association";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -20,18 +21,59 @@ import {AssociationsProvider} from "../../providers/associations/associations";
 })
 export class AssociationsPage {
 
-  listAssociations : any;
+  listAssociations : Association[] = Array<Association>();
+  userAssociation : string[] = Array<string>();
+  subscriber : boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public associationProvider : AssociationsProvider) {
-   associationProvider.getAssociations().subscribe(
-       data => {
-         this.listAssociations = data;
-       }
-   );
-  }
+  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider) {
+
+
+
+
+
+
+      }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AssociationsPage');
+  }
+
+  ionViewWillLoad() {
+      this.associationProvider.getAssociations().subscribe( data => {
+          this.listAssociations = data;
+          this.isSuscriber();
+      });
+
+  }
+
+  subscribe(association : Association){
+    if (association.isSubscriber==true){
+        association.isSubscriber = false;
+        this.userProvider.Unsubscribe(association);
+    } else {
+        this.userProvider.Subscribe(association);
+        association.isSubscriber = true;
+    }
+  }
+
+   isSuscriber() {
+
+
+      this.userProvider.getUser().subscribe( user => {
+
+
+          this.listAssociations.forEach(
+              association => {
+                  console.log(association.id);
+                  if (user.associations.find(x => x == association.id)){
+                      association.isSubscriber = true;
+                  } else {
+                      association.isSubscriber = false;
+                  }
+                  console.log(association.isSubscriber);
+              }
+          );
+      });
   }
 
 

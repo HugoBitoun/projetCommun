@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
+import {AngularFireAuth} from "angularfire2/auth";
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
@@ -11,12 +12,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {SignInPage} from "../pages/sign-in/sign-in";
 import { HttpClientModule } from '@angular/common/http';
-import {AuthProvider} from "../providers/auth/auth";
 import { AssociationsProvider } from '../providers/associations/associations';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFirestoreModule, AngularFirestoreCollection } from 'angularfire2/firestore';
 import {environment} from "../environments/environment";
 import {AssociationsPage} from "../pages/associations/associations";
+import { SignInProvider } from '../providers/sign-in/sign-in';
+import { UserProvider } from '../providers/user/user';
 
 @NgModule({
   declarations: [
@@ -32,8 +34,7 @@ import {AssociationsPage} from "../pages/associations/associations";
     IonicModule.forRoot(MyApp),
       HttpClientModule,
       AngularFireModule.initializeApp(environment.firebase),
-      AngularFirestoreModule
-
+      AngularFirestoreModule,
 
   ],
   bootstrap: [IonicApp],
@@ -49,8 +50,9 @@ import {AssociationsPage} from "../pages/associations/associations";
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    AuthProvider,
-    AssociationsProvider
+    AssociationsProvider,
+    SignInProvider,AngularFireAuth,
+    UserProvider
   ]
 })
 export class AppModule {}
