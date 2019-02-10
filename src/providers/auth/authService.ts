@@ -8,6 +8,7 @@ import "rxjs-compat/add/observable/of";
 
 @Injectable()
 export class AuthService {
+    
     static oAuthLogin(credentials: { email: any; password: any; }): any {
         throw new Error("Method not implemented.");
     }

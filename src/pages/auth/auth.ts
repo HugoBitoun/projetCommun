@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {IonicPage, List, NavController, NavParams} from 'ionic-angular';
-import {SignInPage} from "../sign-in/sign-in";
+import {SignUpPage} from "../sign-up/sign-up";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../providers/auth/authService";
 import {HomePage} from "../home/home";
@@ -67,8 +67,8 @@ export class AuthPage {
 
   }
 
-  signIn(){
-    this.navCtrl.push(SignInPage);
+  signUp(){
+    this.navCtrl.push(SignUpPage);
   }
 
 }

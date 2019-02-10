@@ -10,15 +10,17 @@ import { AuthPage } from '../pages/auth/auth';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {SignInPage} from "../pages/sign-in/sign-in";
+import {SignUpPage} from "../pages/sign-up/sign-up";
 import { HttpClientModule } from '@angular/common/http';
 import { AssociationsProvider } from '../providers/associations/associations';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestoreModule} from 'angularfire2/firestore';
 import {environment} from "../environments/environment";
 import {AssociationsPage} from "../pages/associations/associations";
-import { SignInProvider } from '../providers/sign-in/sign-in';
 import { UserProvider } from '../providers/user/user';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { SignUpProvider } from '../providers/sign-up/sign-up';
 
 @NgModule({
   declarations: [
@@ -26,15 +28,17 @@ import { UserProvider } from '../providers/user/user';
     HomePage,
     ListPage,
       AuthPage,
-      SignInPage,
+      SignUpPage,
       AssociationsPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
       HttpClientModule,
-      AngularFireModule.initializeApp(environment.firebase),
+      AngularFireModule.initializeApp(environment.firebase),      
       AngularFirestoreModule,
+      AngularFireAuthModule,
+      AngularFireDatabaseModule
 
   ],
   bootstrap: [IonicApp],
@@ -43,7 +47,7 @@ import { UserProvider } from '../providers/user/user';
     HomePage,
     ListPage,
       AuthPage,
-      SignInPage,
+      SignUpPage,
       AssociationsPage
   ],
   providers: [
@@ -51,8 +55,9 @@ import { UserProvider } from '../providers/user/user';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AssociationsProvider,
-    SignInProvider,AngularFireAuth,
-    UserProvider
+    AngularFireAuth,
+    UserProvider,
+    SignUpProvider  
   ]
 })
 export class AppModule {}
