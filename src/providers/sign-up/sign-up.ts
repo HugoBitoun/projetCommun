@@ -20,4 +20,8 @@ export class SignUpProvider {
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password);
   }
 
+  public oAuthLogin(user: User){
+    return this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password);        
+}
+
 }

@@ -6,8 +6,7 @@ export class User {
     email : string;    
     password? : string;    
     name? : string;
-    famillyName? : string;
-    firstName? : string;
+    lastName? : string;
     roles? : Roles;
     uid? : string;
     associations? : string[];
