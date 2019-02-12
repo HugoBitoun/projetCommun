@@ -19,6 +19,7 @@ import {environment} from "../environments/environment";
 import {AssociationsPage} from "../pages/associations/associations";
 import { SignInProvider } from '../providers/sign-in/sign-in';
 import { UserProvider } from '../providers/user/user';
+import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { UserProvider } from '../providers/user/user';
     ListPage,
       AuthPage,
       SignInPage,
-      AssociationsPage
+      AssociationsPage,
+
   ],
   imports: [
     BrowserModule,
@@ -35,6 +37,8 @@ import { UserProvider } from '../providers/user/user';
       HttpClientModule,
       AngularFireModule.initializeApp(environment.firebase),
       AngularFirestoreModule,
+      PopoverAssoPageModule
+
 
   ],
   bootstrap: [IonicApp],
@@ -44,7 +48,10 @@ import { UserProvider } from '../providers/user/user';
     ListPage,
       AuthPage,
       SignInPage,
-      AssociationsPage
+      AssociationsPage,
+
+
+
   ],
   providers: [
     StatusBar,
@@ -55,4 +62,5 @@ import { UserProvider } from '../providers/user/user';
     UserProvider
   ]
 })
+
 export class AppModule {}

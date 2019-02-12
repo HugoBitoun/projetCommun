@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
+import {PopoverAssoPage} from "../popover-asso/popover-asso";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -17,7 +18,8 @@ import {Association} from "../../assets/utils/Association";
   templateUrl: 'associations.html',
     providers : [
         AssociationsProvider
-    ]
+    ],
+
 })
 export class AssociationsPage {
 
@@ -25,16 +27,18 @@ export class AssociationsPage {
   userAssociation : string[] = Array<string>();
   subscriber : boolean = false;
 
-  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider) {
+  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,
+   public popoverController : PopoverController) {
+
+  }
+
+    presentPopover(ev: Event) {
+        const popover = this.popoverController.create(PopoverAssoPage);
+        popover.present({ ev : ev});
+    }
 
 
-
-
-
-
-      }
-
-  ionViewDidLoad() {
+    ionViewDidLoad() {
     console.log('ionViewDidLoad AssociationsPage');
   }
 
