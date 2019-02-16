@@ -22,6 +22,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { SignUpProvider } from '../providers/sign-up/sign-up';
 
+
 @NgModule({
   declarations: [
     MyApp,

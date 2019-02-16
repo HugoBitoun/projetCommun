@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../../assets/utils/User';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFirestore } from 'angularfire2/firestore';
 
 /*
   Generated class for the SignUpProvider provider.
@@ -11,17 +10,15 @@ import { AngularFirestore } from 'angularfire2/firestore';
 */
 @Injectable()
 export class SignUpProvider {
-
-  constructor(private afAuth: AngularFireAuth,private db : AngularFirestore ) {
-    
+  
+  constructor(private afAuth: AngularFireAuth) {
   }
 
-  public register(user: User){
-    return this.afAuth.auth.createUserWithEmailAndPassword(user.email,user.password);
+  public register(user: User): any {
+    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(value => { })
+      .catch(err => {
+        throw new Error('Cet email est déjà utilisé par un autre utilisateur');
+      });
   }
-
-  public oAuthLogin(user: User){
-    return this.afAuth.auth.signInWithEmailAndPassword(user.email,user.password);        
-}
 
 }

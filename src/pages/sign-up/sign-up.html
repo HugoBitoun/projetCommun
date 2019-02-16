@@ -16,7 +16,7 @@
   <form class="form" [formGroup]="validations_form" (ngSubmit)="doRegister(user)">
     <ion-list>
       <ion-item>
-        <ion-label floating color="primary">Prénom</ion-label>
+        <ion-label floating>Prénom</ion-label>
         <ion-input type="text" formControlName="name" [(ngModel)]="user.name"></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -30,12 +30,12 @@
 
       <ion-item>
         <ion-label floating color="primary">Nom</ion-label>
-        <ion-input type="text" formControlName="lastname" [(ngModel)]="user.lastName"></ion-input>
+        <ion-input type="text" formControlName="lastName" [(ngModel)]="user.lastName"></ion-input>
       </ion-item>
       <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.lastname">
+        <ng-container *ngFor="let validation of validation_messages.lastName">
           <div class="error-message"
-            *ngIf="validations_form.get('lastname').hasError(validation.type) && (validations_form.get('lastname').dirty || validations_form.get('lastname').touched)">
+            *ngIf="validations_form.get('lastName').hasError(validation.type) && (validations_form.get('lastName').dirty || validations_form.get('lastName').touched)">
             {{ validation.message }}
           </div>
         </ng-container>
@@ -56,7 +56,7 @@
 
 
       <ion-item>
-        <ion-label floating color="primary">Password</ion-label>
+        <ion-label floating color="primary">Mot de passe</ion-label>
         <ion-input type="password" formControlName="password" [(ngModel)]="user.password"></ion-input>
       </ion-item>
       <div class="validation-errors">
@@ -69,7 +69,7 @@
       </div>
 
       <ion-item>
-        <ion-label floating color="primary">Confirm Password</ion-label>
+        <ion-label floating color="primary">Confirmation de mot de passe</ion-label>
         <ion-input type="password" formControlName="confirm_password"></ion-input>
       </ion-item>
       <div class="validation-errors">

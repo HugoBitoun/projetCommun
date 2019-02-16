@@ -1,6 +1,6 @@
 webpackJsonp([3],{
 
-/***/ 108:
+/***/ 107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -132,8 +132,8 @@ var AssociationsPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__sign_up_sign_up__ = __webpack_require__(197);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_authService__ = __webpack_require__(558);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_auth_authService__ = __webpack_require__(557);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__home_home__ = __webpack_require__(107);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -211,10 +211,11 @@ var AuthPage = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__home_home__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_sign_up_sign_up__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_utils_password_validator__ = __webpack_require__(557);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -237,26 +238,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var SignUpPage = /** @class */ (function () {
-    function SignUpPage(navCtrl, navParams, toastCtrl, signUpProvider, formBuilder) {
+    function SignUpPage(navCtrl, navParams, toastCtrl, signUpProvider, formBuilder, afa) {
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.toastCtrl = toastCtrl;
         this.signUpProvider = signUpProvider;
         this.formBuilder = formBuilder;
+        this.afa = afa;
         this.user = {};
         this.validation_messages = {
             'name': [
-                { type: 'required', message: 'Votre nom est obligatoire.' }
+                { type: 'required', message: 'Votre prénom est obligatoire.' },
+                { type: 'minlength', message: 'Votre prénom doit comporter au moins 2 caractères.' },
+                { type: 'pattern', message: 'Votre prénom doit contenir que des lettres!' }
             ],
             'lastName': [
-                { type: 'required', message: 'Votre prénom est obligatoire.' }
+                { type: 'required', message: 'Votre nom est obligatoire.' },
+                { type: 'minlength', message: 'Votre nom doit comporter au moins 2 caractères.' },
+                { type: 'pattern', message: 'Votre nom doit contenir que des lettres!' }
             ],
             'email': [
                 { type: 'required', message: 'Votre email est obligatoire.' },
                 { type: 'pattern', message: 'Enterez un email valide, Merci!' }
             ],
             'password': [
-                { type: 'required', message: 'Votre prénom est obligatoire.' },
+                { type: 'required', message: 'Votre mot de passe est obligatoire.' },
                 { type: 'minlength', message: 'Le mot de passe doit comporter au moins 5 caractères.' },
                 { type: 'pattern', message: 'Votre mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.' }
             ],
@@ -268,57 +274,67 @@ var SignUpPage = /** @class */ (function () {
             ],
         };
         this.validations_form = this.formBuilder.group({
-            name: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required),
-            lastname: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required),
+            name: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].compose([
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required,
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].minLength(2),
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].pattern('([a-zA-Z]+$)')
+            ])),
+            lastName: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].compose([
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required,
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].minLength(2),
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].pattern('([a-zA-Z]+$)')
+            ])),
             email: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].compose([
                 __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].pattern('^[a-zA-Z0-9_.+-]+@etu.univ-paris1.fr+$')
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].pattern('(^[a-zA-Z0-9_.+-]+@etu.univ-paris1.fr+$)|(^[a-zA-Z0-9_.+-]+@univ-paris1.fr+$)')
             ])),
             password: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].compose([
                 __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].minLength(5),
-                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required,
-                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9]+$')
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required
             ])),
-            confirm_password: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required)
-        }, function (formGroup) {
-            return __WEBPACK_IMPORTED_MODULE_5__assets_utils_password_validator__["a" /* PasswordValidator */].areEqual(formGroup);
+            confirm_password: new __WEBPACK_IMPORTED_MODULE_4__angular_forms__["b" /* FormControl */]('', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required]))
+        }, {
+            validator: this.matchingPasswords('password', 'confirm_password')
         });
     }
-    SignUpPage_1 = SignUpPage;
+    SignUpPage.prototype.matchingPasswords = function (passwordKey, confirmPasswordKey) {
+        return function (group) {
+            var password = group.controls[passwordKey];
+            var confirmPassword = group.controls[confirmPasswordKey];
+            if (password.value !== confirmPassword.value) {
+                return {
+                    mismatchedPasswords: false
+                };
+            }
+        };
+    };
     SignUpPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad SignUpPage');
     };
     SignUpPage.prototype.doRegister = function (user) {
         var _this = this;
-        this.signUpProvider.oAuthLogin(user).then(function (success) {
-            _this.toastCtrl.create({
-                message: 'Ce compte existe déjà',
-                duration: 10000
-            }).present();
-        }, function (err) {
-            _this.doRegisterAux(user);
-        });
-    };
-    SignUpPage.prototype.doRegisterAux = function (user) {
-        try {
-            var result = this.signUpProvider.register(user);
-            this.toastCtrl.create({
-                message: 'Votre compte a été créé',
-                duration: 10000
-            }).present();
-            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
-            console.log(result);
-        }
-        catch (e) {
-            this.navCtrl.setRoot(SignUpPage_1);
+        if (this.validations_form.valid) {
+            this.signUpProvider.register(user).then(function (value) {
+                _this.toastCtrl.create({
+                    message: 'Votre compte a été crée avec succès',
+                    duration: 6000
+                }).present();
+                _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_2__home_home__["a" /* HomePage */]);
+            })
+                .catch(function (err) {
+                _this.toastCtrl.create({
+                    message: err.message,
+                    duration: 6000
+                }).present();
+            });
         }
     };
-    var SignUpPage_1, _a, _b, _c, _d, _e;
-    SignUpPage = SignUpPage_1 = __decorate([
+    var _a, _b, _c, _d, _e, _f;
+    SignUpPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-sign-up',template:/*ion-inline-start:"E:\L3_MIAGE_S6\projet_commun\projetCommun\src\pages\sign-up\sign-up.html"*/'<!--\n\n  Generated template for the SignUpPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Inscription</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n<ion-content padding>\n\n\n\n  <form class="form" [formGroup]="validations_form" (ngSubmit)="doRegister(user)">\n\n    <ion-list>\n\n      <ion-item>\n\n        <ion-label floating color="primary">Prénom</ion-label>\n\n        <ion-input type="text" formControlName="name" [(ngModel)]="user.name"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.name">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'name\').hasError(validation.type) && (validations_form.get(\'name\').dirty || validations_form.get(\'name\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Nom</ion-label>\n\n        <ion-input type="text" formControlName="lastname" [(ngModel)]="user.lastName"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.lastname">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'lastname\').hasError(validation.type) && (validations_form.get(\'lastname\').dirty || validations_form.get(\'lastname\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Email universitaire</ion-label>\n\n        <ion-input type="email" formControlName="email" [(ngModel)]="user.email"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.email">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'email\').hasError(validation.type) && (validations_form.get(\'email\').dirty || validations_form.get(\'email\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Password</ion-label>\n\n        <ion-input type="password" formControlName="password" [(ngModel)]="user.password"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.password">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'password\').hasError(validation.type) && (validations_form.get(\'password\').dirty || validations_form.get(\'password\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Confirm Password</ion-label>\n\n        <ion-input type="password" formControlName="confirm_password"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.confirm_password">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'confirm_password\').hasError(validation.type) && (validations_form.get(\'confirm_password\').dirty || validations_form.get(\'confirm_password\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <!-- These validations are for the form group -->\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.matching_passwords">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.hasError(validation.type) && (validations_form.get(\'confirm_password\').dirty || validations_form.get(\'confirm_password\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <div padding style="text-align: center">\n\n        <button ion-button [disabled]="!validations_form.valid">inscription</button>\n\n      </div>\n\n    </ion-list>\n\n  </form>\n\n  <pre>{{validations_form.value | json}}</pre>\n\n</ion-content>'/*ion-inline-end:"E:\L3_MIAGE_S6\projet_commun\projetCommun\src\pages\sign-up\sign-up.html"*/,
+            selector: 'page-sign-up',template:/*ion-inline-start:"E:\L3_MIAGE_S6\projet_commun\projetCommun\src\pages\sign-up\sign-up.html"*/'<!--\n\n  Generated template for the SignUpPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Inscription</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n<ion-content padding>\n\n\n\n  <form class="form" [formGroup]="validations_form" (ngSubmit)="doRegister(user)">\n\n    <ion-list>\n\n      <ion-item>\n\n        <ion-label floating>Prénom</ion-label>\n\n        <ion-input type="text" formControlName="name" [(ngModel)]="user.name"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.name">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'name\').hasError(validation.type) && (validations_form.get(\'name\').dirty || validations_form.get(\'name\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Nom</ion-label>\n\n        <ion-input type="text" formControlName="lastName" [(ngModel)]="user.lastName"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.lastName">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'lastName\').hasError(validation.type) && (validations_form.get(\'lastName\').dirty || validations_form.get(\'lastName\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Email universitaire</ion-label>\n\n        <ion-input type="email" formControlName="email" [(ngModel)]="user.email"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.email">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'email\').hasError(validation.type) && (validations_form.get(\'email\').dirty || validations_form.get(\'email\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Mot de passe</ion-label>\n\n        <ion-input type="password" formControlName="password" [(ngModel)]="user.password"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.password">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'password\').hasError(validation.type) && (validations_form.get(\'password\').dirty || validations_form.get(\'password\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <ion-item>\n\n        <ion-label floating color="primary">Confirmation de mot de passe</ion-label>\n\n        <ion-input type="password" formControlName="confirm_password"></ion-input>\n\n      </ion-item>\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.confirm_password">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.get(\'confirm_password\').hasError(validation.type) && (validations_form.get(\'confirm_password\').dirty || validations_form.get(\'confirm_password\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <!-- These validations are for the form group -->\n\n      <div class="validation-errors">\n\n        <ng-container *ngFor="let validation of validation_messages.matching_passwords">\n\n          <div class="error-message"\n\n            *ngIf="validations_form.hasError(validation.type) && (validations_form.get(\'confirm_password\').dirty || validations_form.get(\'confirm_password\').touched)">\n\n            {{ validation.message }}\n\n          </div>\n\n        </ng-container>\n\n      </div>\n\n\n\n      <div padding style="text-align: center">\n\n        <button ion-button [disabled]="!validations_form.valid">inscription</button>\n\n      </div>\n\n    </ion-list>\n\n  </form>\n\n  <pre>{{validations_form.value | json}}</pre>\n\n</ion-content>'/*ion-inline-end:"E:\L3_MIAGE_S6\projet_commun\projetCommun\src\pages\sign-up\sign-up.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" ? _a : Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" ? _b : Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" ? _c : Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_sign_up_sign_up__["a" /* SignUpProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_sign_up_sign_up__["a" /* SignUpProvider */]) === "function" ? _d : Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]) === "function" ? _e : Object])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" ? _a : Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" ? _b : Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* ToastController */]) === "function" ? _c : Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_sign_up_sign_up__["a" /* SignUpProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_sign_up_sign_up__["a" /* SignUpProvider */]) === "function" ? _d : Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]) === "function" ? _e : Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5_angularfire2_auth__["AngularFireAuth"]) === "function" ? _f : Object])
     ], SignUpPage);
     return SignUpPage;
 }());
@@ -349,15 +365,15 @@ webpackEmptyAsyncContext.id = 230;
 
 var map = {
 	"../pages/associations/associations.module": [
-		598,
+		597,
 		2
 	],
 	"../pages/auth/auth.module": [
-		599,
+		598,
 		1
 	],
 	"../pages/sign-up/sign-up.module": [
-		600,
+		599,
 		0
 	]
 };
@@ -382,7 +398,7 @@ module.exports = webpackAsyncContext;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AssociationsProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(167);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_fire_firestore__ = __webpack_require__(287);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_compat_add_operator_map__ = __webpack_require__(552);
@@ -439,11 +455,11 @@ var AssociationsProvider = /** @class */ (function () {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(167);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase__ = __webpack_require__(553);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_firebase___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_firebase__);
@@ -505,10 +521,8 @@ var UserProvider = /** @class */ (function () {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignUpProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -520,7 +534,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 
 
-
 /*
   Generated class for the SignUpProvider provider.
 
@@ -528,19 +541,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
   and Angular DI.
 */
 var SignUpProvider = /** @class */ (function () {
-    function SignUpProvider(afAuth, db) {
+    function SignUpProvider(afAuth) {
         this.afAuth = afAuth;
-        this.db = db;
     }
     SignUpProvider.prototype.register = function (user) {
-        return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password);
+        return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(function (value) { })
+            .catch(function (err) {
+            throw new Error('Cet email est déjà utilisé par un autre utilisateur');
+        });
     };
-    SignUpProvider.prototype.oAuthLogin = function (user) {
-        return this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password);
-    };
+    var _a;
     SignUpProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"], __WEBPACK_IMPORTED_MODULE_2_angularfire2_firestore__["AngularFirestore"]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_angularfire2_auth__["AngularFireAuth"]) === "function" ? _a : Object])
     ], SignUpProvider);
     return SignUpProvider;
 }());
@@ -627,26 +640,26 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ionic_angular__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(579);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__app_component__ = __webpack_require__(578);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_list_list__ = __webpack_require__(337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_auth_auth__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_status_bar__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_splash_screen__ = __webpack_require__(336);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_sign_up_sign_up__ = __webpack_require__(197);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_common_http__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_common_http__ = __webpack_require__(167);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_associations_associations__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angularfire2__ = __webpack_require__(587);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angularfire2__ = __webpack_require__(586);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13_angularfire2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13_angularfire2__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angularfire2_firestore__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angularfire2_firestore__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14_angularfire2_firestore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14_angularfire2_firestore__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__environments_environment__ = __webpack_require__(588);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__environments_environment__ = __webpack_require__(587);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_associations_associations__ = __webpack_require__(195);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_user_user__ = __webpack_require__(291);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_angularfire2_database__ = __webpack_require__(589);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_angularfire2_database__ = __webpack_require__(588);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18_angularfire2_database___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18_angularfire2_database__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_sign_up_sign_up__ = __webpack_require__(293);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -735,56 +748,16 @@ var AppModule = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PasswordValidator; });
-var PasswordValidator = /** @class */ (function () {
-    function PasswordValidator() {
-    }
-    // Inspired on: http://plnkr.co/edit/Zcbg2T3tOxYmhxs7vaAm?p=preview
-    PasswordValidator.areEqual = function (formGroup) {
-        var val;
-        var valid = true;
-        for (var key in formGroup.controls) {
-            if (formGroup.controls.hasOwnProperty(key)) {
-                var control = formGroup.controls[key];
-                if (val === undefined) {
-                    val = control.value;
-                }
-                else {
-                    if (val !== control.value) {
-                        valid = false;
-                        break;
-                    }
-                }
-            }
-        }
-        if (valid) {
-            return null;
-        }
-        return {
-            areEqual: true
-        };
-    };
-    return PasswordValidator;
-}());
-
-//# sourceMappingURL=password.validator.js.map
-
-/***/ }),
-
-/***/ 558:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__ = __webpack_require__(71);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_angularfire2_auth___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_angularfire2_auth__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_compat_add_operator_switchMap__ = __webpack_require__(559);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_compat_add_operator_switchMap__ = __webpack_require__(558);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_compat_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_compat_add_operator_switchMap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_firestore__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_firestore__ = __webpack_require__(171);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_angularfire2_firestore___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_angularfire2_firestore__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_compat_add_observable_of__ = __webpack_require__(561);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_compat_add_observable_of__ = __webpack_require__(560);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_rxjs_compat_add_observable_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_rxjs_compat_add_observable_of__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -851,7 +824,7 @@ var AuthService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 579:
+/***/ 578:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -860,7 +833,7 @@ var AuthService = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_home_home__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_list_list__ = __webpack_require__(337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_auth_auth__ = __webpack_require__(196);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_associations_associations__ = __webpack_require__(195);
@@ -924,7 +897,7 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 588:
+/***/ 587:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
