@@ -5,6 +5,7 @@ import { User } from '../../assets/utils/User';
 import { SignUpProvider } from '../../providers/sign-up/sign-up';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthPage } from '../auth/auth';
 
 
 /**
@@ -48,7 +49,7 @@ export class SignUpPage {
       { type: 'required', message: 'Confirmer le mot de passe est requis' }
     ],
     'matching_passwords': [
-      { type: 'areEqual', message: 'Les mots de passes sont déffirents attention!' }
+      { type: 'matchingPasswords', message: 'Les mots de passes sont déffirents attention!' }
     ],
   }
 
@@ -72,7 +73,8 @@ export class SignUpPage {
         Validators.minLength(5),
         Validators.required
       ])),
-      confirm_password: new FormControl('', Validators.compose([Validators.required]))
+      confirm_password: new FormControl('', Validators.compose([Validators.required])),
+      matching_passwords : this.matchingPasswords('password', 'confirm_password')
 
     }, {
         validator: this.matchingPasswords('password', 'confirm_password')
