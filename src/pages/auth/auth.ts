@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {IonicPage, List, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {SignUpPage} from "../sign-up/sign-up";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
 import {AuthService} from "../../providers/auth/authService";
 import {HomePage} from "../home/home";
 
@@ -23,15 +23,35 @@ import {HomePage} from "../home/home";
 })
 export class AuthPage {
 
- loginForm : FormGroup;
+  validations_form: FormGroup;
+  
+
+  validation_messages = {
+    'email': [
+      { type: 'required', message: 'Votre email est obligatoire.' },
+      { type: 'pattern', message: 'Entrez un email valide, Merci!' }
+    ],
+    'password': [
+      { type: 'required', message: 'Votre mot de passe est obligatoire.' },
+    ]    
+  }
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fb : FormBuilder, public aServ : AuthService) {
 
-    this.loginForm = this.fb.group({
-        email: ['', Validators.compose([Validators.required,Validators.email])],
-        password: ['',Validators.compose([Validators.required])]
-    })
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder : FormBuilder,
+            public toastCtrl : ToastController, public aServ : AuthService) {
+
+    this.validations_form = this.formBuilder.group({
+      email: new FormControl('', Validators.compose([
+        Validators.required,
+        Validators.pattern('(^[a-zA-Z0-9_.+-]+@etu.univ-paris1.fr+$)|(^[a-zA-Z0-9_.+-]+@univ-paris1.fr+$)|(^[a-zA-Z0-9_.+-]+@admin.fr+$)')
+      ])),
+      password: new FormControl('', Validators.compose([
+        Validators.minLength(5),
+        Validators.required
+      ]))
+      
+    });
   }
 
 
@@ -44,7 +64,7 @@ export class AuthPage {
   doConnection(){
 
 
-      let data = this.loginForm.value;
+      let data = this.validations_form.value;
 
       if(!data.email){
           return;
@@ -58,9 +78,18 @@ export class AuthPage {
       this.aServ.oAuthLogin(credentials).then(
           success =>{
               this.navCtrl.setRoot(HomePage);
+              this.toastCtrl.create({
+                message: 'Bienvenue',
+                duration: 6000
+              }).present();          
+    
           },
           err => {
-              console.log("ne marche pas");
+            this.toastCtrl.create({
+              message: err.message,
+              duration: 6000
+            }).present();                    
+            
           }
       );
 

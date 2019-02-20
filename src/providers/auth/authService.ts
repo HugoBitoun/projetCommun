@@ -31,6 +31,9 @@ export class AuthService {
             .then((credential)=> {
                 this.updateUserData(credential.user);
             })
+            .catch(err => {
+                throw new Error('Email universitaire ou mot de passe incorrect !');
+              });
     }
 
     public signOut(){

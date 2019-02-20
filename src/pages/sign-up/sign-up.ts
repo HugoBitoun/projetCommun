@@ -5,7 +5,6 @@ import { User } from '../../assets/utils/User';
 import { SignUpProvider } from '../../providers/sign-up/sign-up';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AuthPage } from '../auth/auth';
 
 
 /**
@@ -38,7 +37,7 @@ export class SignUpPage {
     ],
     'email': [
       { type: 'required', message: 'Votre email est obligatoire.' },
-      { type: 'pattern', message: 'Enterez un email valide, Merci!' }
+      { type: 'pattern', message: 'Entrez un email valide, Merci!' }
     ],
     'password': [
       { type: 'required', message: 'Votre mot de passe est obligatoire.' },
@@ -49,7 +48,7 @@ export class SignUpPage {
       { type: 'required', message: 'Confirmer le mot de passe est requis' }
     ],
     'matching_passwords': [
-      { type: 'matchingPasswords', message: 'Les mots de passes sont déffirents attention!' }
+      { type: 'validator', message: 'Les mots de passes sont déffirents attention!' }
     ],
   }
 
@@ -73,8 +72,7 @@ export class SignUpPage {
         Validators.minLength(5),
         Validators.required
       ])),
-      confirm_password: new FormControl('', Validators.compose([Validators.required])),
-      matching_passwords : this.matchingPasswords('password', 'confirm_password')
+      confirm_password: new FormControl('', Validators.compose([Validators.required]))
 
     }, {
         validator: this.matchingPasswords('password', 'confirm_password')
@@ -101,11 +99,11 @@ export class SignUpPage {
   doRegister(user: User) {
     if (this.validations_form.valid) {
         this.signUpProvider.register(user).then(value => {
+          this.navCtrl.setRoot(HomePage);                
           this.toastCtrl.create({
             message: 'Votre compte a été crée avec succès',
             duration: 6000
           }).present();          
-          this.navCtrl.setRoot(HomePage);                
         })
         .catch(err => {
           this.toastCtrl.create({

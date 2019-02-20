@@ -15,19 +15,34 @@
 
 <ion-content padding>
 
-
-  <form (ngSubmit)="doConnection()" [formGroup]="loginForm">
+  <form class="form" [formGroup]="validations_form" (ngSubmit)="doConnection()">
     <ion-list>
 
       <ion-item>
-        <ion-label floating>Email</ion-label>
-        <ion-input type="text" formControlName="email"></ion-input>
+        <ion-label floating color="primary">Email universitaire</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
       </ion-item>
-      
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.email">
+          <div class="error-message"
+            *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
+
       <ion-item>
-        <ion-label floating>Mot de passe</ion-label>
-        <ion-input formControlName="password" type="password"></ion-input>
+        <ion-label floating color="primary">Mot de passe</ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
       </ion-item>
+      <div class="validation-errors">
+        <ng-container *ngFor="let validation of validation_messages.password">
+          <div class="error-message"
+            *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+            {{ validation.message }}
+          </div>
+        </ng-container>
+      </div>
 
       <div padding style="text-align: center">
         <button ion-button (click)="doConnection()">Connexion</button>
@@ -36,4 +51,6 @@
       </div>
     </ion-list>
   </form>
+
+
 </ion-content>
