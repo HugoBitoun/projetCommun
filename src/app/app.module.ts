@@ -10,17 +10,22 @@ import { AuthPage } from '../pages/auth/auth';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import {SignInPage} from "../pages/sign-in/sign-in";
+import {SignUpPage} from "../pages/sign-up/sign-up";
 import { HttpClientModule } from '@angular/common/http';
 import { AssociationsProvider } from '../providers/associations/associations';
 import { AngularFireModule } from 'angularfire2';
-import { AngularFirestoreModule, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestoreModule} from 'angularfire2/firestore';
 import {environment} from "../environments/environment";
 import {AssociationsPage} from "../pages/associations/associations";
-import { SignInProvider } from '../providers/sign-in/sign-in';
 import { UserProvider } from '../providers/user/user';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { SignUpProvider } from '../providers/sign-up/sign-up';
+
+
 import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
 import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
+
 
 @NgModule({
   declarations: [
@@ -28,7 +33,7 @@ import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
     HomePage,
     ListPage,
       AuthPage,
-      SignInPage,
+      SignUpPage, 
       AssociationsPage,
       DetailAssoPage
 
@@ -37,10 +42,11 @@ import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
     BrowserModule,
     IonicModule.forRoot(MyApp),
       HttpClientModule,
-      AngularFireModule.initializeApp(environment.firebase),
+      AngularFireModule.initializeApp(environment.firebase),      
       AngularFirestoreModule,
+      AngularFireAuthModule,
+      AngularFireDatabaseModule
       PopoverAssoPageModule
-
 
   ],
   bootstrap: [IonicApp],
@@ -49,19 +55,18 @@ import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
     HomePage,
     ListPage,
       AuthPage,
-      SignInPage,
+      SignUpPage,
       AssociationsPage,
-DetailAssoPage
-
-
+      DetailAssoPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AssociationsProvider,
-    SignInProvider,AngularFireAuth,
-    UserProvider
+    AngularFireAuth,
+    UserProvider,
+    SignUpProvider  
   ]
 })
 

@@ -25683,3 +25683,11 @@ page-auth div  {
 page-auth p {
   color: grey;
 }
+
+page-auth .error-message {
+  color: red;
+}
+
+page-sign-up .error-message {
+  color: red;
+}

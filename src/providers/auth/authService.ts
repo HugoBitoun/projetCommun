@@ -8,6 +8,7 @@ import "rxjs-compat/add/observable/of";
 
 @Injectable()
 export class AuthService {
+    
     static oAuthLogin(credentials: { email: any; password: any; }): any {
         throw new Error("Method not implemented.");
     }
@@ -30,6 +31,9 @@ export class AuthService {
             .then((credential)=> {
                 this.updateUserData(credential.user);
             })
+            .catch(err => {
+                throw new Error('Email universitaire ou mot de passe incorrect !');
+              });
     }
 
     public signOut(){
