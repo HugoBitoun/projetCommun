@@ -20,6 +20,7 @@ import {AssociationsPage} from "../pages/associations/associations";
 import { SignInProvider } from '../providers/sign-in/sign-in';
 import { UserProvider } from '../providers/user/user';
 import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
+import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
       AuthPage,
       SignInPage,
       AssociationsPage,
+      DetailAssoPage
 
   ],
   imports: [
@@ -49,7 +51,7 @@ import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
       AuthPage,
       SignInPage,
       AssociationsPage,
-
+DetailAssoPage
 
 
   ],

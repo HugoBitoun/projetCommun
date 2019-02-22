@@ -4,6 +4,8 @@ import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
 import {PopoverAssoPage} from "../popover-asso/popover-asso";
+import {User} from "../../../www/assets/utils/User";
+import {DetailAssoPage} from "../detail-asso/detail-asso";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -26,9 +28,13 @@ export class AssociationsPage {
   listAssociations : Association[] = Array<Association>();
   userAssociation : string[] = Array<string>();
   subscriber : boolean = false;
+  user: User;
 
   constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,
-   public popoverController : PopoverController) {
+   public popoverController : PopoverController){
+    this.userProvider.getUserAux().subscribe( data => {
+    this.user = data
+    });
 
   }
 
@@ -79,6 +85,10 @@ export class AssociationsPage {
           );
       });
   }
+
+    public getAssociationPage(association : Association){
+        this.navCtrl.push(DetailAssoPage, {association : association})
+    }
 
 
 
