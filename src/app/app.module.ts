@@ -23,14 +23,20 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { SignUpProvider } from '../providers/sign-up/sign-up';
 
 
+import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
+import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
+
+
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     ListPage,
       AuthPage,
-      SignUpPage,
-      AssociationsPage
+      SignUpPage, 
+      AssociationsPage,
+      DetailAssoPage
+
   ],
   imports: [
     BrowserModule,
@@ -40,6 +46,7 @@ import { SignUpProvider } from '../providers/sign-up/sign-up';
       AngularFirestoreModule,
       AngularFireAuthModule,
       AngularFireDatabaseModule
+      PopoverAssoPageModule
 
   ],
   bootstrap: [IonicApp],
@@ -49,7 +56,8 @@ import { SignUpProvider } from '../providers/sign-up/sign-up';
     ListPage,
       AuthPage,
       SignUpPage,
-      AssociationsPage
+      AssociationsPage,
+      DetailAssoPage
   ],
   providers: [
     StatusBar,
@@ -61,4 +69,5 @@ import { SignUpProvider } from '../providers/sign-up/sign-up';
     SignUpProvider  
   ]
 })
+
 export class AppModule {}

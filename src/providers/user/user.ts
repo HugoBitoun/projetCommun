@@ -24,6 +24,10 @@ export class UserProvider {
     this.userId = this.afAuth.auth.currentUser.uid;
   }
 
+  public getUserAux(): Observable<User>{
+    return this.firestore.doc<User>(`users/${this.userId}`).valueChanges();
+  }
+
   public getUser(): Observable<User> {
     const listAsso = this.firestore.collection<User>(`users`).doc(`${this.userId}`);
     return listAsso.valueChanges().map( a=> {

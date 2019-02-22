@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
+import {PopoverAssoPage} from "../popover-asso/popover-asso";
+import {User} from "../../../www/assets/utils/User";
+import {DetailAssoPage} from "../detail-asso/detail-asso";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -17,24 +20,31 @@ import {Association} from "../../assets/utils/Association";
   templateUrl: 'associations.html',
     providers : [
         AssociationsProvider
-    ]
+    ],
+
 })
 export class AssociationsPage {
 
   listAssociations : Association[] = Array<Association>();
   userAssociation : string[] = Array<string>();
   subscriber : boolean = false;
+  user: User;
 
-  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider) {
+  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,
+   public popoverController : PopoverController){
+    this.userProvider.getUserAux().subscribe( data => {
+    this.user = data
+    });
+
+  }
+
+    presentPopover(ev: Event) {
+        const popover = this.popoverController.create(PopoverAssoPage);
+        popover.present({ ev : ev});
+    }
 
 
-
-
-
-
-      }
-
-  ionViewDidLoad() {
+    ionViewDidLoad() {
     console.log('ionViewDidLoad AssociationsPage');
   }
 
@@ -75,6 +85,10 @@ export class AssociationsPage {
           );
       });
   }
+
+    public getAssociationPage(association : Association){
+        this.navCtrl.push(DetailAssoPage, {association : association})
+    }
 
 
 

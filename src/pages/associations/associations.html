@@ -6,19 +6,31 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-row>
+  <ion-navbar ion-col>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Associations</ion-title>
+
+
   </ion-navbar>
+
+  <div ion-col-sm>
+    <button ion-button (click)="presentPopover($e)">
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </div>
+  </ion-row>
 
 </ion-header>
 
 
 <ion-content padding>
   <ion-list>
-    <ion-card *ngFor="let association of listAssociations">
+    <ion-card *ngFor="let association of listAssociations" (click)="getAssociationPage(association)">
+      <ion-item-sliding  >
+        <ion-item >
       <ion-card-title>{{association.Name}}</ion-card-title>
       <ion-card-header>
         {{association.Description}}
@@ -30,6 +42,12 @@
         <ion-icon *ngIf="!association.isSubscriber" (click)="subscribe(association)" name="checkmark" type="primary"></ion-icon>
         <ion-icon *ngIf="association.isSubscriber" (click)="subscribe(association)" name="checkmark-circle" type="secondary"></ion-icon>
       </ion-card-content>
+        </ion-item>
+        <ion-item-options side="end" *ngIf="user.roles.admin == true">
+          <button color="danger" ion-button>Supprimer</button>
+          <button color="primary" ion-button>Modifier</button>
+        </ion-item-options>
+      </ion-item-sliding>
     </ion-card>
   </ion-list>
 </ion-content>
