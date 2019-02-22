@@ -21,9 +21,6 @@ import { UserProvider } from '../providers/user/user';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { SignUpProvider } from '../providers/sign-up/sign-up';
-
-
-import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
 import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
 
 
@@ -46,7 +43,6 @@ import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
       AngularFirestoreModule,
       AngularFireAuthModule,
       AngularFireDatabaseModule
-      PopoverAssoPageModule
 
   ],
   bootstrap: [IonicApp],

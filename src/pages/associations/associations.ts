@@ -3,7 +3,6 @@ import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angu
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
-import {PopoverAssoPage} from "../popover-asso/popover-asso";
 import {User} from "../../../www/assets/utils/User";
 import {DetailAssoPage} from "../detail-asso/detail-asso";
 
@@ -37,12 +36,6 @@ export class AssociationsPage {
     });
 
   }
-
-    presentPopover(ev: Event) {
-        const popover = this.popoverController.create(PopoverAssoPage);
-        popover.present({ ev : ev});
-    }
-
 
     ionViewDidLoad() {
     console.log('ionViewDidLoad AssociationsPage');
