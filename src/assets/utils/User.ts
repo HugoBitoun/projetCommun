@@ -8,6 +8,7 @@ export class User {
     roles : Roles;
     uid : string;
     associations? : string[];
+    cours? : string[];
 
     constructor(values){
 

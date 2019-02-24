@@ -6,40 +6,41 @@
 -->
 <ion-header>
 
-  <ion-row>
-  <ion-navbar ion-col>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Associations</ion-title>
+    <ion-row>
+        <ion-navbar ion-col>
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+            <ion-title>Associations</ion-title>
 
 
-  </ion-navbar>
-
-  <div ion-col-sm>
-    <button ion-button (click)="presentPopover($e)">
-      <ion-icon name="more"></ion-icon>
-    </button>
-  </div>
-  </ion-row>
+            <ion-buttons end>
+                <button ion-button (click)="presentPopover($e)">
+                    <ion-icon name="more"></ion-icon>
+                </button>
+            </ion-buttons>
+        </ion-navbar>
+    </ion-row>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-card *ngFor="let association of listAssociations">
-      <ion-card-title>{{association.Name}}</ion-card-title>
-      <ion-card-header>
-        {{association.Description}}
-        {{association.id}}
+    <ion-list>
+        <ion-card *ngFor="let association of listAssociations">
+            <ion-card-title>{{association.Name}}</ion-card-title>
+            <ion-card-header>
+                {{association.Description}}
+                {{association.id}}
 
 
-      </ion-card-header>
-      <ion-card-content>
-        <ion-icon *ngIf="!association.isSubscriber" (click)="subscribe(association)" name="checkmark" type="primary"></ion-icon>
-        <ion-icon *ngIf="association.isSubscriber" (click)="subscribe(association)" name="checkmark-circle" type="secondary"></ion-icon>
-      </ion-card-content>
-    </ion-card>
-  </ion-list>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-icon *ngIf="!association.isSubscriber" (click)="subscribe(association)" name="checkmark"
+                          type="primary"></ion-icon>
+                <ion-icon *ngIf="association.isSubscriber" (click)="subscribe(association)" name="checkmark-circle"
+                          type="secondary"></ion-icon>
+            </ion-card-content>
+        </ion-card>
+    </ion-list>
 </ion-content>

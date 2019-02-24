@@ -5,6 +5,4 @@ export class Association {
     id : string;
     isSubscriber? : boolean;
 
-
-
 }

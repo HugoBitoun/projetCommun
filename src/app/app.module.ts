@@ -21,6 +21,7 @@ import {SignInProvider} from '../providers/sign-in/sign-in';
 import {UserProvider} from '../providers/user/user';
 import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
 import {CoursPage} from "../pages/cours/cours";
+import { CoursProvider } from '../providers/cours/cours';
 
 @NgModule({
     declarations: [
@@ -60,7 +61,8 @@ import {CoursPage} from "../pages/cours/cours";
         {provide: ErrorHandler, useClass: IonicErrorHandler},
         AssociationsProvider,
         SignInProvider, AngularFireAuth,
-        UserProvider
+        UserProvider,
+    CoursProvider
     ]
 })
 

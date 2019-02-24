@@ -6,14 +6,33 @@
 -->
 <ion-header>
 
-    <ion-navbar>
-        <ion-title>cours</ion-title>
-    </ion-navbar>
+
+        <ion-navbar>
+            <button ion-button menuToggle>
+                <ion-icon name="menu"></ion-icon>
+            </button>
+            <ion-title>Mes cours</ion-title>
+        </ion-navbar>
+
 
 </ion-header>
 
 
 <ion-content padding>
+
+    <ion-card *ngFor="let cours of listCoursSubscribed">
+
+        <ion-card-title>{{cours.name}}</ion-card-title>
+        <ion-card-header>
+        </ion-card-header>
+
+        <ion-card-content>
+            <!-- Add card content here! -->
+        </ion-card-content>
+
+    </ion-card>
+
+
     <ion-fab right bottom>
         <button ion-fab color="primary">
             <ion-icon name="settings"></ion-icon>
@@ -23,7 +42,7 @@
                 <ion-icon name="trash"></ion-icon>
             </button>
             <button color="secondary" ion-fab>
-                <ion-icon name="add"></ion-icon>
+                <ion-icon name="add" (click)="openModal()"></ion-icon>
             </button>
         </ion-fab-list>
     </ion-fab>
