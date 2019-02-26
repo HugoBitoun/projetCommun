@@ -20,8 +20,8 @@ import {AssociationsPage} from "../pages/associations/associations";
 import {SignInProvider} from '../providers/sign-in/sign-in';
 import {UserProvider} from '../providers/user/user';
 import {PopoverAssoPageModule} from "../pages/popover-asso/popover-asso.module";
-import {CoursPage} from "../pages/cours/cours";
-import { CoursProvider } from '../providers/cours/cours';
+import {CoursPage, ModalContentPage} from "../pages/cours/cours";
+import {CoursProvider} from '../providers/cours/cours';
 
 @NgModule({
     declarations: [
@@ -32,6 +32,7 @@ import { CoursProvider } from '../providers/cours/cours';
         SignInPage,
         AssociationsPage,
         CoursPage,
+        ModalContentPage,
     ],
     imports: [
         BrowserModule,
@@ -52,6 +53,7 @@ import { CoursProvider } from '../providers/cours/cours';
         SignInPage,
         AssociationsPage,
         CoursPage,
+        ModalContentPage,
 
 
     ],
@@ -62,7 +64,7 @@ import { CoursProvider } from '../providers/cours/cours';
         AssociationsProvider,
         SignInProvider, AngularFireAuth,
         UserProvider,
-    CoursProvider
+        CoursProvider
     ]
 })
 

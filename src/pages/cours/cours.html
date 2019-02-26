@@ -11,7 +11,7 @@
             <button ion-button menuToggle>
                 <ion-icon name="menu"></ion-icon>
             </button>
-            <ion-title>Mes cours</ion-title>
+            <ion-title>Mes cursus</ion-title>
         </ion-navbar>
 
 
@@ -27,7 +27,7 @@
         </ion-card-header>
 
         <ion-card-content>
-            <!-- Add card content here! -->
+            {{cours.description}}
         </ion-card-content>
 
     </ion-card>
@@ -41,8 +41,8 @@
             <button color="danger" ion-fab>
                 <ion-icon name="trash"></ion-icon>
             </button>
-            <button color="secondary" ion-fab>
-                <ion-icon name="add" (click)="openModal()"></ion-icon>
+            <button color="secondary" (click)="openModal()" ion-fab>
+                <ion-icon name="add" ></ion-icon>
             </button>
         </ion-fab-list>
     </ion-fab>
