@@ -31,8 +31,9 @@ export class AssociationsPage {
 
   constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,
    public popoverController : PopoverController){
-    this.userProvider.getUserAux().subscribe( data => {
-    this.user = data
+    this.userProvider.getUser().subscribe( data => {
+    this.user = data;
+    console.log(data); 
     });
 
   }
@@ -50,6 +51,7 @@ export class AssociationsPage {
   }
 
   subscribe(association : Association){
+        
     if (association.isSubscriber==true){
         association.isSubscriber = false;
         this.userProvider.Unsubscribe(association);

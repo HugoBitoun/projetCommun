@@ -6,12 +6,10 @@ import {Observable} from "rxjs";
 import {AngularFirestore, AngularFirestoreDocument} from "angularfire2/firestore";
 import "rxjs-compat/add/observable/of";
 
+
 @Injectable()
 export class AuthService {
     
-    static oAuthLogin(credentials: { email: any; password: any; }): any {
-        throw new Error("Method not implemented.");
-    }
     user$ : Observable<User>;
 
     constructor( private afAuth: AngularFireAuth, private db : AngularFirestore ) {
@@ -48,8 +46,7 @@ export class AuthService {
             email: user.email,
             roles : {
                 student: true
-            },
-            associations : []
+            }            
         };
         return userRef.set(data,{merge:true});
     }

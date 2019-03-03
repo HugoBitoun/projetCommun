@@ -25,7 +25,7 @@
       <ion-card-header>
         {{association.Description}}
         {{association.id}}
-
+        <p color="danger">{{user.email}}</p>
 
       </ion-card-header>
       <ion-card-content>
@@ -33,7 +33,7 @@
         <ion-icon *ngIf="association.isSubscriber" (click)="subscribe(association)" name="checkmark-circle" type="secondary"></ion-icon>
       </ion-card-content>
         </ion-item>
-        <ion-item-options side="end" *ngIf="user.roles.admin == true">
+        <ion-item-options side="end" *ngIf="user.roles.admin == true ">
           <button color="danger" ion-button>Supprimer</button>
           <button color="primary" ion-button>Modifier</button>
         </ion-item-options>

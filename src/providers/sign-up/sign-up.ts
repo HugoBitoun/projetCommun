@@ -3,6 +3,7 @@ import { User } from '../../assets/utils/User';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+import firebase from 'firebase';
 
 /*
   Generated class for the SignUpProvider provider.
@@ -28,44 +29,44 @@ export class SignUpProvider {
   }
 
   public register(user: User): any {
-    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(value => {
-      this.updateUserData(value.user);
+    console.log(user); 
+    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(value => {      
+      this.updateUserData(value.user, user);
     })
       .catch(err => {
         throw new Error('Cet email est déjà utilisé par un autre utilisateur');
       });
   }
 
-  public updateUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.db.doc(`/users/${user.uid}`);
+  public updateUserData(userAuth, user: User) {
+    const userRef: AngularFirestoreDocument<any> = this.db.doc(`/users/${userAuth.uid}`);
     var regex1 = RegExp('@etu.univ-paris1.fr*');
-    if (regex1.test(user.email)) {
+    if (regex1.test(userAuth.email)) {
       const data: User = {
-        uid: user.uid,
-        email: user.email,
-        //        name: user.name,
-        //      lastName: user.lastName,
-
+        uid: userAuth.uid,
+        email: userAuth.email,
+        name: user.name,
+        lastName: user.lastName,
         roles: {
-
-          student: true
+          student: true,
+          admin: false
         },
         associations: []
       };
       return userRef.set(data, { merge: true });
     } else {
       const data: User = {
-        uid: user.uid,
-        email: user.email,
-        //        name: user.name,
-        //      lastName: user.lastName,
-
-        roles: {
-
-          student: false
+        uid: userAuth.uid,
+        email: userAuth.email,
+        name: user.name,
+        lastName: user.lastName,
+        roles: {          
+          student: true,
+          admin: false
         },
         associations: []
       };
+      console.log(data);
       return userRef.set(data, { merge: true });
     }
 

@@ -1,35 +1,45 @@
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Component, ViewChild, OnInit } from '@angular/core';
+import { Nav, Platform, AlertController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import {AuthPage} from "../pages/auth/auth";
-import * as firebase from 'firebase';
-import {environment} from "../environments/environment";
 import {AssociationsPage} from "../pages/associations/associations";
+import { LogOutProvider } from '../providers/log-out/log-out';
 
 @Component({
   templateUrl: 'app.html'
 })
-export class MyApp {
+export class MyApp implements OnInit{
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = AuthPage;
 
   pages: Array<{title: string, component: any}>;
+  user = null;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
-    this.initializeApp();
-
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+                public logOutProvider: LogOutProvider, public alertController: AlertController) {
+    this.initializeApp();    
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
-        {title : 'Associations', component : AssociationsPage}
+        {title : 'Associations', component : AssociationsPage},                    
     ];
+  }
 
+  ngOnInit(): void {
+    this.logOutProvider.getAuthState().subscribe(
+      (user) => this.user=user);    
+  }
+
+
+  logout(){
+   this.logOutProvider.logout();
+   this.nav.setRoot(AuthPage);
   }
 
   initializeApp() {

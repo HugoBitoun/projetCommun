@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { HomePage } from '../home/home';
 import { User } from '../../assets/utils/User';
 import { SignUpProvider } from '../../providers/sign-up/sign-up';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthPage } from '../auth/auth';
 
 
 /**
@@ -16,7 +16,6 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 @IonicPage()
 @Component({
-
   selector: 'page-sign-up',
   templateUrl: 'sign-up.html',
 })
@@ -98,12 +97,12 @@ export class SignUpPage {
 
   doRegister(user: User) {
     if (this.validations_form.valid) {
-        this.signUpProvider.register(user).then(value => {
-          this.navCtrl.setRoot(HomePage);                
+        this.signUpProvider.register(user).then(value => {                          
           this.toastCtrl.create({
             message: 'Votre compte a été crée avec succès',
             duration: 6000
           }).present();          
+          this.navCtrl.setRoot(AuthPage);
         })
         .catch(err => {
           this.toastCtrl.create({
