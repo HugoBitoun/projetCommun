@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import {Cours} from "../../assets/utils/Cours";
+import * as firebase from "firebase";
 
 
 /*
@@ -28,5 +29,11 @@ export class CoursProvider {
         })
         //return this.firestore.collection<any>('associations/').valueChanges();
     }
-
+    public getCoursById(id : string) : Promise<Cours> {
+        console.log(id);
+        return firebase.firestore().collection('cours/').doc(id).get().then(
+            data => {
+                return data.data() as Cours;
+            })
+    }
 }

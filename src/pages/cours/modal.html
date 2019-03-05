@@ -5,7 +5,7 @@
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
-                <span ion-text color="primary" showWhen="ios">Cancel</span>
+                <span ion-text color="primary" showWhen="ios">Valider</span>
                 <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
             </button>
         </ion-buttons>
@@ -18,13 +18,15 @@
         <ion-list-header>
             Cursus
         </ion-list-header>
-        <ion-item *ngFor="let cours of listCoursSubscribed">
+
+        <ion-item *ngFor="let cours of listCours">
             <ion-label>{{cours.name}}</ion-label>
-            <ion-radio checked="true" value="{{cours.id}}" (click)="select(cours)"></ion-radio>
-        </ion-item>
-        <ion-item *ngFor="let cours2 of listCoursUnsubscribed">
-            <ion-label>{{cours2.name}}</ion-label>
-            <ion-radio value="{{cours2.id}}" (click)="select(cours2)"></ion-radio>
+
+            <ion-radio *ngIf="cours.isSubscriber==true" checked="true" value="{{cours.id}}"
+                       (click)="select(cours)"></ion-radio>
+
+            <ion-radio *ngIf="cours.isSubscriber==false" checked="false" value="{{cours.id}}"
+                       (click)="select(cours)"></ion-radio>
         </ion-item>
     </ion-list>
 </ion-content>
