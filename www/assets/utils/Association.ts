@@ -4,6 +4,7 @@ export class Association {
     Description : string;
     id : string;
     isSubscriber? : boolean;
+    idAdminAsso? : string;
 
 
 

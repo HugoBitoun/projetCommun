@@ -23,6 +23,10 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { SignUpProvider } from '../providers/sign-up/sign-up';
 import {DetailAssoPage} from "../pages/detail-asso/detail-asso";
 import { LogOutProvider } from '../providers/log-out/log-out';
+import {MyAssociationsPage} from "../pages/my-associations/my-associations";
+import {TabAssociationPage} from "../pages/tab-association/tab-association";
+import {TabAssociationCreatedPage} from "../pages/tab-association-created/tab-association-created";
+import {AddAssoPage} from "../pages/add-asso/add-asso";
 
 
 @NgModule({
@@ -33,7 +37,11 @@ import { LogOutProvider } from '../providers/log-out/log-out';
       AuthPage,
       SignUpPage, 
       AssociationsPage,
-      DetailAssoPage    
+      DetailAssoPage,
+    MyAssociationsPage,
+    TabAssociationPage,
+    TabAssociationCreatedPage,
+    AddAssoPage
 
   ],
   imports: [
@@ -54,7 +62,11 @@ import { LogOutProvider } from '../providers/log-out/log-out';
       AuthPage,
       SignUpPage,
       AssociationsPage,
-      DetailAssoPage      
+      DetailAssoPage,
+    MyAssociationsPage,
+    TabAssociationPage,
+    TabAssociationCreatedPage,
+    AddAssoPage
   ],
   providers: [
     StatusBar,

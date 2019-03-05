@@ -10,6 +10,7 @@ export class User {
     roles? : Roles;
     uid? : string;
     associations? : string[];
+    numberOfAssociations? : number;
 
     constructor(values){
         this.email = values.email;            

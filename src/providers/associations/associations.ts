@@ -4,6 +4,7 @@ import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firest
 import {Association} from "../../assets/utils/Association";
 import "rxjs-compat/add/operator/map";
 import {Observable} from "rxjs";
+import * as firebase from "firebase";
 
 /*
   Generated class for the AssociationsProvider provider.
@@ -29,5 +30,34 @@ export class AssociationsProvider {
       })
     })
     //return this.firestore.collection<any>('associations/').valueChanges();
+  }
+
+  public getAssociationsById(id : string) : Promise<Association> {
+    console.log(id);
+    return firebase.firestore().collection('associations/').doc(id).get().then(
+        data => {
+          return data.data() as Association;
+        })
+  }
+
+  public addAsso(association : Association){
+    const ref = this.firestore.collection('associations');
+    ref.add({
+          Name : association.Name,
+          Description : association.Description,
+          idAdminAsso : association.idAdminAsso
+        }
+    )
+  }
+
+  public getAssoCreatedByUser(id): Promise<Association[]>{
+    const ref = firebase.firestore().collection('associations');
+    return ref.where('idAdminAsso', '==', id).get().then(
+        data => {
+          return data.docs.map( association => {
+            return association.data() as Association;
+          })
+        }
+    );
   }
 }
