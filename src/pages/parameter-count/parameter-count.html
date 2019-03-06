@@ -16,9 +16,9 @@
 </ion-header>
 
 <ion-content padding>
-  <p *ngIf="name != null"><strong>Nom: </strong>{{lastName}}</p>
-  <p *ngIf="lastName != null"><strong>Prénom: </strong>{{name}}</p>
-  <p *ngIf="email != null"><strong>Email universitaire: </strong>{{email}}</p>
+  <p><strong>Prénom: </strong>{{name}}</p>
+  <p><strong>Nom: </strong>{{lastName}}</p>  
+  <p><strong>Email universitaire: </strong>{{email}}</p>
 <form class="form" [formGroup]="validations_form" (ngSubmit)="modify(user)">
     <ion-list>
       <ion-item>

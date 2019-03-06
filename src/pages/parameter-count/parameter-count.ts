@@ -20,9 +20,9 @@ export class ParameterCountPage {
   
   validations_form: FormGroup;
   user = {} as User;  
-  name = "";
-  lastName="";
-  email="";
+  name: String;
+  lastName: String;
+  email: String;
 
   validation_messages = {
     'name': [
@@ -40,9 +40,7 @@ export class ParameterCountPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController, private parameterCountProvider: ParameterCountProvider,
      public formBuilder: FormBuilder) {
-      this.name = "";
-      this.lastName = "";
-      this.email = "";
+
     this.parameterCountProvider.getUser().subscribe( data => {
       this.name = data.name;   
       this.lastName = data.lastName;
@@ -66,7 +64,6 @@ export class ParameterCountPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ParameterCountPage');
   }
-
 
   modify(user: User) {
      
