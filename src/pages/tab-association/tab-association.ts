@@ -4,6 +4,7 @@ import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../../www/assets/utils/Association";
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {DetailAssoPage} from "../detail-asso/detail-asso";
+import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 
 /**
  * Generated class for the TabAssociationPage page.
@@ -40,6 +41,6 @@ export class TabAssociationPage {
 
     public getAssociationPage(association : Association){
       console.log(association.id);
-        this.navCtrl.push(DetailAssoPage, {association : association})
+        this.navParams.data.push(AssociationDetailMessagePage, {association : association})
     }
 }

@@ -18,6 +18,7 @@ export class DetailAssoPage {
 
   association : Association;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.association = navParams.get('association');
   }
@@ -25,5 +26,6 @@ export class DetailAssoPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad DetailAssoPage');
   }
+
 
 }

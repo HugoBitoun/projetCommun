@@ -19,8 +19,8 @@
 <ion-content padding>
 
   <ion-tabs>
-    <ion-tab tabTitle="Inscrits" tabIcon="contact" [root]="tab1"></ion-tab>
-    <ion-tab tabTitle="Crées" tabIcon="compass" [root]="tab2" *ngIf="isAssociationCreator"></ion-tab>
+    <ion-tab tabTitle="Inscrits" tabIcon="contact" [root]="tab1" [rootParams]="navParams.get('nav')"></ion-tab>
+    <ion-tab tabTitle="Crées" tabIcon="compass" [root]="tab2" [rootParams]="navParams.get('nav')" *ngIf="isAssociationCreator"></ion-tab>
   </ion-tabs>
 
 </ion-content>

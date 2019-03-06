@@ -33,6 +33,7 @@ export class MessagePage {
 
   update() {
     this.listMessage = [];
+    console.log(this.navParams.get('association').id);
     this.associationProvider.getMessageAsso(this.navParams.get('association').id).then(
         data => {
           data.map( data => {

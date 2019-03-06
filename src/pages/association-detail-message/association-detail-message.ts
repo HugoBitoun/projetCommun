@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Association} from "../../assets/utils/Association";
 import {DetailAssoPage} from "../detail-asso/detail-asso";
 import {MessagePage} from "../message/message";
+import {MyAssociationsPage} from "../my-associations/my-associations";
 
 /**
  * Generated class for the AssociationDetailMessagePage page.
@@ -23,6 +24,7 @@ export class AssociationDetailMessagePage {
   tab2 = MessagePage;
   navParamTabs : any;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.association = navParams.get('association');
     this.navParamTabs = navParams;
@@ -30,5 +32,6 @@ export class AssociationDetailMessagePage {
 
   ionViewDidEnter() {
   }
+
 
 }

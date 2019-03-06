@@ -34,7 +34,10 @@ export class AssociationsProvider {
     //return this.firestore.collection<any>('associations/').valueChanges();
   }
 
-  public getAssociationsById(id : string) : Promise<Association> {
+
+
+
+    public getAssociationsById(id : string) : Promise<Association> {
     console.log(id);
     return firebase.firestore().collection('associations/').doc(id).get().then(
         data => {
