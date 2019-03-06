@@ -5,6 +5,7 @@ import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
 import {User} from "../../../www/assets/utils/User";
 import {DetailAssoPage} from "../detail-asso/detail-asso";
+import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -25,12 +26,10 @@ import {DetailAssoPage} from "../detail-asso/detail-asso";
 export class AssociationsPage {
 
   listAssociations : Association[] = Array<Association>();
-  userAssociation : string[] = Array<string>();
   subscriber : boolean = false;
   user: User;
 
-  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,
-   public popoverController : PopoverController){
+  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,){
     this.userProvider.getUser().subscribe( data => {
     this.user = data;
     console.log(data); 
@@ -82,7 +81,7 @@ export class AssociationsPage {
   }
 
     public getAssociationPage(association : Association){
-        this.navCtrl.push(DetailAssoPage, {association : association})
+        this.navCtrl.push(AssociationDetailMessagePage, {association : association})
     }
 
 

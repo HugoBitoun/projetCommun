@@ -1,3 +1,5 @@
+import {Messages} from "./Messages";
+
 export class Association {
 
     Name : string;
@@ -5,6 +7,7 @@ export class Association {
     id : string;
     isSubscriber? : boolean;
     idAdminAsso? : string;
+    messages? : Messages[];
 
 
 

@@ -5,6 +5,8 @@ import {Association} from "../../assets/utils/Association";
 import "rxjs-compat/add/operator/map";
 import {Observable} from "rxjs";
 import * as firebase from "firebase";
+import {Messages} from "../../assets/utils/Messages";
+import {Time} from "@angular/common";
 
 /*
   Generated class for the AssociationsProvider provider.
@@ -59,5 +61,34 @@ export class AssociationsProvider {
           })
         }
     );
+  }
+
+
+  public getMessageAsso(id): Promise<Messages[]>{
+      const ref = firebase.firestore().collection('associations');
+      return ref.doc(id).get().then( data => {
+          return data.get('messages') as Messages[];
+      })
+  }
+
+  public addMessageAsso(values){
+
+      const ref = firebase.firestore().collection('associations').doc(values.idAsso);
+      ref.update({
+          messages : firebase.firestore.FieldValue.arrayUnion({
+              message : values.message,
+              idUser : values.idUser
+          })
+      })
+  }
+
+  public removeMessage(values){
+      const ref = firebase.firestore().collection('associations').doc(values.idAsso);
+      ref.update({
+          messages : firebase.firestore.FieldValue.arrayRemove({
+              message : values.message,
+              idUser : values.idUser
+          })
+      })
   }
 }

@@ -4,7 +4,6 @@ import {AddAssoPage} from "../add-asso/add-asso";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {Association} from "../../assets/utils/Association";
-import {updateTemplate} from "@ionic/app-scripts/dist/template";
 
 /**
  * Generated class for the TabAssociationCreatedPage page.

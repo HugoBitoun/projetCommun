@@ -5,7 +5,6 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { AuthPage } from '../pages/auth/auth';
 import { SignUpPage } from "../pages/sign-up/sign-up";
 
@@ -27,13 +26,14 @@ import {MyAssociationsPage} from "../pages/my-associations/my-associations";
 import {TabAssociationPage} from "../pages/tab-association/tab-association";
 import {TabAssociationCreatedPage} from "../pages/tab-association-created/tab-association-created";
 import {AddAssoPage} from "../pages/add-asso/add-asso";
+import {AssociationDetailMessagePage} from "../pages/association-detail-message/association-detail-message";
+import {MessagePage} from "../pages/message/message";
 
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
       AuthPage,
       SignUpPage, 
       AssociationsPage,
@@ -41,7 +41,9 @@ import {AddAssoPage} from "../pages/add-asso/add-asso";
     MyAssociationsPage,
     TabAssociationPage,
     TabAssociationCreatedPage,
-    AddAssoPage
+    AddAssoPage,
+    AssociationDetailMessagePage,
+    MessagePage
 
   ],
   imports: [
@@ -58,7 +60,6 @@ import {AddAssoPage} from "../pages/add-asso/add-asso";
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
       AuthPage,
       SignUpPage,
       AssociationsPage,
@@ -66,7 +67,9 @@ import {AddAssoPage} from "../pages/add-asso/add-asso";
     MyAssociationsPage,
     TabAssociationPage,
     TabAssociationCreatedPage,
-    AddAssoPage
+    AddAssoPage,
+      AssociationDetailMessagePage,
+      MessagePage
   ],
   providers: [
     StatusBar,

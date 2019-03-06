@@ -27,15 +27,11 @@ export class TabAssociationPage {
         data => {
             data.associations.forEach(
                 id => {
-                  console.log("coucou");
-                  console.log(id);
                   this.associationProvider.getAssociationsById(id).then( data => {
                       this.listAssociations.push(data);
-                  })
-                }
-            )
-        }
-    )
+                  });
+                });
+        });
   }
 
   ionViewDidLoad() {
