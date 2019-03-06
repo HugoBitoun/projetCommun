@@ -45,8 +45,8 @@
       </div>
 
       <div padding style="text-align: center">
-        <button ion-button (click)="doConnection()">Connexion</button>
-        <p>ou</p>
+        <button ion-button [disabled]="!validations_form.valid" (click)="doConnection()">Connexion</button>
+        <p>Si vous n'êtes pas inscrits ?</p>
         <button ion-button (click)="signUp()" >Inscription</button>
       </div>
     </ion-list>

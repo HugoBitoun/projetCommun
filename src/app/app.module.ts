@@ -27,6 +27,8 @@ import {MyAssociationsPage} from "../pages/my-associations/my-associations";
 import {TabAssociationPage} from "../pages/tab-association/tab-association";
 import {TabAssociationCreatedPage} from "../pages/tab-association-created/tab-association-created";
 import {AddAssoPage} from "../pages/add-asso/add-asso";
+import { ParameterCountProvider } from '../providers/parameter-count/parameter-count';
+import { ParameterCountPage } from '../pages/parameter-count/parameter-count';
 
 
 @NgModule({
@@ -41,7 +43,8 @@ import {AddAssoPage} from "../pages/add-asso/add-asso";
     MyAssociationsPage,
     TabAssociationPage,
     TabAssociationCreatedPage,
-    AddAssoPage
+    AddAssoPage,
+    ParameterCountPage
 
   ],
   imports: [
@@ -66,7 +69,8 @@ import {AddAssoPage} from "../pages/add-asso/add-asso";
     MyAssociationsPage,
     TabAssociationPage,
     TabAssociationCreatedPage,
-    AddAssoPage
+    AddAssoPage,
+    ParameterCountPage
   ],
   providers: [
     StatusBar,
@@ -76,7 +80,8 @@ import {AddAssoPage} from "../pages/add-asso/add-asso";
     AngularFireAuth,
     UserProvider,
     SignUpProvider,
-    LogOutProvider  
+    LogOutProvider,
+    ParameterCountProvider  
   ]
 })
 

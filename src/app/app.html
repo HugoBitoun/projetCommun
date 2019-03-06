@@ -6,16 +6,19 @@
   </ion-header>
 
   <ion-content>
-    <ion-list>
+    <ion-list>      
       <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
         {{p.title}}
       </button>
+      <button menuClose ion-item (click)="parameterCount()">
+        <ion-icon name="build"></ion-icon> Mon compte
+      </button>      
       <button menuClose ion-item (click)="logout()">
         <ion-icon name="log-out"></ion-icon> Déconnexion
       </button>      
-    </ion-list>
+    </ion-list>    
   </ion-content>
-
+  
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

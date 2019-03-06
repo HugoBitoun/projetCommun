@@ -32,13 +32,13 @@ export class AssociationsPage {
   constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,
    public popoverController : PopoverController){
     this.userProvider.getUser().subscribe( data => {
-    this.user = data;
-    console.log(data); 
+     this.user = data;
+     console.log(data); 
     });
 
   }
 
-    ionViewDidLoad() {
+ionViewDidLoad() {
     console.log('ionViewDidLoad AssociationsPage');
   }
 

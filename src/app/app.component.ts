@@ -9,6 +9,7 @@ import {AuthPage} from "../pages/auth/auth";
 import {AssociationsPage} from "../pages/associations/associations";
 import { LogOutProvider } from '../providers/log-out/log-out';
 import {MyAssociationsPage} from "../pages/my-associations/my-associations";
+import { ParameterCountPage } from '../pages/parameter-count/parameter-count';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +29,7 @@ export class MyApp implements OnInit{
     this.pages = [
       { title: 'Home', component: HomePage },
       { title: 'List', component: ListPage },
-        {title : 'Associations', component : AssociationsPage},
+        {title : 'Associations', component : AssociationsPage},        
       {title : 'Mes associations', component : MyAssociationsPage}
     ];
   }
@@ -38,11 +39,15 @@ export class MyApp implements OnInit{
       (user) => this.user=user);    
   }
 
+  parameterCount(){
+    this.nav.setRoot(ParameterCountPage);
+  }
 
-  logout(){
-   this.logOutProvider.logout();
+  async logout(){
+   this.logOutProvider.logout();   
    this.nav.setRoot(AuthPage);
   }
+
 
   initializeApp() {
     this.platform.ready().then(() => {

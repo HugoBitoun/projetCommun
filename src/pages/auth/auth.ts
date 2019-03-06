@@ -49,8 +49,7 @@ export class AuthPage {
       password: new FormControl('', Validators.compose([
         Validators.minLength(5),
         Validators.required
-      ]))
-      
+      ]))      
     });
   }
 
@@ -62,7 +61,6 @@ export class AuthPage {
   }
 
   doConnection(){
-
 
       let data = this.validations_form.value;
 
@@ -80,20 +78,18 @@ export class AuthPage {
               this.navCtrl.setRoot(HomePage);
               this.toastCtrl.create({
                 message: 'Bienvenue',
-                duration: 6000
+                duration: 2000
               }).present();          
     
           },
           err => {
             this.toastCtrl.create({
               message: err.message,
-              duration: 6000
+              duration: 2000
             }).present();                    
             
           }
       );
-
-
   }
 
   signUp(){
