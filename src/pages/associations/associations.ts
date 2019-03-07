@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
@@ -16,9 +16,9 @@ import {AssociationDetailMessagePage} from "../association-detail-message/associ
 
 @IonicPage()
 @Component({
-  selector: 'page-associations',
-  templateUrl: 'associations.html',
-    providers : [
+    selector: 'page-associations',
+    templateUrl: 'associations.html',
+    providers: [
         AssociationsProvider
     ],
 
@@ -26,20 +26,17 @@ import {AssociationDetailMessagePage} from "../association-detail-message/associ
 export class AssociationsPage {
 
   listAssociations : Association[] = Array<Association>();
-  subscriber : boolean = false;
   user: User;
 
-  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,){
-    this.userProvider.getUser().subscribe( data => {
-    this.user = data;
-    console.log(data); 
-    });
-
+  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,) {
+      this.userProvider.getUser().subscribe(data => {
+          this.user = data;
+          console.log(data);
+      });
   }
 
-    ionViewDidLoad() {
-    console.log('ionViewDidLoad AssociationsPage');
-  }
+
+
 
   ionViewWillLoad() {
       this.associationProvider.getAssociations().subscribe( data => {
@@ -49,42 +46,38 @@ export class AssociationsPage {
 
   }
 
-  subscribe(association : Association){
-        
-    if (association.isSubscriber==true){
-        association.isSubscriber = false;
-        this.userProvider.Unsubscribe(association);
-    } else {
-        this.userProvider.Subscribe(association);
-        association.isSubscriber = true;
-    }
-  }
+  subscribe(association : Association)
+      {
 
-   isSuscriber() {
-
-
-      this.userProvider.getUser().subscribe( user => {
-
-
-          this.listAssociations.forEach(
-              association => {
-                  console.log(association.id);
-                  if (user.associations.find(x => x == association.id)){
-                      association.isSubscriber = true;
-                  } else {
-                      association.isSubscriber = false;
-                  }
-                  console.log(association.isSubscriber);
-              }
-          );
-      });
-  }
+          if (association.isSubscriber == true) {
+              association.isSubscriber = false;
+              this.userProvider.Unsubscribe(association);
+          } else {
+              this.userProvider.Subscribe(association);
+              association.isSubscriber = true;
+          }
+      }
 
     public getAssociationPage(association : Association){
         this.navCtrl.push(AssociationDetailMessagePage, {association : association})
     }
 
 
+    isSuscriber() {
+        this.userProvider.getUser().subscribe(user => {
+            this.listAssociations.forEach(
+                association => {
+                    console.log(association.id);
+                    if (user.associations.find(x => x == association.id)) {
+                        association.isSubscriber = true;
+                    } else {
+                        association.isSubscriber = false;
+                    }
+                    console.log(association.isSubscriber);
+                }
+            );
+        });
+    }
 
 
 }

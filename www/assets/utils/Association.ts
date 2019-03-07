@@ -9,6 +9,4 @@ export class Association {
     idAdminAsso? : string;
     messages? : Messages[];
 
-
-
 }

@@ -1,13 +1,11 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {ErrorHandler, NgModule} from '@angular/core';
 import {AngularFireAuth} from "angularfire2/auth";
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-
+import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { AuthPage } from '../pages/auth/auth';
 import { SignUpPage } from "../pages/sign-up/sign-up";
-
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,6 +26,8 @@ import {TabAssociationCreatedPage} from "../pages/tab-association-created/tab-as
 import {AddAssoPage} from "../pages/add-asso/add-asso";
 import {AssociationDetailMessagePage} from "../pages/association-detail-message/association-detail-message";
 import {MessagePage} from "../pages/message/message";
+import {CoursPage, ModalContentPage} from "../pages/cours/cours";
+import {CoursProvider} from '../providers/cours/cours';
 
 
 @NgModule({
@@ -43,7 +43,9 @@ import {MessagePage} from "../pages/message/message";
     TabAssociationCreatedPage,
     AddAssoPage,
     AssociationDetailMessagePage,
-    MessagePage
+    MessagePage,
+      CoursPage,
+      ModalContentPage,
 
   ],
   imports: [
@@ -69,7 +71,9 @@ import {MessagePage} from "../pages/message/message";
     TabAssociationCreatedPage,
     AddAssoPage,
       AssociationDetailMessagePage,
-      MessagePage
+      MessagePage ,
+      CoursPage,
+      ModalContentPage,
   ],
   providers: [
     StatusBar,
@@ -79,8 +83,11 @@ import {MessagePage} from "../pages/message/message";
     AngularFireAuth,
     UserProvider,
     SignUpProvider,
-    LogOutProvider  
+    LogOutProvider,
+      CoursProvider
   ]
+
 })
 
-export class AppModule {}
+export class AppModule {
+}
