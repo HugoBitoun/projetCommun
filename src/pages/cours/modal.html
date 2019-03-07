@@ -5,7 +5,7 @@
         </ion-title>
         <ion-buttons start>
             <button ion-button (click)="dismiss()">
-                <span ion-text color="primary">Valider</span>
+                <!--  <span ion-text color="primary">Valider</span> -->
                 <ion-icon name="md-close"></ion-icon>
             </button>
         </ion-buttons>
@@ -13,20 +13,40 @@
 </ion-header>
 
 <ion-content padding>
+    <div *ngIf="user.roles.prof==false">
+        <ion-list radio-group>
+            <ion-list-header>
+                Cursus
+            </ion-list-header>
 
-    <ion-list radio-group>
-        <ion-list-header>
-            Cursus
-        </ion-list-header>
+            <ion-item *ngFor="let cours of listCours">
+                <ion-label>{{cours.name}}</ion-label>
 
+                <ion-radio *ngIf="cours.isSubscriber==true" checked="true" value="{{cours.id}}"
+                           (click)="select(cours)"></ion-radio>
+
+                <ion-radio *ngIf="cours.isSubscriber==false" checked="false" value="{{cours.id}}"
+                           (click)="select(cours)"></ion-radio>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <ion-list>
         <ion-item *ngFor="let cours of listCours">
             <ion-label>{{cours.name}}</ion-label>
-
-            <ion-radio *ngIf="cours.isSubscriber==true" checked="true" value="{{cours.id}}"
-                       (click)="select(cours)"></ion-radio>
-
-            <ion-radio *ngIf="cours.isSubscriber==false" checked="false" value="{{cours.id}}"
-                       (click)="select(cours)"></ion-radio>
+            <ion-checkbox slot="end" [(ngModel)]="cours.isSubscriber" (click)="select(cours)"></ion-checkbox>
         </ion-item>
     </ion-list>
+
+
+        <!-- <ion-item>
+            <ion-label>Daenerys Targaryen</ion-label>
+            <ion-checkbox color="dark" checked="true"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Arya Stark</ion-label>
+            <ion-checkbox disabled="true"></ion-checkbox>
+        </ion-item> -->
+
 </ion-content>

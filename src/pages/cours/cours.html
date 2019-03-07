@@ -28,14 +28,8 @@
 
     <div *ngIf="hasCours==true">
         <ion-card *ngFor="let cours of listCours">
-            <div *ngIf="cours.isSubscriber == true">
-                <ion-card-title>{{cours.name}}</ion-card-title>
-                <ion-card-header>
-                </ion-card-header>
-
-                <ion-card-content>
-                    {{cours.description}}
-                </ion-card-content>
+            <div *ngIf="cours.isSubscriber == true" (click)="getCoursDetailPage(cours)">
+                <ion-card-content text-center text-uppercase><h1>{{cours.name}}</h1></ion-card-content>
             </div>
         </ion-card>
 
@@ -45,7 +39,7 @@
                 <ion-icon name="settings"></ion-icon>
             </button>
             <ion-fab-list side="top">
-                <button color="danger" ion-fab>
+                <button color="danger" ion-fab *ngIf="user.roles.prof==true">
                     <ion-icon name="trash"></ion-icon>
                 </button>
                 <button color="secondary" (click)="openModal()" ion-fab>

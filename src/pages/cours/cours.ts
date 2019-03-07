@@ -11,6 +11,8 @@ import {
 import {CoursProvider} from "../../providers/cours/cours";
 import {Cours} from "../../assets/utils/Cours";
 import {UserProvider} from "../../providers/user/user";
+import {CoursDetailsPage} from "../cours-details/cours-details";
+import {User} from "../../assets/utils/User";
 
 
 /**
@@ -29,14 +31,13 @@ export class CoursPage {
 
     listCours: Cours[] = new Array<Cours>();
     loader: Loading;
-    hasCours:Boolean;
+    hasCours: Boolean;
+    user: User;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider,
                 public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
-        this.loader = this.loadingCtrl.create({
-            content: "Please wait..."
-        });
-        this.hasCours=false;
+
+        this.hasCours = false;
     }
 
     ionViewDidLoad() {
@@ -45,26 +46,30 @@ export class CoursPage {
     }
 
     ionViewWillLoad() {
-
+        this.loader = this.loadingCtrl.create({
+            content: "Please wait..."
+        });
         this.loader.present();
-        this.init2();
+        this.getCours();
     }
 
-    init2() {
+    getCours() {
         this.coursProvider.getCours().subscribe(cours => {
             this.listCours = cours;
-            this.regSub();
+            this.getSubCours();
         });
     }
 
-    regSub() {
+    getSubCours() {
         this.userProvider.getUser().subscribe(user => {
+            this.user = user;
+            console.log(user.roles.prof);
             this.listCours.forEach(
                 cours => {
                     console.log(user.cours);
                     if (user.cours.find(x => x == cours.id)) {
                         cours.isSubscriber = true;
-                        this.hasCours=true;
+                        this.hasCours = true;
                     } else {
                         cours.isSubscriber = false;
                     }
@@ -75,10 +80,16 @@ export class CoursPage {
         });
     }
 
+    getCoursDetailPage(cours: Cours) {
+        console.log(cours.name);
+        this.navCtrl.push(CoursDetailsPage, {cours: cours});
+    }
+
     openModal() {
         console.log("openModal() " + this.listCours);
+        console.log("user " + this.user.roles.prof);
         let modal = this.modalCtrl.create(ModalContentPage, {
-            list: this.listCours,
+            list: this.listCours, user: this.user
         });
         modal.onDidDismiss(() => {
             this.ionViewWillLoad();
@@ -93,7 +104,7 @@ export class CoursPage {
 })
 export class ModalContentPage {
     listCours: Cours[] = new Array<Cours>();
-    selectedCours: Cours = new Cours();
+    user: User;
 
     constructor(
         public platform: Platform,
@@ -102,7 +113,8 @@ export class ModalContentPage {
         public userProvider: UserProvider
     ) {
         this.listCours = this.params.get("list");
-        console.log("openedModal() " + this.listCours);
+        this.user = this.params.get("user");
+        console.log("openedModal() " + this.listCours + " " + this.user.roles.prof);
     }
 
     ionViewWillLoad() {
@@ -110,28 +122,32 @@ export class ModalContentPage {
     }
 
     select(cours) {
-        this.selectedCours = cours;
-        console.log(cours);
-
+        if (cours.isSubscriber)
+            cours.isSubscriber = false;
+        else
+            cours.isSubscriber = true;
     }
 
     unsubscribeCours() {
-        let coursUnsub = this.listCours.find(x => x.isSubscriber == true);
-        if (coursUnsub != undefined) {
-            coursUnsub.isSubscriber = false;
-            this.userProvider.unsubscribeCours(coursUnsub);
-        }
+        this.listCours.forEach(cours => {
+            if (cours.isSubscriber == false)
+                this.userProvider.unsubscribeCours(cours);
+        });
     }
 
-    subscribeCours(cours) {
-        cours.isSubscriber = true;
-        this.userProvider.subscribeCours(cours);
+    subscribeCours() {
+
+        this.listCours.forEach(cours => {
+            if (cours.isSubscriber == true)
+                console.log(cours.name);
+            this.userProvider.subscribeCours(cours);
+        })
+
     }
 
     dismiss() {
-        let selectedCours = this.selectedCours;
         this.unsubscribeCours();
-        this.subscribeCours(selectedCours);
+        this.subscribeCours();
         this.viewCtrl.dismiss();
     }
 }
