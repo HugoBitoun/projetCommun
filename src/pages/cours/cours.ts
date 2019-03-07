@@ -28,15 +28,15 @@ import {UserProvider} from "../../providers/user/user";
 export class CoursPage {
 
     listCours: Cours[] = new Array<Cours>();
-    listCoursSubscribed: Cours[] = new Array<Cours>();
-    listCoursUnsubscribed: Cours[] = new Array<Cours>();
     loader: Loading;
+    hasCours:Boolean;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider,
                 public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
         this.loader = this.loadingCtrl.create({
             content: "Please wait..."
         });
+        this.hasCours=false;
     }
 
     ionViewDidLoad() {
@@ -46,25 +46,8 @@ export class CoursPage {
 
     ionViewWillLoad() {
 
-        //this.loader.present();
-        // this.initCours();
-        //this.loader.dismissAll();
+        this.loader.present();
         this.init2();
-    }
-
-
-    initCours() {
-        this.userProvider.getUser().subscribe(user => {
-            if (user.cours != undefined) {
-                user.cours.forEach(id => {
-                    this.coursProvider.getCoursById(id).then(
-                        cours => {
-                            this.listCoursSubscribed.push(cours);
-                        }
-                    )
-                })
-            }
-        });
     }
 
     init2() {
@@ -81,12 +64,14 @@ export class CoursPage {
                     console.log(user.cours);
                     if (user.cours.find(x => x == cours.id)) {
                         cours.isSubscriber = true;
+                        this.hasCours=true;
                     } else {
                         cours.isSubscriber = false;
                     }
-                    console.log(cours.isSubscriber);
+                    console.log(cours + " : " + cours.isSubscriber);
                 }
             );
+            this.loader.dismissAll();
         });
     }
 
@@ -132,8 +117,10 @@ export class ModalContentPage {
 
     unsubscribeCours() {
         let coursUnsub = this.listCours.find(x => x.isSubscriber == true);
-        coursUnsub.isSubscriber = false;
-        this.userProvider.unsubscribeCours(coursUnsub);
+        if (coursUnsub != undefined) {
+            coursUnsub.isSubscriber = false;
+            this.userProvider.unsubscribeCours(coursUnsub);
+        }
     }
 
     subscribeCours(cours) {

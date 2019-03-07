@@ -17,34 +17,42 @@
 
 </ion-header>
 
-
 <ion-content padding>
+    <div *ngIf="hasCours==false">
+        <ion-item (click)="openModal()">
+            <ion-label>
+                Vous n'êtes inscrit(e) dans aucun cours !
+            </ion-label>
+        </ion-item>
+    </div>
 
-    <ion-card *ngFor="let cours of listCours">
-        <div *ngIf="cours.isSubscriber == true">
-            <ion-card-title>{{cours.name}}</ion-card-title>
-            <ion-card-header>
-            </ion-card-header>
+    <div *ngIf="hasCours==true">
+        <ion-card *ngFor="let cours of listCours">
+            <div *ngIf="cours.isSubscriber == true">
+                <ion-card-title>{{cours.name}}</ion-card-title>
+                <ion-card-header>
+                </ion-card-header>
 
-            <ion-card-content>
-                {{cours.description}}
-            </ion-card-content>
-        </div>
-    </ion-card>
+                <ion-card-content>
+                    {{cours.description}}
+                </ion-card-content>
+            </div>
+        </ion-card>
 
 
-    <ion-fab right bottom>
-        <button ion-fab color="primary">
-            <ion-icon name="settings"></ion-icon>
-        </button>
-        <ion-fab-list side="top">
-            <button color="danger" ion-fab>
-                <ion-icon name="trash"></ion-icon>
+        <ion-fab right bottom>
+            <button ion-fab color="primary">
+                <ion-icon name="settings"></ion-icon>
             </button>
-            <button color="secondary" (click)="openModal()" ion-fab>
-                <ion-icon name="add"></ion-icon>
-            </button>
-        </ion-fab-list>
-    </ion-fab>
-
+            <ion-fab-list side="top">
+                <button color="danger" ion-fab>
+                    <ion-icon name="trash"></ion-icon>
+                </button>
+                <button color="secondary" (click)="openModal()" ion-fab>
+                    <ion-icon name="add"></ion-icon>
+                </button>
+            </ion-fab-list>
+        </ion-fab>
+    </div>
 </ion-content>
+
