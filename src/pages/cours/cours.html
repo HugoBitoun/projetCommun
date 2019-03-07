@@ -29,6 +29,7 @@
     <div *ngIf="hasCours==true">
         <ion-card *ngFor="let cours of listCours">
             <div *ngIf="cours.isSubscriber == true" (click)="getCoursDetailPage(cours)">
+                <img src="{{cours.image}}">
                 <ion-card-content text-center text-uppercase><h1>{{cours.name}}</h1></ion-card-content>
             </div>
         </ion-card>
