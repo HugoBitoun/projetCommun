@@ -37,7 +37,6 @@ export class CoursPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider,
                 public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
 
-        this.hasCours = false;
     }
 
     ionViewDidLoad() {
@@ -60,8 +59,10 @@ export class CoursPage {
         });
     }
 
+
     getSubCours() {
         this.userProvider.getUser().subscribe(user => {
+            this.hasCours = false;
             this.user = user;
             console.log(user.roles.prof);
             this.listCours.forEach(
@@ -126,25 +127,31 @@ export class ModalContentPage {
         this.selectedCours = cours;
     }
 
-    unsubscribeCours() {
-        this.listCours.forEach(cours=>{
-            if(cours.isSubscriber){
-                cours.isSubscriber=false;
-                this.userProvider.unsubscribeCours(cours);
-            }
-        })
-
+    unsubscribeCours(cours: Cours) {
+        this.userProvider.unsubscribeCours(cours);
+        cours.isSubscriber = true;
     }
 
     subscribeCours(cours: Cours) {
         this.userProvider.subscribeCours(cours);
-        cours.isSubscriber=true;
+        cours.isSubscriber = true;
     }
 
     dismiss() {
         if (this.selectedCours != undefined) {
-            this.unsubscribeCours();
+            this.listCours.forEach(cours => {
+                this.unsubscribeCours(cours);
+            });
             this.subscribeCours(this.selectedCours);
+
+        } else if (this.user.roles.prof) {
+            this.listCours.forEach(cours => {
+                if (cours.isSubscriber) {
+                    this.subscribeCours(cours);
+                } else {
+                    this.unsubscribeCours(cours);
+                }
+            });
         }
 
         this.viewCtrl.dismiss();
