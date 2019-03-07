@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import * as firebase from "firebase";
 import DocumentData = firebase.firestore.DocumentData;
 import {Association} from "../../assets/utils/Association";
+import {Cours} from "../../assets/utils/Cours";
 
 /*
   Generated class for the UserProvider provider.
@@ -45,5 +46,13 @@ export class UserProvider {
   public Unsubscribe(association : Association){
     const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
     userRef.update( {associations : firebase.firestore.FieldValue.arrayRemove(association.id)});
+  }
+  public subscribeCours(cours : Cours){
+    const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
+    userRef.update( {cours : firebase.firestore.FieldValue.arrayUnion(cours.id)});
+  }
+  public unsubscribeCours(cours : Cours){
+    const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
+    userRef.update( {cours : firebase.firestore.FieldValue.arrayRemove(cours.id)});
   }
 }

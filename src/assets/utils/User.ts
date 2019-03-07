@@ -11,6 +11,8 @@ export class User {
     uid? : string;
     associations? : string[];
     numberOfAssociations? : number;
+    cours? : string[];
+
 
     constructor(values){
         this.email = values.email;            
