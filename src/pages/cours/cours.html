@@ -35,17 +35,9 @@
 
 
         <ion-fab right bottom>
-            <button ion-fab color="primary">
+            <button ion-fab color="primary" (click)="openModal()">
                 <ion-icon name="settings"></ion-icon>
             </button>
-            <ion-fab-list side="top">
-                <button color="danger" ion-fab *ngIf="user.roles.prof==true">
-                    <ion-icon name="trash"></ion-icon>
-                </button>
-                <button color="secondary" (click)="openModal()" ion-fab>
-                    <ion-icon name="add"></ion-icon>
-                </button>
-            </ion-fab-list>
         </ion-fab>
     </div>
 </ion-content>

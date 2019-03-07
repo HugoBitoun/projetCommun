@@ -47,7 +47,7 @@ export class CoursPage {
 
     ionViewWillLoad() {
         this.loader = this.loadingCtrl.create({
-            content: "Please wait..."
+            content: "Patientez un peu !"
         });
         this.loader.present();
         this.getCours();
@@ -105,11 +105,12 @@ export class CoursPage {
 export class ModalContentPage {
     listCours: Cours[] = new Array<Cours>();
     user: User;
+    selectedCours: Cours;
 
     constructor(
         public platform: Platform,
         public params: NavParams,
-        public viewCtrl: ViewController, public coursProvider: CoursProvider,
+        public viewCtrl: ViewController,
         public userProvider: UserProvider
     ) {
         this.listCours = this.params.get("list");
@@ -122,32 +123,30 @@ export class ModalContentPage {
     }
 
     select(cours) {
-        if (cours.isSubscriber)
-            cours.isSubscriber = false;
-        else
-            cours.isSubscriber = true;
+        this.selectedCours = cours;
     }
 
     unsubscribeCours() {
-        this.listCours.forEach(cours => {
-            if (cours.isSubscriber == false)
+        this.listCours.forEach(cours=>{
+            if(cours.isSubscriber){
+                cours.isSubscriber=false;
                 this.userProvider.unsubscribeCours(cours);
-        });
-    }
-
-    subscribeCours() {
-
-        this.listCours.forEach(cours => {
-            if (cours.isSubscriber == true)
-                console.log(cours.name);
-            this.userProvider.subscribeCours(cours);
+            }
         })
 
     }
 
+    subscribeCours(cours: Cours) {
+        this.userProvider.subscribeCours(cours);
+        cours.isSubscriber=true;
+    }
+
     dismiss() {
-        this.unsubscribeCours();
-        this.subscribeCours();
+        if (this.selectedCours != undefined) {
+            this.unsubscribeCours();
+            this.subscribeCours(this.selectedCours);
+        }
+
         this.viewCtrl.dismiss();
     }
 }
