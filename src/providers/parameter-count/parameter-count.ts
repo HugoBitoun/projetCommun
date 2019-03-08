@@ -54,8 +54,6 @@ export class ParameterCountProvider {
 
   public getUser(): Observable<User> {
     this.userId = this.afAuth.auth.currentUser.uid;
-    console.log('ahya anis ');
-    console.log(this.userId);
     const listAsso = this.db.collection<User>(`users`).doc(`${this.userId}`);
     return listAsso.valueChanges().map( a=> {
       return a as User;

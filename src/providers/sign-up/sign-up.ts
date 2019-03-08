@@ -3,7 +3,6 @@ import { User } from '../../assets/utils/User';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable } from 'rxjs';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import firebase from 'firebase';
 
 /*
   Generated class for the SignUpProvider provider.
@@ -17,7 +16,6 @@ export class SignUpProvider {
   user$: Observable<User>;
 
   constructor(private afAuth: AngularFireAuth, private db: AngularFirestore) {
-
     this.user$ = this.afAuth.authState.switchMap(user => {
       if (user) {
         return this.db.doc<User>(`/users/${user.uid}`).valueChanges();
@@ -28,9 +26,19 @@ export class SignUpProvider {
     })
   }
 
+  sendVerificationMail() {
+    return this.afAuth.auth.currentUser.sendEmailVerification()
+    .then(() => {
+
+    }).catch(err=> {
+      throw Error('échec lors de la transmission de mail de confirmation');
+    });
+  }
+
   public register(user: User): any {
     console.log(user); 
-    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(value => {      
+    return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(value => { 
+      this.sendVerificationMail(); 
       this.updateUserData(value.user, user);
     })
       .catch(err => {
@@ -69,9 +77,6 @@ export class SignUpProvider {
       console.log(data);
       return userRef.set(data, { merge: true });
     }
-
-
   }
-
 
 }
