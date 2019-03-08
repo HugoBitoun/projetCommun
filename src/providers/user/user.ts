@@ -32,6 +32,17 @@ export class UserProvider {
     })
   }
 
+  public removeAssoUsers(id){
+    const ref = firebase.firestore().collection('users').where('associations', 'array-contains',id);
+    ref.get().then( data => {
+      data.docs.map( user => {
+        firebase.firestore().collection('users').doc(user.id).update({
+          associations : firebase.firestore.FieldValue.arrayRemove(id)
+        })
+      })
+    })
+  }
+
   public Subscribe(association : Association){
     const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
     userRef.update( {associations : firebase.firestore.FieldValue.arrayUnion(association.id)});

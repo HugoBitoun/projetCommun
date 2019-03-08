@@ -4,6 +4,7 @@ import {AddAssoPage} from "../add-asso/add-asso";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {Association} from "../../assets/utils/Association";
+import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 
 /**
  * Generated class for the TabAssociationCreatedPage page.
@@ -50,5 +51,16 @@ export class TabAssociationCreatedPage {
   addAsso(){
     this.navCtrl.push(AddAssoPage, {parentPage : this});
   }
+
+    public getAssociationPage(association : Association){
+        console.log(association.id);
+        this.navParams.data.push(AssociationDetailMessagePage, {association : association})
+    }
+
+    deleteAsso(id){
+      this.associationProvider.removeAsso(id);
+      this.userProvider.removeAssoUsers(id);
+      this.update();
+    }
 
 }

@@ -25,38 +25,47 @@ import {AssociationDetailMessagePage} from "../association-detail-message/associ
 })
 export class AssociationsPage {
 
-  listAssociations : Association[] = Array<Association>();
-  user: User;
+    listAssociations : Association[] = Array<Association>();
+    user: User;
 
-  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,) {
-      this.userProvider.getUser().subscribe(data => {
-          this.user = data;
-          console.log(data);
-      });
-  }
-
-
+    constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,) {
+        this.userProvider.getUser().subscribe(data => {
+            this.user = data;
+            console.log(data);
+        });
+    }
 
 
-  ionViewWillLoad() {
-      this.associationProvider.getAssociations().subscribe( data => {
-          this.listAssociations = data;
-          this.isSuscriber();
-      });
 
-  }
 
-  subscribe(association : Association)
-      {
+    ionViewWillLoad() {
+        this.update();
+    }
 
-          if (association.isSubscriber == true) {
-              association.isSubscriber = false;
-              this.userProvider.Unsubscribe(association);
-          } else {
-              this.userProvider.Subscribe(association);
-              association.isSubscriber = true;
-          }
-      }
+    update(){
+        this.associationProvider.getAssociations().subscribe( data => {
+            this.listAssociations = data;
+            this.isSuscriber();
+        });
+    }
+
+    deleteAsso(id){
+        this.associationProvider.removeAsso(id);
+        this.userProvider.removeAssoUsers(id);
+        this.update();
+    }
+
+    subscribe(association : Association)
+    {
+
+        if (association.isSubscriber == true) {
+            association.isSubscriber = false;
+            this.userProvider.Unsubscribe(association);
+        } else {
+            this.userProvider.Subscribe(association);
+            association.isSubscriber = true;
+        }
+    }
 
     public getAssociationPage(association : Association){
         this.navCtrl.push(AssociationDetailMessagePage, {association : association})

@@ -22,16 +22,25 @@ export class TabAssociationPage {
   listAssociations : Association[] = Array<Association>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, public associationProvider : AssociationsProvider) {
+    this.update();
+  }
 
-    this.userProvider.getUser().subscribe(
-        data => {
-            data.associations.forEach(
-                id => {
-                  this.associationProvider.getAssociations2(id).subscribe( data => {
-                      this.listAssociations.push(data);
-                  })
-                });
-        });
+  update(){
+      this.listAssociations = [];
+      this.userProvider.getUser().subscribe(
+          data => {
+              data.associations.forEach(
+                  id => {
+                      this.associationProvider.getAssociationsById(id).subscribe( data => {
+                          this.listAssociations.push(data);
+                      })
+                  });
+          });
+  }
+
+  unsuscribe(association : Association){
+      this.userProvider.Unsubscribe(association);
+      this.update();
   }
 
   ionViewDidLoad() {

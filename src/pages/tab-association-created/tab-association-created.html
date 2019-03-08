@@ -10,14 +10,14 @@
 <ion-content padding>
 
     <ion-list>
-    <ion-card *ngFor="let association of myAssociationsCreate">
+    <ion-card *ngFor="let association of myAssociationsCreate" (click)="getAssociationPage(association)">
         <ion-item-sliding  >
             <ion-item >
         <ion-card-title>{{association.Name}}</ion-card-title>
         <ion-card-header>{{association.Description}}</ion-card-header>
             </ion-item>
             <ion-item-options side="end">
-                <button color="danger" ion-button>Supprimer</button>
+                <button color="danger" ion-button (click)="deleteAsso(association.id)">Supprimer</button>
                 <button color="primary" ion-button>Modifier</button>
             </ion-item-options>
         </ion-item-sliding>
