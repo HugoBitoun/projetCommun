@@ -1,1 +1,14 @@
-/node_modules
+node_modules/*
+www
+.sourcemaps/*
+.idea
+.temp
+.sass-cache
+<%= appPath %>/bower_components
+coverage
+platforms
+plugins
+*.swp
+*.swo
+*.log
+*.DS_Store
