@@ -8,12 +8,25 @@
 
     <ion-navbar>
         <ion-title text-uppercase>Mon Cours</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only color="primary" (click)="refresh">
+                <ion-icon name="repeat"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+                pullingIcon="arrow-dropdown"
+                pullingText="Pull to refresh"
+                refreshingSpinner="circles"
+                refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
     <ion-segment [(ngModel)]="seg">
         <ion-segment-button value="Description">
             Description
@@ -33,12 +46,12 @@
             </ion-item>
             <h2 class="m-5">{{cours.description}}</h2>
         </ion-list>
-
         <ion-list *ngSwitchCase="'Messages'">
             <div *ngFor="let message of listMessages">
                 <div>
                     <ion-card class="my-5">
-                        <ion-card-title class="{{getMessageColor(getUser(message.idUser))}} text-uppercase py-2">
+                        <ion-card-title
+                                class="{{getMessageColor(getUser(message.idUser))}} text-uppercase py-2">
                             <ion-icon class="m-1" name="{{getMessageIcon(getUser(message.idUser))}}"></ion-icon>
                             {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}} {{convertDate(message.date)}}
                         </ion-card-title>
@@ -59,7 +72,7 @@
             <ion-icon name="trash"></ion-icon>
         </button>
         <button ion-fab color="secondary" (click)="createMessage">
-            <ion-icon name="create" ></ion-icon>
+            <ion-icon name="create"></ion-icon>
         </button>
     </ion-fab-list>
 </ion-fab>

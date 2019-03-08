@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {IonicPage, NavController, NavParams, Refresher} from 'ionic-angular';
 import {Cours} from "../../assets/utils/Cours";
 import {User} from "../../assets/utils/User";
 import {CoursProvider} from "../../providers/cours/cours";
@@ -31,7 +31,12 @@ export class CoursDetailsPage {
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider, public userProvider: UserProvider, public keyboard: Keyboard) {
         this.cours = navParams.get('cours');
         this.user = navParams.get('user');
-        this.seg = 'Description';
+        if (navParams.get('refresh')) {
+            this.seg = 'Messages';
+        } else {
+            this.seg = 'Description';
+        }
+
     }
 
     ionViewDidLoad() {
@@ -39,6 +44,8 @@ export class CoursDetailsPage {
     }
 
     ionViewWillLoad() {
+        this.listMessages=new  Array<Messages>();
+        this.listUsers = new Array<User>();
         this.getMessages();
     }
 
@@ -62,7 +69,7 @@ export class CoursDetailsPage {
         });
     }
 
-    getMessagesUser() {
+    getMessagesUser(event?) {
         this.userProvider.getAllUsers().subscribe(data => {
             this.listUsers = data;
             //this.update();
@@ -81,6 +88,10 @@ export class CoursDetailsPage {
             });
         });
     }*/
+    async doRefresh(refresher: Refresher) {
+
+        refresher.cancel();  // Works
+    }
 
     getMessageColor(user: User): string {
         if (user.roles.admin != undefined && user.roles.admin) {
@@ -95,7 +106,7 @@ export class CoursDetailsPage {
         return "bg-primary";
     }
 
-    getMessageIcon(user:User):string{
+    getMessageIcon(user: User): string {
         if (user.roles.admin != undefined && user.roles.admin) {
             return "ribbon";
         }
