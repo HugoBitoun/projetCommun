@@ -25680,11 +25680,11 @@ page-auth div  {
   padding: 10px;
 }
 
-page-auth p {
-  color: grey;
+page-auth .error-message {
+  color: red;
 }
 
-page-auth .error-message {
+page-parameter-count .error-message {
   color: red;
 }
 

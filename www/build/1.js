@@ -1,14 +1,14 @@
 webpackJsonp([1],{
 
-/***/ 601:
+/***/ 613:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DetailAssoPageModule", function() { return DetailAssoPageModule; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TabAssociationCreatedPageModule", function() { return TabAssociationCreatedPageModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__detail_asso__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__tab_association_created__ = __webpack_require__(206);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -18,23 +18,23 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 
-var DetailAssoPageModule = /** @class */ (function () {
-    function DetailAssoPageModule() {
+var TabAssociationCreatedPageModule = /** @class */ (function () {
+    function TabAssociationCreatedPageModule() {
     }
-    DetailAssoPageModule = __decorate([
+    TabAssociationCreatedPageModule = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["I" /* NgModule */])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_2__detail_asso__["a" /* DetailAssoPage */],
+                __WEBPACK_IMPORTED_MODULE_2__tab_association_created__["a" /* TabAssociationCreatedPage */],
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__detail_asso__["a" /* DetailAssoPage */]),
+                __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* IonicPageModule */].forChild(__WEBPACK_IMPORTED_MODULE_2__tab_association_created__["a" /* TabAssociationCreatedPage */]),
             ],
         })
-    ], DetailAssoPageModule);
-    return DetailAssoPageModule;
+    ], TabAssociationCreatedPageModule);
+    return TabAssociationCreatedPageModule;
 }());
 
-//# sourceMappingURL=detail-asso.module.js.map
+//# sourceMappingURL=tab-association-created.module.js.map
 
 /***/ })
 
