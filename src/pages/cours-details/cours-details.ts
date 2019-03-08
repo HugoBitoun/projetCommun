@@ -5,7 +5,7 @@ import {User} from "../../assets/utils/User";
 import {CoursProvider} from "../../providers/cours/cours";
 import {Messages} from "../../assets/utils/Messages";
 import {UserProvider} from "../../providers/user/user";
-import { Keyboard } from '@ionic-native/keyboard/ngx';
+import {Keyboard} from '@ionic-native/keyboard/ngx';
 
 /**
  * Generated class for the CoursDetailsPage page.
@@ -46,7 +46,17 @@ export class CoursDetailsPage {
         this.coursProvider.getMessagesCours(this.cours.id).then(data => {
             data.map(data => {
                 this.listMessages.push(data);
+                this.listMessages.sort((n1, n2) => {
+                    if (n1.date > n2.date) {
+                        return -1;
+                    }
 
+                    if (n1.date < n2.date) {
+                        return 1;
+                    }
+
+                    return 0;
+                });
                 this.getMessagesUser();
             });
         });
@@ -73,7 +83,6 @@ export class CoursDetailsPage {
     }*/
 
     getMessageColor(user: User): string {
-        console.log("admin " + user.roles.admin + " prof " + user.roles.prof);
         if (user.roles.admin != undefined && user.roles.admin) {
             return "bg-danger";
         }
@@ -84,6 +93,19 @@ export class CoursDetailsPage {
             return "bg-info";
         }
         return "bg-primary";
+    }
+
+    getMessageIcon(user:User):string{
+        if (user.roles.admin != undefined && user.roles.admin) {
+            return "ribbon";
+        }
+        if (user.roles.prof != undefined && user.roles.prof) {
+            return "book";
+        }
+        if (user.roles.student != undefined && user.roles.student) {
+            return "school";
+        }
+        return "logo-snapchat";
     }
 
     convertDate(date: firebase.firestore.Timestamp): string {
