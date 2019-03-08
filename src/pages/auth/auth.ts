@@ -72,6 +72,7 @@ export class AuthPage {
             this.ngZone.run(() => {
               this.navCtrl.setRoot(HomePage);                                                                                                          
             });
+            console.log('iwach');
             this.toastCtrl.create({
               message: 'Bienvenue',
               duration: 2000
