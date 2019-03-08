@@ -35,6 +35,16 @@ export class AssociationsProvider {
   }
 
 
+    public getAssociations2(id): Observable<Association>{
+      const listAsso = this.firestore.collection<Association>(`associations/`).doc(id);
+        return listAsso.snapshotChanges().map( actions => {
+            const data = actions.payload.data() as Association;
+            data.id = actions.payload.id;
+            return data;
+        })
+        //return this.firestore.collection<any>('associations/').valueChanges();
+    }
+
 
 
     public getAssociationsById(id : string) : Promise<Association> {

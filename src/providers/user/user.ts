@@ -21,13 +21,7 @@ export class UserProvider {
   userId : string;
 
   constructor(public http: HttpClient, public firestore : AngularFirestore, public afAuth : AngularFireAuth) {
-
     this.userId = this.afAuth.auth.currentUser.uid;
-  }
-
-  public getUserAux(): Observable<User>{
-    
-    return this.firestore.doc<User>(`users/${this.userId}`).valueChanges();
   }
 
   public getUser(): Observable<User> {

@@ -9,10 +9,20 @@
 
 <ion-content padding>
 
+    <ion-list>
     <ion-card *ngFor="let association of myAssociationsCreate">
+        <ion-item-sliding  >
+            <ion-item >
         <ion-card-title>{{association.Name}}</ion-card-title>
         <ion-card-header>{{association.Description}}</ion-card-header>
+            </ion-item>
+            <ion-item-options side="end">
+                <button color="danger" ion-button>Supprimer</button>
+                <button color="primary" ion-button>Modifier</button>
+            </ion-item-options>
+        </ion-item-sliding>
     </ion-card>
+    </ion-list>
 
     <ion-fab right bottom>
         <button (click)="addAsso()" ion-fab color="primary">

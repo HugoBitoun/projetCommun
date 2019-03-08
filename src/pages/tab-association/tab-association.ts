@@ -3,7 +3,6 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../../www/assets/utils/Association";
 import {AssociationsProvider} from "../../providers/associations/associations";
-import {DetailAssoPage} from "../detail-asso/detail-asso";
 import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 
 /**
@@ -28,9 +27,9 @@ export class TabAssociationPage {
         data => {
             data.associations.forEach(
                 id => {
-                  this.associationProvider.getAssociationsById(id).then( data => {
+                  this.associationProvider.getAssociations2(id).subscribe( data => {
                       this.listAssociations.push(data);
-                  });
+                  })
                 });
         });
   }
