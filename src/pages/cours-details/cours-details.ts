@@ -4,9 +4,7 @@ import {Cours} from "../../assets/utils/Cours";
 import {User} from "../../assets/utils/User";
 import {CoursProvider} from "../../providers/cours/cours";
 import {Messages} from "../../assets/utils/Messages";
-import {listener} from "@angular/core/src/render3/instructions";
 import {UserProvider} from "../../providers/user/user";
-import Timestamp = firebase.firestore.Timestamp;
 
 /**
  * Generated class for the CoursDetailsPage page.
@@ -70,7 +68,22 @@ export class CoursDetailsPage {
             });
         });
     }*/
-    convertDate(date: Timestamp): string {
+
+    getMessageColor(user :User): string {
+        console.log("admin "+user.roles.admin+" prof "+user.roles.prof);
+        if (user.roles.admin != undefined && user.roles.admin) {
+            return "bg-danger";
+        }
+        if (user.roles.prof != undefined && user.roles.prof) {
+            return "bg-warning";
+        }
+        if (user.roles.student != undefined && user.roles.student) {
+            return "bg-info";
+        }
+        return "bg-primary";
+    }
+
+    convertDate(date: firebase.firestore.Timestamp): string {
         return date.toDate().toLocaleDateString();
     }
 

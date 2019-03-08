@@ -26,6 +26,7 @@
     "@ionic/storage": "2.2.0",
     "@types/node": "^11.10.4",
     "angularfire2": "^5.0.0-rc.11",
+    "bootstrap": "^4.3.1",
     "cordova-android": "7.1.4",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-ionic-keyboard": "^2.1.3",

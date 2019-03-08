@@ -31,15 +31,17 @@
                 </ion-thumbnail>
                 <h1 text-uppercase="">{{cours.name}}</h1>
             </ion-item>
-            <h2>{{cours.description}}</h2>
+            <h2 class="m-5">{{cours.description}}</h2>
         </ion-list>
 
         <ion-list *ngSwitchCase="'Messages'">
             <div *ngFor="let message of listMessages">
-                <div >
-                    <ion-card margin>
-                        <ion-card-title>{{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}}</ion-card-title>
-                        <ion-card-header>{{convertDate(message.date)}}</ion-card-header>
+                <div>
+                    <ion-card class="m-1">
+                        <ion-card-title class="{{getMessageColor(getUser(message.idUser))}} text-uppercase">
+                            <ion-icon name="flask"></ion-icon>
+                            {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}} {{convertDate(message.date)}}
+                        </ion-card-title>
                         <ion-card-content>{{message.message}}</ion-card-content>
                     </ion-card>
                 </div>
@@ -47,3 +49,5 @@
         </ion-list>
     </div>
 </ion-content>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
