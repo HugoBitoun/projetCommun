@@ -37,8 +37,8 @@
         <ion-list *ngSwitchCase="'Messages'">
             <div *ngFor="let message of listMessages">
                 <div>
-                    <ion-card class="m-1">
-                        <ion-card-title class="{{getMessageColor(getUser(message.idUser))}} text-uppercase">
+                    <ion-card class="my-5">
+                        <ion-card-title class="{{getMessageColor(getUser(message.idUser))}} text-uppercase py-2">
                             <ion-icon name="flask"></ion-icon>
                             {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}} {{convertDate(message.date)}}
                         </ion-card-title>
@@ -49,5 +49,21 @@
         </ion-list>
     </div>
 </ion-content>
+
+<ion-fab right bottom>
+    <button ion-fab color="primary">
+        <ion-icon name="settings"></ion-icon>
+    </button>
+    <ion-fab-list side="top">
+        <button ion-fab color="danger">
+            <ion-icon name="trash"></ion-icon>
+        </button>
+        <button ion-fab color="secondary" (click)="createMessage">
+            <ion-icon name="create" ></ion-icon>
+        </button>
+    </ion-fab-list>
+</ion-fab>
+
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">

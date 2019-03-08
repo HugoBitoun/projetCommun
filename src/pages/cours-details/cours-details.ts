@@ -5,6 +5,7 @@ import {User} from "../../assets/utils/User";
 import {CoursProvider} from "../../providers/cours/cours";
 import {Messages} from "../../assets/utils/Messages";
 import {UserProvider} from "../../providers/user/user";
+import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 /**
  * Generated class for the CoursDetailsPage page.
@@ -17,6 +18,7 @@ import {UserProvider} from "../../providers/user/user";
 @Component({
     selector: 'page-cours-details',
     templateUrl: 'cours-details.html',
+    providers: [Keyboard],
 })
 export class CoursDetailsPage {
 
@@ -26,7 +28,7 @@ export class CoursDetailsPage {
     listMessages: Messages[] = new Array<Messages>();
     listUsers: User[] = new Array<User>();
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider, public userProvider: UserProvider) {
+    constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider, public userProvider: UserProvider, public keyboard: Keyboard) {
         this.cours = navParams.get('cours');
         this.user = navParams.get('user');
         this.seg = 'Description';
@@ -44,6 +46,7 @@ export class CoursDetailsPage {
         this.coursProvider.getMessagesCours(this.cours.id).then(data => {
             data.map(data => {
                 this.listMessages.push(data);
+
                 this.getMessagesUser();
             });
         });
@@ -69,8 +72,8 @@ export class CoursDetailsPage {
         });
     }*/
 
-    getMessageColor(user :User): string {
-        console.log("admin "+user.roles.admin+" prof "+user.roles.prof);
+    getMessageColor(user: User): string {
+        console.log("admin " + user.roles.admin + " prof " + user.roles.prof);
         if (user.roles.admin != undefined && user.roles.admin) {
             return "bg-danger";
         }
@@ -89,5 +92,9 @@ export class CoursDetailsPage {
 
     getUser(id) {
         return this.listUsers.find(x => x.uid == id);
+    }
+
+    createMessage() {
+        this.keyboard.show();
     }
 }
