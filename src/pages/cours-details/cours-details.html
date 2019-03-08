@@ -35,12 +35,15 @@
         </ion-list>
 
         <ion-list *ngSwitchCase="'Messages'">
-            <ion-item>
-                <ion-thumbnail item-start>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Panneau_travaux.svg/1164px-Panneau_travaux.svg.png">
-                </ion-thumbnail>
-                <h2>EN DEVELOPPEMENT</h2>
-            </ion-item>
+            <div *ngFor="let message of listMessages">
+                <div >
+                    <ion-card margin>
+                        <ion-card-title>{{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}}</ion-card-title>
+                        <ion-card-header>{{convertDate(message.date)}}</ion-card-header>
+                        <ion-card-content>{{message.message}}</ion-card-content>
+                    </ion-card>
+                </div>
+            </div>
         </ion-list>
     </div>
 </ion-content>

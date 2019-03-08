@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
 import {Cours} from "../../assets/utils/Cours";
 import * as firebase from "firebase";
+import {Messages} from "../../assets/utils/Messages";
 
 
 /*
@@ -35,5 +36,34 @@ export class CoursProvider {
             data => {
                 return data.data() as Cours;
             })
+    }
+
+    public getMessagesCours(id): Promise<Messages[]>{
+        const ref = firebase.firestore().collection('cours');
+        return ref.doc(id).get().then( data => {
+            return data.get('messages') as Messages[];
+        })
+    }
+
+    public addMessageCours(values){
+
+        const ref = firebase.firestore().collection('cours').doc(values.idAsso);
+        ref.update({
+            messages : firebase.firestore.FieldValue.arrayUnion({
+                message : values.message,
+                idUser : values.idUser,
+                date :  firebase.database.ServerValue.TIMESTAMP,
+            })
+        })
+    }
+
+    public removeMessageCours(values){
+        const ref = firebase.firestore().collection('cours').doc(values.idAsso);
+        ref.update({
+            messages : firebase.firestore.FieldValue.arrayRemove({
+                message : values.message,
+                idUser : values.idUser
+            })
+        })
     }
 }

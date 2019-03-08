@@ -1,5 +1,7 @@
+import Timestamp = firebase.firestore.Timestamp;
+
 export class Messages {
-    message : string;
-    date? : Date;
-    idUser : string;
+    message: string;
+    date?: Timestamp;
+    idUser: string;
 }

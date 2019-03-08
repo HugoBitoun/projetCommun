@@ -83,7 +83,7 @@ export class CoursPage {
 
     getCoursDetailPage(cours: Cours) {
         console.log(cours.name);
-        this.navCtrl.push(CoursDetailsPage, {cours: cours});
+        this.navCtrl.push(CoursDetailsPage, {cours: cours, user: this.user});
     }
 
     openModal() {
