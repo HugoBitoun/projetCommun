@@ -1,0 +1,29 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Mes cursus
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+                <!--  <span ion-text color="primary">Valider</span> -->
+                <ion-icon name="md-close"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button ion-button (click)="valider()">
+                <!--  <span ion-text color="primary">Valider</span> -->
+                <ion-icon name="checkmark"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-item class="my-2 p-1">
+        <ion-label
+                class="text-capitalize text-primary text font-weight-bold">{{user.name}} {{user.lastName}}</ion-label>
+        <ion-label class="text-uppercase">{{cours.name}}</ion-label>
+    </ion-item>
+    <ion-textarea placeholder="Ecrivez votre message..." [(ngModel)]="inputMessage"
+                  class="border border-info rounded bg-light" style="height: 80%"></ion-textarea>
+</ion-content>

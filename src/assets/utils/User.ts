@@ -7,7 +7,7 @@ export class User {
     password? : string;    
     name? : string;
     lastName? : string;
-    roles? : Roles;
+    roles : Roles;
     uid? : string;
     associations? : string[];
     cours? : string[];

@@ -17,34 +17,30 @@
 
 </ion-header>
 
-
 <ion-content padding>
+    <div *ngIf="hasCours==false" (click)="openModal()" margin-horizontal>
+        <button ion-button color="danger" text-wrap padding>{{user.name}} {{user.lastName}}, vous n'êtes inscrit(e) à aucun
+            cours !
+        </button>
+    </div>
 
-    <ion-card *ngFor="let cours of listCours">
-        <div *ngIf="cours.isSubscriber == true">
-            <ion-card-title>{{cours.name}}</ion-card-title>
-            <ion-card-header>
-            </ion-card-header>
+    <div *ngIf="hasCours==true">
+        <ion-card *ngFor="let cours of listCours" margin-bottom>
+            <div *ngIf="cours.isSubscriber == true" (click)="getCoursDetailPage(cours)">
+                <img src="{{cours.image}}">
+                <ion-card-content text-center text-uppercase><h1>{{cours.name}}</h1></ion-card-content>
+            </div>
+        </ion-card>
+    </div>
+</ion-content>
 
-            <ion-card-content>
-                {{cours.description}}
-            </ion-card-content>
-        </div>
-    </ion-card>
-
-
+<!-- Il est a l'exterieur pour qu'il soit en position absolue et scroll avec l'ecran -->
+<div *ngIf="hasCours==true">
     <ion-fab right bottom>
-        <button ion-fab color="primary">
+        <button ion-fab color="primary" (click)="openModal()">
             <ion-icon name="settings"></ion-icon>
         </button>
-        <ion-fab-list side="top">
-            <button color="danger" ion-fab>
-                <ion-icon name="trash"></ion-icon>
-            </button>
-            <button color="secondary" (click)="openModal()" ion-fab>
-                <ion-icon name="add"></ion-icon>
-            </button>
-        </ion-fab-list>
     </ion-fab>
+</div>
 
-</ion-content>
+

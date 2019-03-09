@@ -1,7 +1,10 @@
-export class Cours{
+import {Messages} from "./Messages";
+
+export class Cours {
     id: String;
-    name : String;
-    description : String
-    messages:Array<String>;
-    isSubscriber? : boolean;
+    name: String;
+    description: String
+    messages: Messages[];
+    isSubscriber?: boolean;
+    image?: String;
 }
