@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content padding>
-    <div *ngIf="user.roles.prof==false">
+    <div *ngIf="user.roles.prof==true">
         <ion-list radio-group>
             <ion-list-header>
                 Cursus
@@ -27,7 +27,7 @@
             </ion-item>
         </ion-list>
     </div>
-    <div *ngIf="user.roles.prof==true">
+    <div *ngIf="user.roles.prof==false">
         <ion-list>
             <ion-item *ngFor="let cours of listCours">
                 <ion-label>{{cours.name}}</ion-label>
