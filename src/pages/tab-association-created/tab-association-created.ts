@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {AddAssoPage} from "../add-asso/add-asso";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
@@ -27,7 +27,8 @@ export class TabAssociationCreatedPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider: UserProvider,
-              public associationProvider: AssociationsProvider) {
+              public associationProvider: AssociationsProvider,
+              public alertCtrl : AlertController) {
     this.update()
   }
 
@@ -62,10 +63,28 @@ export class TabAssociationCreatedPage {
     }
 
     deleteAsso(id){
-      this.associationProvider.removeAsso(id);
-      this.userProvider.removeAssoUsers(id);
-      this.userProvider.addOneToNbAsso(this.userCanCreateNbAsso);
-      this.update();
+        let alert = this.alertCtrl.create({
+            title : 'Voulez vous vraiment supprimer l\'association ?',
+            buttons: [
+                {
+                    text: 'OUI',
+                    handler: () => {
+                        this.associationProvider.removeAsso(id);
+                        this.userProvider.removeAssoUsers(id);
+                        this.userProvider.addOneToNbAsso(this.userCanCreateNbAsso);
+                        this.update();
+                    }
+                }
+                ,{
+                    text : 'NON'
+                }
+            ]
+        });
+
+        alert.present();
+
+
+
     }
 
     modifyAsso(association :Association){

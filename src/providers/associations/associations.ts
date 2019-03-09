@@ -89,7 +89,8 @@ export class AssociationsProvider {
       ref.update({
           messages : firebase.firestore.FieldValue.arrayUnion({
               message : values.message,
-              idUser : values.idUser
+              idUser : values.idUser,
+              date : new Date()
           })
       })
   }
@@ -99,7 +100,8 @@ export class AssociationsProvider {
       ref.update({
           messages : firebase.firestore.FieldValue.arrayRemove({
               message : values.message,
-              idUser : values.idUser
+              idUser : values.idUser,
+              date : values.date
           })
       })
   }

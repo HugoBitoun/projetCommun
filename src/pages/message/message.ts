@@ -117,6 +117,7 @@ export class MessagePage {
             let values = {
               message : message.message,
               idUser: message.idUser,
+              date : message.date,
               idAsso : this.association.id
             };
             this.associationProvider.removeMessage(values);

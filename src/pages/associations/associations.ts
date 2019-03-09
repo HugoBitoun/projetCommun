@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import {AlertController, IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
@@ -29,7 +29,9 @@ export class AssociationsPage {
     listAssociations : Association[] = Array<Association>();
     user: User;
 
-    constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,) {
+    constructor(public navCtrl: NavController, public userProvider : UserProvider,
+                public associationProvider : AssociationsProvider,
+                public alertCtrl : AlertController) {
         this.userProvider.getUser().subscribe(data => {
             this.user = data;
             console.log(data);
@@ -51,10 +53,28 @@ export class AssociationsPage {
     }
 
     deleteAsso(association : Association){
-        this.associationProvider.removeAsso(association.id);
-        this.userProvider.removeAssoUsers(association.id);
-        this.userProvider.addOneToNbAssoAdmin(association.idAdminAsso);
-        this.update();
+
+        let alert = this.alertCtrl.create({
+            title : 'Voulez vous vraiment supprimer' + association.Name + ' ?',
+            buttons: [
+                {
+                    text: 'OUI',
+                    handler: () => {
+                        this.associationProvider.removeAsso(association.id);
+                        this.userProvider.removeAssoUsers(association.id);
+                        this.userProvider.addOneToNbAssoAdmin(association.idAdminAsso);
+                        this.update();
+                    }
+                }
+                ,{
+                    text : 'NON'
+                }
+            ]
+        });
+
+        alert.present();
+
+
     }
 
     subscribe(association : Association)
