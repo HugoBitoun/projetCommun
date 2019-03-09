@@ -49,9 +49,10 @@ export class AssociationsPage {
         });
     }
 
-    deleteAsso(id){
-        this.associationProvider.removeAsso(id);
-        this.userProvider.removeAssoUsers(id);
+    deleteAsso(association : Association){
+        this.associationProvider.removeAsso(association.id);
+        this.userProvider.removeAssoUsers(association.id);
+        this.userProvider.addOneToNbAssoAdmin(association.idAdminAsso);
         this.update();
     }
 

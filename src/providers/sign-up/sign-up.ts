@@ -49,8 +49,10 @@ export class SignUpProvider {
         lastName: user.lastName,
         roles: {
           student: true,
-          admin: false
+          admin: false,
+          isAdminAsso : false,
         },
+        canCreateNbAsso : 0,
         associations: []
       };
       return userRef.set(data, { merge: true });

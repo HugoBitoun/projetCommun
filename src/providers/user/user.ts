@@ -60,4 +60,32 @@ export class UserProvider {
     const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
     userRef.update( {cours : firebase.firestore.FieldValue.arrayRemove(cours.id)});
   }
+
+  public removeOneToNbAsso(nbAsso){
+    const ref = firebase.firestore().collection('users').doc(`${this.userId}`);
+    ref.update({
+      canCreateNbAsso : nbAsso-1
+    })
+  }
+
+  public addOneToNbAsso(nbAsso){
+    const ref = firebase.firestore().collection('users').doc(`${this.userId}`);
+    ref.update({
+      canCreateNbAsso : nbAsso+1
+    })
+  }
+
+  public getUserById(id){
+    return firebase.firestore().collection('users').doc(id);
+  }
+
+  public addOneToNbAssoAdmin(idUser){
+    let nbAsso;
+    this.getUserById(idUser).get().then( data => {
+      nbAsso = data.get('canCreateNbAsso');
+      this.getUserById(idUser).update({
+        canCreateNbAsso : nbAsso+1
+      })
+    })
+  }
 }
