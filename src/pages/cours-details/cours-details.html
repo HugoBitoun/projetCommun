@@ -13,6 +13,7 @@
 
 
 <ion-content padding>
+
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
                 pullingIcon="arrow-dropdown"
@@ -21,6 +22,7 @@
                 refreshingText="Refreshing...">
         </ion-refresher-content>
     </ion-refresher>
+
     <ion-segment [(ngModel)]="seg">
         <ion-segment-button value="Description">
             Description
@@ -45,9 +47,9 @@
                 <div>
                     <ion-card class="my-5">
                         <ion-card-title
-                                class="{{getMessageColor(getUser(message.idUser))}} text-uppercase py-2">
+                                class="{{getMessageColor(getUser(message.idUser))}} text-capitalize py-2">
                             <ion-icon class="m-1" name="{{getMessageIcon(getUser(message.idUser))}}"></ion-icon>
-                            {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}} {{convertDate(message.date)}}
+                            {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}} | {{convertDate(message.date)}}
                         </ion-card-title>
                         <ion-card-content>{{message.message}}</ion-card-content>
                     </ion-card>
@@ -65,7 +67,7 @@
         <button ion-fab color="danger">
             <ion-icon name="trash"></ion-icon>
         </button>
-        <button ion-fab color="secondary" (click)="createMessage">
+        <button ion-fab color="secondary" (click)="openModal()">
             <ion-icon name="create"></ion-icon>
         </button>
     </ion-fab-list>

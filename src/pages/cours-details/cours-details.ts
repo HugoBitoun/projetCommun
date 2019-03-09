@@ -1,5 +1,14 @@
 import {Component} from '@angular/core';
-import {IonicPage, Loading, LoadingController, NavController, NavParams, Refresher} from 'ionic-angular';
+import {
+    IonicPage,
+    Loading,
+    LoadingController, ModalController,
+    NavController,
+    NavParams,
+    Platform,
+    Refresher,
+    ViewController
+} from 'ionic-angular';
 import {Cours} from "../../assets/utils/Cours";
 import {User} from "../../assets/utils/User";
 import {CoursProvider} from "../../providers/cours/cours";
@@ -29,7 +38,7 @@ export class CoursDetailsPage {
     listUsers: User[] = new Array<User>();
     loader: Loading;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider, public loadingCtrl: LoadingController, public userProvider: UserProvider, public keyboard: Keyboard) {
+    constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public coursProvider: CoursProvider, public loadingCtrl: LoadingController, public userProvider: UserProvider, public keyboard: Keyboard) {
         this.cours = navParams.get('cours');
         this.user = navParams.get('user');
         if (navParams.get('refresh')) {
@@ -131,7 +140,7 @@ export class CoursDetailsPage {
     }
 
     convertDate(date: firebase.firestore.Timestamp): string {
-        return date.toDate().toLocaleDateString();
+        return date.toDate().toLocaleDateString("en-GB",{day:"numeric", month:"2-digit", year:"2-digit", hour:"2-digit",minute:"2-digit",second:"2-digit"});
     }
 
     getUser(id) {
@@ -140,5 +149,56 @@ export class CoursDetailsPage {
 
     createMessage() {
         this.keyboard.show();
+    }
+
+    openModal() {
+
+        let modal = this.modalCtrl.create(ModalContentPageMessage, {
+            cours: this.cours, user: this.user
+        });
+        modal.onDidDismiss(() => {
+            this.ionViewWillLoad();
+        });
+        modal.present();
+    }
+}
+
+@Component({
+    selector: 'page-cours-details',
+    templateUrl: 'modal2.html',
+})
+export class ModalContentPageMessage {
+    cours: Cours;
+    user: User;
+    selectedCours: Cours;
+    inputMessage: string;
+
+    constructor(
+        public platform: Platform,
+        public params: NavParams,
+        public viewCtrl: ViewController,
+        public userProvider: UserProvider,
+        public coursProvider: CoursProvider,
+    ) {
+        this.cours = this.params.get("cours");
+        this.user = this.params.get("user");
+        console.log("openedModal() " + this.cours.name + " " + this.user.roles.prof);
+    }
+
+    valider() {
+        console.log(this.inputMessage);
+        if (this.inputMessage != undefined && this.inputMessage.length > 5 && this.inputMessage.length < 1000) {
+            let values = {
+                message: this.inputMessage,
+                idUser: this.user.uid,
+                idCours: this.cours.id,
+            };
+            this.coursProvider.addMessageCours(values);
+            this.dismiss();
+        }
+    }
+
+    dismiss() {
+        this.viewCtrl.dismiss();
     }
 }

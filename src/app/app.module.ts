@@ -28,7 +28,7 @@ import {AssociationDetailMessagePage} from "../pages/association-detail-message/
 import {MessagePage} from "../pages/message/message";
 import {CoursPage, ModalContentPage} from "../pages/cours/cours";
 import {CoursProvider} from '../providers/cours/cours';
-import {CoursDetailsPage} from "../pages/cours-details/cours-details";
+import {CoursDetailsPage, ModalContentPageMessage} from "../pages/cours-details/cours-details";
 
 
 @NgModule({
@@ -48,6 +48,7 @@ import {CoursDetailsPage} from "../pages/cours-details/cours-details";
         CoursPage,
         ModalContentPage,
         CoursDetailsPage,
+        ModalContentPageMessage,
     ],
     imports: [
         BrowserModule,
@@ -73,6 +74,7 @@ import {CoursDetailsPage} from "../pages/cours-details/cours-details";
         AddAssoPage,
         AssociationDetailMessagePage,
         MessagePage,
+        ModalContentPageMessage,
         CoursPage,
         ModalContentPage,
         CoursDetailsPage,
