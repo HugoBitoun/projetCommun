@@ -77,8 +77,8 @@ export class CoursPage {
                     console.log(cours + " : " + cours.isSubscriber);
                 }
             );
-            this.loader.dismissAll();
         });
+        this.loader.dismissAll();
     }
 
     getCoursDetailPage(cours: Cours) {

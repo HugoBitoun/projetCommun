@@ -37,6 +37,7 @@ export class CoursDetailsPage {
     listMessages: Messages[] = new Array<Messages>();
     listUsers: User[] = new Array<User>();
     loader: Loading;
+    isRemove: boolean;
 
     constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public coursProvider: CoursProvider, public loadingCtrl: LoadingController, public userProvider: UserProvider, public keyboard: Keyboard) {
         this.cours = navParams.get('cours');
@@ -46,7 +47,7 @@ export class CoursDetailsPage {
         } else {
             this.seg = 'Description';
         }
-
+        this.isRemove = false;
     }
 
     ionViewDidLoad() {
@@ -65,7 +66,7 @@ export class CoursDetailsPage {
         this.listMessages = new Array<Messages>();
         this.coursProvider.getMessagesCours(this.cours.id).then(data => {
             data.map(data => {
-
+                console.log(data)
                 this.listMessages.push(data);
                 this.listMessages.sort((n1, n2) => {
                     if (n1.date > n2.date) {
@@ -109,6 +110,18 @@ export class CoursDetailsPage {
         refresher.cancel();  // Works
     }
 
+    removeMode() {
+        this.isRemove = !this.isRemove;
+    }
+
+    getColorNav(): string {
+        if (this.isRemove) {
+            return "bg-danger";
+        } else {
+            return "bg-white";
+        }
+    }
+
     getMessageColor(user: User): string {
         if (user != undefined) {
             if (user.roles.admin != undefined && user.roles.admin) {
@@ -140,15 +153,40 @@ export class CoursDetailsPage {
     }
 
     convertDate(date: firebase.firestore.Timestamp): string {
-        return date.toDate().toLocaleDateString("en-GB",{day:"numeric", month:"2-digit", year:"2-digit", hour:"2-digit",minute:"2-digit",second:"2-digit"});
+        return date.toDate().toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "2-digit",
+            year: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
     }
 
-    getUser(id) {
+    getUser(id){
         return this.listUsers.find(x => x.uid == id);
     }
 
-    createMessage() {
-        this.keyboard.show();
+    getUserName(id) {
+       // console.log("coucou " + id);
+        return this.listUsers.find(x => x.uid == id).name;
+    }
+
+    getUserLastName(id){
+        return this.listUsers.find(x => x.uid == id).lastName;
+    }
+
+    removeMessage(message: Messages) {
+        if (this.isRemove) {
+            let values = {
+                message: message.message,
+                idUser: message.idUser,
+                idCours: this.cours.id,
+                date: message.date,
+            };
+            this.coursProvider.removeMessageCours(values);
+            this.ionViewWillLoad();
+        }
     }
 
     openModal() {
@@ -186,7 +224,7 @@ export class ModalContentPageMessage {
     }
 
     valider() {
-        console.log(this.inputMessage);
+       // console.log("cul " + this.inputMessage);
         if (this.inputMessage != undefined && this.inputMessage.length > 5 && this.inputMessage.length < 1000) {
             let values = {
                 message: this.inputMessage,

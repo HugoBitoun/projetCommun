@@ -5,14 +5,15 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
     <ion-navbar>
         <ion-title text-uppercase>Mon Cours</ion-title>
+        <ion-buttons end *ngIf="isRemove==true"><button class="btn btn-success" (click)="removeMode()">Valider</button></ion-buttons>
     </ion-navbar>
+
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="{{getColorNav()}}">
 
     <ion-refresher (ionRefresh)="doRefresh($event)">
         <ion-refresher-content
@@ -45,11 +46,12 @@
         <ion-list *ngSwitchCase="'Messages'">
             <div *ngFor="let message of listMessages">
                 <div>
-                    <ion-card class="my-5">
+                    <ion-card class="my-5 round" (click)="removeMessage(message)">
                         <ion-card-title
                                 class="{{getMessageColor(getUser(message.idUser))}} text-capitalize py-2">
                             <ion-icon class="m-1" name="{{getMessageIcon(getUser(message.idUser))}}"></ion-icon>
-                            {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}} | {{convertDate(message.date)}}
+                            {{getUserName(message.idUser)}} {{getUserLastName(message.idUser)}}
+                            | {{convertDate(message.date)}}
                         </ion-card-title>
                         <ion-card-content>{{message.message}}</ion-card-content>
                     </ion-card>
@@ -64,7 +66,7 @@
         <ion-icon name="settings"></ion-icon>
     </button>
     <ion-fab-list side="top">
-        <button ion-fab color="danger">
+        <button *ngIf="user.roles.admin==true" ion-fab color="danger" (click)="removeMode()">
             <ion-icon name="trash"></ion-icon>
         </button>
         <button ion-fab color="secondary" (click)="openModal()">
