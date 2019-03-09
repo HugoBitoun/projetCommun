@@ -28,6 +28,7 @@ import {AssociationDetailMessagePage} from "../pages/association-detail-message/
 import {MessagePage} from "../pages/message/message";
 import {CoursPage, ModalContentPage} from "../pages/cours/cours";
 import {CoursProvider} from '../providers/cours/cours';
+import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import {CoursProvider} from '../providers/cours/cours';
     MessagePage,
       CoursPage,
       ModalContentPage,
+      ModifyAssoPage
 
   ],
   imports: [
@@ -74,6 +76,7 @@ import {CoursProvider} from '../providers/cours/cours';
       MessagePage ,
       CoursPage,
       ModalContentPage,
+      ModifyAssoPage
   ],
   providers: [
     StatusBar,

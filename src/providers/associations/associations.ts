@@ -101,4 +101,14 @@ export class AssociationsProvider {
           })
       })
   }
+
+  public modifyAsso(association : Association){
+      const ref = firebase.firestore().collection('associations').doc(association.id);
+      ref.update({
+          Name : association.Name,
+          Description : association.Description
+      })
+
+
+  }
 }

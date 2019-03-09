@@ -6,6 +6,7 @@ import {AssociationsProvider} from "../../providers/associations/associations";
 import {Association} from "../../assets/utils/Association";
 import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 import {User} from "../../assets/utils/User";
+import {ModifyAssoPage} from "../modify-asso/modify-asso";
 
 /**
  * Generated class for the TabAssociationCreatedPage page.
@@ -65,6 +66,10 @@ export class TabAssociationCreatedPage {
       this.userProvider.removeAssoUsers(id);
       this.userProvider.addOneToNbAsso(this.userCanCreateNbAsso);
       this.update();
+    }
+
+    modifyAsso(association :Association){
+      this.navCtrl.push(ModifyAssoPage, {association : association, parentPage : this});
     }
 
 }

@@ -1,0 +1,36 @@
+<!--
+  Generated template for the ModifyAssoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Modifier {{ association.Name }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div>
+    <h1>Modifier {{association.Name}}</h1>
+  </div>
+
+  <form class="form" [formGroup]="validations_form" (ngSubmit)="modifyAsso()">
+    <ion-list>
+      <ion-item>
+        <ion-label floating color ="primary">Nom association</ion-label>
+        <ion-input type="text" formControlName="Name" [(ngModel)]="association.Name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Description</ion-label>
+        <ion-input type="text" formControlName="Description" [(ngModel)]="association.Description"></ion-input>
+      </ion-item>
+      <button ion-button [disabled]="!validations_form.valid" color="primary">Modifier association</button>
+    </ion-list>
+  </form>
+
+</ion-content>
