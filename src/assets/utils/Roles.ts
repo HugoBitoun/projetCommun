@@ -1,7 +1,8 @@
 export interface Roles {
 
-    student : boolean;
+    student? : boolean;
     admin? : boolean;
+    prof? : boolean;
     isAdminAsso? : boolean;
 
 }

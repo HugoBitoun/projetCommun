@@ -57,6 +57,7 @@ export class SignUpProvider {
         lastName: user.lastName,
         roles: {
           student: true,
+          prof: false,
           admin: false
         },
         associations: []
@@ -69,7 +70,8 @@ export class SignUpProvider {
         name: user.name,
         lastName: user.lastName,
         roles: {          
-          student: true,
+          student: false,
+          prof: true,
           admin: false
         },
         associations: []
