@@ -37,9 +37,9 @@ export class TabAssociationCreatedPage {
           data => {
               this.userCanCreateNbAsso = data.canCreateNbAsso;
               this.associationProvider.getAssoCreatedByUser(data.uid).then(
-                  data => {
-                      console.log(data);
-                      this.myAssociationsCreate = data;
+                  associations => {
+                      console.log(associations);
+                      this.myAssociationsCreate = associations;
                   }
               )
           }

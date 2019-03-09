@@ -6,6 +6,7 @@ import {Association} from "../../assets/utils/Association";
 import {User} from "../../../www/assets/utils/User";
 import {DetailAssoPage} from "../detail-asso/detail-asso";
 import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
+import {ModifyAssoPage} from "../modify-asso/modify-asso";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -87,6 +88,10 @@ export class AssociationsPage {
                 }
             );
         });
+    }
+
+    modifyAsso(association : Association){
+        this.navCtrl.push(ModifyAssoPage, {association : association, parentPage : this});
     }
 
 

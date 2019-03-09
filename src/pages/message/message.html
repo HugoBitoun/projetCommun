@@ -12,7 +12,7 @@
       {{message.message}}
     </ion-card-header>
     <ion-card-content>
-      <ion-icon *ngIf="message.idUser == idUser" (click)="removeMessage(message)" name="close" color="danger"></ion-icon>
+      <ion-icon *ngIf="message.idUser == idUser || isAdmin==true" (click)="removeMessage(message)" name="close" color="danger"></ion-icon>
     </ion-card-content>
   </ion-card>
 

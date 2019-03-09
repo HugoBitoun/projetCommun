@@ -32,7 +32,9 @@ export class TabAssociationPage {
               data.associations.forEach(
                   id => {
                       this.associationProvider.getAssociationsById(id).subscribe( data => {
-                          this.listAssociations.push(data);
+                          console.log(this.listAssociations);
+                          if (!this.listAssociations.find(x => x.id == data.id))
+                          {this.listAssociations.push(data);}
                       })
                   });
           });
@@ -49,6 +51,6 @@ export class TabAssociationPage {
 
     public getAssociationPage(association : Association){
       console.log(association.id);
-        this.navParams.data.push(AssociationDetailMessagePage, {association : association})
+        this.navParams.data.push(AssociationDetailMessagePage, {association : association, parentPage : this})
     }
 }

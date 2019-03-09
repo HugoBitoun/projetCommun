@@ -23,6 +23,7 @@ export class MessagePage {
   isAdminOfAsso : boolean;
   idUser : string;
   association : Association;
+  isAdmin : boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider : UserProvider,
@@ -50,6 +51,7 @@ export class MessagePage {
     this.userProvider.getUser().subscribe(
         user => {
           this.idUser = user.uid;
+          this.isAdmin = user.roles.admin;
           if (user.uid == this.association.idAdminAsso){
             this.isAdminOfAsso = true;
           } else {
@@ -84,6 +86,9 @@ export class MessagePage {
           handler: data => {
             this.sendMessage(data.message);
             this.update();
+            if (this.navParams.get('parentPage')!=null){
+              this.navParams.get('parentPage').update();
+            }
           }
         }
       ]
