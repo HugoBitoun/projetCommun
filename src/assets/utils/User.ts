@@ -10,8 +10,8 @@ export class User {
     roles : Roles;
     uid? : string;
     associations? : string[];
-    numberOfAssociations? : number;
     cours? : string[];
+    canCreateNbAsso? : number;
 
 
     constructor(values){

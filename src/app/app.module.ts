@@ -29,6 +29,8 @@ import {MessagePage} from "../pages/message/message";
 import {CoursPage, ModalContentPage} from "../pages/cours/cours";
 import {CoursProvider} from '../providers/cours/cours';
 import {CoursDetailsPage, ModalContentPageMessage} from "../pages/cours-details/cours-details";
+import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
+
 
 
 @NgModule({
@@ -49,6 +51,7 @@ import {CoursDetailsPage, ModalContentPageMessage} from "../pages/cours-details/
         ModalContentPage,
         CoursDetailsPage,
         ModalContentPageMessage,
+        ModifyAssoPage
     ],
     imports: [
         BrowserModule,
@@ -78,6 +81,7 @@ import {CoursDetailsPage, ModalContentPageMessage} from "../pages/cours-details/
         CoursPage,
         ModalContentPage,
         CoursDetailsPage,
+        ModifyAssoPage
     ],
     providers: [
         StatusBar,
@@ -90,7 +94,6 @@ import {CoursDetailsPage, ModalContentPageMessage} from "../pages/cours-details/
         LogOutProvider,
         CoursProvider
     ]
-
 })
 
 export class AppModule {

@@ -25,11 +25,6 @@ export class UserProvider {
         this.userId = this.afAuth.auth.currentUser.uid;
     }
 
-    public getUserAux(): Observable<User> {
-
-        return this.firestore.doc<User>(`users/${this.userId}`).valueChanges();
-    }
-
     public getUser(): Observable<User> {
         this.userId = this.afAuth.auth.currentUser.uid;
         const listAsso = this.firestore.collection<User>(`users`).doc(`${this.userId}`);
@@ -69,4 +64,48 @@ export class UserProvider {
         })
         //return this.firestore.collection<any>('associations/').valueChanges();
     }
+
+
+    public getUserById(id){
+        return firebase.firestore().collection('users').doc(id);
+    }
+
+    public addOneToNbAssoAdmin(idUser){
+        let nbAsso;
+        this.getUserById(idUser).get().then( data => {
+            nbAsso = data.get('canCreateNbAsso');
+            this.getUserById(idUser).update({
+                canCreateNbAsso : nbAsso+1
+            })
+        })
+    }
+    public removeAssoUsers(id){
+        const ref = firebase.firestore().collection('users').where('associations', 'array-contains',id);
+        ref.get().then( data => {
+            data.docs.map( user => {
+                firebase.firestore().collection('users').doc(user.id).update({
+                    associations : firebase.firestore.FieldValue.arrayRemove(id)
+                })
+            })
+        })
+    }
+
+    public removeOneToNbAsso(nbAsso){
+        const ref = firebase.firestore().collection('users').doc(`${this.userId}`);
+        ref.update({
+            canCreateNbAsso : nbAsso-1
+        })
+    }
+
+    public addOneToNbAsso(nbAsso){
+        const ref = firebase.firestore().collection('users').doc(`${this.userId}`);
+        ref.update({
+            canCreateNbAsso : nbAsso+1
+        })
+    }
+
+
 }
+
+
+

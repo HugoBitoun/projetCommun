@@ -7,15 +7,15 @@
 
 <ion-content padding>
 
-    <ion-card *ngFor="let association of listAssociations" (click)="getAssociationPage(association)">
-        <ion-card-title>
+    <ion-card *ngFor="let association of listAssociations" >
+        <ion-card-title (click)="getAssociationPage(association)">
             {{association.Name}}
         </ion-card-title>
-        <ion-card-header>
+        <ion-card-header (click)="getAssociationPage(association)">
             {{ association.Description}}
         </ion-card-header>
         <ion-card-content>
-
+            <ion-icon  (click)="unsuscribe(association)" name="checkmark-circle" type="secondary"></ion-icon>
         </ion-card-content>
     </ion-card>
 

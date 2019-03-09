@@ -31,28 +31,35 @@ export class AssociationsProvider {
         return data;
       })
     })
-    //return this.firestore.collection<any>('associations/').valueChanges();
   }
 
 
-
-
-    public getAssociationsById(id : string) : Promise<Association> {
-    console.log(id);
-    return firebase.firestore().collection('associations/').doc(id).get().then(
-        data => {
-          return data.data() as Association;
+    public getAssociationsById(id): Observable<Association>{
+      const listAsso = this.firestore.collection<Association>(`associations/`).doc(id);
+        return listAsso.snapshotChanges().map( actions => {
+            if(actions.payload.exists) {
+                const data = actions.payload.data() as Association;
+                data.id = actions.payload.id;
+                return data;
+            }
         })
-  }
+    }
+
 
   public addAsso(association : Association){
     const ref = this.firestore.collection('associations');
     ref.add({
           Name : association.Name,
           Description : association.Description,
-          idAdminAsso : association.idAdminAsso
+          idAdminAsso : association.idAdminAsso,
+          messages : []
         }
     )
+  }
+
+  public removeAsso(id){
+      const ref = firebase.firestore().collection('associations/').doc(id);
+      ref.delete();
   }
 
   public getAssoCreatedByUser(id): Promise<Association[]>{
@@ -60,7 +67,9 @@ export class AssociationsProvider {
     return ref.where('idAdminAsso', '==', id).get().then(
         data => {
           return data.docs.map( association => {
-            return association.data() as Association;
+                const asso = association.data() as Association;
+                asso.id = association.id;
+              return asso;
           })
         }
     );
@@ -93,5 +102,15 @@ export class AssociationsProvider {
               idUser : values.idUser
           })
       })
+  }
+
+  public modifyAsso(association : Association){
+      const ref = firebase.firestore().collection('associations').doc(association.id);
+      ref.update({
+          Name : association.Name,
+          Description : association.Description
+      })
+
+
   }
 }

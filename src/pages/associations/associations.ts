@@ -6,6 +6,7 @@ import {Association} from "../../assets/utils/Association";
 import {User} from "../../../www/assets/utils/User";
 import {DetailAssoPage} from "../detail-asso/detail-asso";
 import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
+import {ModifyAssoPage} from "../modify-asso/modify-asso";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -25,38 +26,48 @@ import {AssociationDetailMessagePage} from "../association-detail-message/associ
 })
 export class AssociationsPage {
 
-  listAssociations : Association[] = Array<Association>();
-  user: User;
+    listAssociations : Association[] = Array<Association>();
+    user: User;
 
-  constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,) {
-      this.userProvider.getUser().subscribe(data => {
-          this.user = data;
-          console.log(data);
-      });
-  }
-
-
+    constructor(public navCtrl: NavController, public userProvider : UserProvider, public associationProvider : AssociationsProvider,) {
+        this.userProvider.getUser().subscribe(data => {
+            this.user = data;
+            console.log(data);
+        });
+    }
 
 
-  ionViewWillLoad() {
-      this.associationProvider.getAssociations().subscribe( data => {
-          this.listAssociations = data;
-          this.isSuscriber();
-      });
 
-  }
 
-  subscribe(association : Association)
-      {
+    ionViewWillLoad() {
+        this.update();
+    }
 
-          if (association.isSubscriber == true) {
-              association.isSubscriber = false;
-              this.userProvider.Unsubscribe(association);
-          } else {
-              this.userProvider.Subscribe(association);
-              association.isSubscriber = true;
-          }
-      }
+    update(){
+        this.associationProvider.getAssociations().subscribe( data => {
+            this.listAssociations = data;
+            this.isSuscriber();
+        });
+    }
+
+    deleteAsso(association : Association){
+        this.associationProvider.removeAsso(association.id);
+        this.userProvider.removeAssoUsers(association.id);
+        this.userProvider.addOneToNbAssoAdmin(association.idAdminAsso);
+        this.update();
+    }
+
+    subscribe(association : Association)
+    {
+
+        if (association.isSubscriber == true) {
+            association.isSubscriber = false;
+            this.userProvider.Unsubscribe(association);
+        } else {
+            this.userProvider.Subscribe(association);
+            association.isSubscriber = true;
+        }
+    }
 
     public getAssociationPage(association : Association){
         this.navCtrl.push(AssociationDetailMessagePage, {association : association})
@@ -77,6 +88,10 @@ export class AssociationsPage {
                 }
             );
         });
+    }
+
+    modifyAsso(association : Association){
+        this.navCtrl.push(ModifyAssoPage, {association : association, parentPage : this});
     }
 
 

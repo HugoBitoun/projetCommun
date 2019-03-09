@@ -3,6 +3,7 @@ import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angula
 import {Messages} from "../../assets/utils/Messages";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
+import {Association} from "../../assets/utils/Association";
 
 /**
  * Generated class for the MessagePage page.
@@ -21,11 +22,14 @@ export class MessagePage {
   listMessage : Messages[] = new Array<Messages>();
   isAdminOfAsso : boolean;
   idUser : string;
+  association : Association;
+  isAdmin : boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider : UserProvider,
               public alertCtrl : AlertController,
               public associationProvider : AssociationsProvider) {
+    this.association = this.navParams.get('association');
     this.update();
 
 
@@ -33,8 +37,8 @@ export class MessagePage {
 
   update() {
     this.listMessage = [];
-    console.log(this.navParams.get('association').id);
-    this.associationProvider.getMessageAsso(this.navParams.get('association').id).then(
+    console.log(this.association.id);
+    this.associationProvider.getMessageAsso(this.association.id).then(
         data => {
           data.map( data => {
             this.listMessage.push(data);
@@ -47,7 +51,8 @@ export class MessagePage {
     this.userProvider.getUser().subscribe(
         user => {
           this.idUser = user.uid;
-          if (user.uid == this.navParams.get('association').idAdminAsso){
+          this.isAdmin = user.roles.admin;
+          if (user.uid == this.association.idAdminAsso){
             this.isAdminOfAsso = true;
           } else {
             this.isAdminOfAsso = false;
@@ -96,7 +101,7 @@ export class MessagePage {
     let values = {
       message : text,
       idUser: this.idUser,
-      idAsso : this.navParams.get('association').id
+      idAsso : this.association.id
     };
 
     this.associationProvider.addMessageAsso(values);
@@ -112,7 +117,7 @@ export class MessagePage {
             let values = {
               message : message.message,
               idUser: message.idUser,
-              idAsso : this.navParams.get('association').id
+              idAsso : this.association.id
             };
             this.associationProvider.removeMessage(values);
             this.update();
