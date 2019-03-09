@@ -86,9 +86,6 @@ export class MessagePage {
           handler: data => {
             this.sendMessage(data.message);
             this.update();
-            if (this.navParams.get('parentPage')!=null){
-              this.navParams.get('parentPage').update();
-            }
           }
         }
       ]

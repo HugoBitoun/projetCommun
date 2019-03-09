@@ -37,9 +37,11 @@ export class AssociationsProvider {
     public getAssociationsById(id): Observable<Association>{
       const listAsso = this.firestore.collection<Association>(`associations/`).doc(id);
         return listAsso.snapshotChanges().map( actions => {
-            const data = actions.payload.data() as Association;
-            data.id = actions.payload.id;
-            return data;
+            if(actions.payload.exists) {
+                const data = actions.payload.data() as Association;
+                data.id = actions.payload.id;
+                return data;
+            }
         })
     }
 

@@ -51,6 +51,6 @@ export class TabAssociationPage {
 
     public getAssociationPage(association : Association){
       console.log(association.id);
-        this.navParams.data.push(AssociationDetailMessagePage, {association : association, parentPage : this})
+        this.navParams.data.push(AssociationDetailMessagePage, {association : association})
     }
 }
