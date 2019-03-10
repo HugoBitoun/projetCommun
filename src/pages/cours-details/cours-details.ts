@@ -48,6 +48,10 @@ export class CoursDetailsPage {
             this.seg = 'Description';
         }
         this.isRemove = false;
+        this.loader = this.loadingCtrl.create({
+            content: "Patientez un peu !"
+        });
+        this.loader.setDuration(1000);
     }
 
     ionViewDidLoad() {
@@ -55,9 +59,6 @@ export class CoursDetailsPage {
     }
 
     ionViewWillLoad() {
-        this.loader = this.loadingCtrl.create({
-            content: "Patientez un peu !"
-        });
         this.loader.present();
         this.getMessages();
     }
@@ -81,7 +82,7 @@ export class CoursDetailsPage {
                 });
                 this.getMessagesUser();
             });
-            this.loader.dismissAll();
+            //this.loader.dismissAll();
         });
     }
 

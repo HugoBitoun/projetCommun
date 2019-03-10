@@ -20,18 +20,20 @@ export class HomePage {
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider,
                 public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
-
-    }
-
-    ionViewWillLoad() {
         this.loader = this.loadingCtrl.create({
             content: "Patientez un peu !"
         });
+        this.loader.setDuration(1000);
+    }
+
+    ionViewWillLoad() {
         this.loader.present();
         this.getCours();
     }
 
+
     getCours() {
+
         this.coursProvider.getCours().subscribe(cours => {
             this.listCours = cours;
             this.getSubCours();
@@ -75,7 +77,6 @@ export class HomePage {
             );
             this.getAllUser();
         });
-        this.loader.dismissAll();
     }
 
     getAllUser() {
