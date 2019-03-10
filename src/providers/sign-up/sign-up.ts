@@ -51,6 +51,7 @@ export class SignUpProvider {
           student: true,
           admin: false,
           isAdminAsso : false,
+          prof:false,
         },
         canCreateNbAsso : 0,
         associations: []
@@ -64,7 +65,8 @@ export class SignUpProvider {
         lastName: user.lastName,
         roles: {          
           student: true,
-          admin: false
+          admin: false,
+          prof:true,
         },
         associations: []
       };

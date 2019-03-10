@@ -50,7 +50,7 @@
                         <ion-card-title
                                 class="{{getMessageColor(getUser(message.idUser))}} text-capitalize py-2">
                             <ion-icon class="m-1" name="{{getMessageIcon(getUser(message.idUser))}}"></ion-icon>
-                            {{getUserName(message.idUser)}} {{getUserLastName(message.idUser)}}
+                            {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}}
                             | {{convertDate(message.date)}}
                         </ion-card-title>
                         <ion-card-content>{{message.message}}</ion-card-content>
