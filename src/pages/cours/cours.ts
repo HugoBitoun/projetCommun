@@ -13,6 +13,7 @@ import {Cours} from "../../assets/utils/Cours";
 import {UserProvider} from "../../providers/user/user";
 import {CoursDetailsPage} from "../cours-details/cours-details";
 import {User} from "../../assets/utils/User";
+import {Messages} from "../../assets/utils/Messages";
 
 
 /**
@@ -71,6 +72,7 @@ export class CoursPage {
                     if (user.cours.find(x => x == cours.id)) {
                         cours.isSubscriber = true;
                         this.hasCours = true;
+
                     } else {
                         cours.isSubscriber = false;
                     }
