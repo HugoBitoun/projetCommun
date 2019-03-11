@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {AddAssoPage} from "../add-asso/add-asso";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
@@ -28,12 +28,16 @@ export class TabAssociationCreatedPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider: UserProvider,
               public associationProvider: AssociationsProvider,
-              public alertCtrl : AlertController) {
+              public alertCtrl : AlertController,
+              public loadingCtrl : LoadingController) {
     this.update()
   }
 
   update(){
-
+      let loader = this.loadingCtrl.create({
+          content: "Patientez un peu !"
+      });
+      loader.present();
       this.userProvider.getUser().subscribe(
           data => {
               this.userCanCreateNbAsso = data.canCreateNbAsso;
@@ -41,6 +45,7 @@ export class TabAssociationCreatedPage {
                   associations => {
                       console.log(associations);
                       this.myAssociationsCreate = associations;
+                      loader.dismiss();
                   }
               )
           }

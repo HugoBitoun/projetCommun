@@ -52,7 +52,8 @@ export class AssociationsProvider {
           Name : association.Name,
           Description : association.Description,
           idAdminAsso : association.idAdminAsso,
-          messages : []
+          messages : [],
+          picLink : association.picLink
         }
     )
   }
@@ -110,7 +111,8 @@ export class AssociationsProvider {
       const ref = firebase.firestore().collection('associations').doc(association.id);
       ref.update({
           Name : association.Name,
-          Description : association.Description
+          Description : association.Description,
+          picLink : association.picLink
       })
 
 

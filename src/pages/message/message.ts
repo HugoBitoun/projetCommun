@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams} from 'ionic-angular';
+import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {Messages} from "../../assets/utils/Messages";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
@@ -28,7 +28,8 @@ export class MessagePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider : UserProvider,
               public alertCtrl : AlertController,
-              public associationProvider : AssociationsProvider) {
+              public associationProvider : AssociationsProvider,
+              public loadingCtrl : LoadingController) {
     this.association = this.navParams.get('association');
     this.update();
 
@@ -36,13 +37,18 @@ export class MessagePage {
   }
 
   update() {
+    let loader = this.loadingCtrl.create({
+      content: "Patientez un peu !"
+    });
+    loader.present();
     this.listMessage = [];
     console.log(this.association.id);
     this.associationProvider.getMessageAsso(this.association.id).then(
         data => {
           data.map( data => {
             this.listMessage.push(data);
-          })
+          });
+          loader.dismiss();
         }
     )
   }

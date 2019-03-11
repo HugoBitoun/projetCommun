@@ -85,7 +85,7 @@
       <div class="validation-errors">
         <ng-container *ngFor="let validation of validation_messages.matching_passwords">
           <div class="error-message"
-            *ngIf="validations_form.hasError(validation.type) && (validations_form.get('confirm_password').dirty || validations_form.get('confirm_password').touched)">
+          *ngIf="validations_form.get('matching_passwords').hasError(validation.type) && (validations_form.get('matching_passwords').dirty || validations_form.get('matching_passwords').touched)">
             {{ validation.message }}
           </div>
         </ng-container>
@@ -96,5 +96,5 @@
       </div>
     </ion-list>
   </form>
-  <pre>{{validations_form.value | json}}</pre>
+
 </ion-content>

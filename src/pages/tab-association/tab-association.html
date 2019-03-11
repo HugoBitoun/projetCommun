@@ -8,6 +8,8 @@
 <ion-content padding>
 
     <ion-card *ngFor="let association of listAssociations" >
+        <div>
+            <img src="{{association.picLink}}" *ngIf="association.picLink != null">
         <ion-card-title (click)="getAssociationPage(association)">
             {{association.Name}}
         </ion-card-title>
@@ -15,8 +17,9 @@
             {{ association.Description}}
         </ion-card-header>
         <ion-card-content>
-            <ion-icon  (click)="unsuscribe(association)" name="checkmark-circle" type="secondary"></ion-icon>
+           <button ion-button clear icon-only (click)="unsuscribe(association)" ><ion-icon name="checkmark-circle" color="secondary" ></ion-icon></button>
         </ion-card-content>
+        </div>
     </ion-card>
 
 </ion-content>

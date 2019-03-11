@@ -25,6 +25,10 @@
         <ion-label floating color="primary">Description</ion-label>
         <ion-input type="text" formControlName="Description" [(ngModel)]="association.Description"></ion-input>
       </ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Lien image</ion-label>
+        <ion-input type="text" formControlName="picLink" [(ngModel)]="association.picLink"></ion-input>
+      </ion-item>
       <button ion-button [disabled]="!validations_form.valid" color="primary">Ajouter association</button>
     </ion-list>
   </form>

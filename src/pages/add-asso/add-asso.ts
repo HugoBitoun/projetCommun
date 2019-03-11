@@ -39,7 +39,8 @@ export class AddAssoPage {
 
       this.validations_form = this.formBuilder.group({
           Name : new FormControl(),
-          Description : new FormControl()
+          Description : new FormControl(),
+          picLink : new FormControl()
       })
   }
 
@@ -50,8 +51,9 @@ export class AddAssoPage {
   public buttonAddAsso(){
     this.association.idAdminAsso = this.idAdminAsso;
     this.associationProvider.addAsso(this.association);
-    this.navParams.get("parentPage").update();
     this.userProvider.removeOneToNbAsso(this.user.canCreateNbAsso);
+
+    this.navParams.get("parentPage").update();
     this.navCtrl.pop();
   }
 

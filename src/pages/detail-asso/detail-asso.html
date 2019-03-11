@@ -8,5 +8,7 @@
 
 
 <ion-content padding>
-  {{association.Description}}
+
+  <img src="{{association.picLink}}" *ngIf="association.picLink!=null" style="text-align: center">
+  <h1>{{association.Description}}</h1>
 </ion-content>

@@ -1,12 +1,19 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import {
+    AlertController,
+    IonicPage,
+    LoadingController,
+    NavController,
+    NavParams,
+    PopoverController
+} from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
-import {User} from "../../../www/assets/utils/User";
-import {DetailAssoPage} from "../detail-asso/detail-asso";
+
 import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 import {ModifyAssoPage} from "../modify-asso/modify-asso";
+import {User} from "../../assets/utils/User";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -26,29 +33,34 @@ import {ModifyAssoPage} from "../modify-asso/modify-asso";
 })
 export class AssociationsPage {
 
+
+    subscriber : boolean = false;
     listAssociations : Association[] = Array<Association>();
     user: User;
 
     constructor(public navCtrl: NavController, public userProvider : UserProvider,
                 public associationProvider : AssociationsProvider,
-                public alertCtrl : AlertController) {
+                public alertCtrl : AlertController,
+                public loadingCtrl : LoadingController) {
         this.userProvider.getUser().subscribe(data => {
             this.user = data;
             console.log(data);
         });
     }
 
-
-
-
     ionViewWillLoad() {
         this.update();
     }
 
     update(){
+        let loader = this.loadingCtrl.create({
+            content: "Patientez un peu !"
+        });
+        loader.present();
         this.associationProvider.getAssociations().subscribe( data => {
             this.listAssociations = data;
             this.isSuscriber();
+            loader.dismiss();
         });
     }
 
