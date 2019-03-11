@@ -69,13 +69,14 @@ export class CoursPage {
             this.listCours.forEach(
                 cours => {
                     console.log(user.cours);
-                    if (user.cours.find(x => x == cours.id)) {
-                        cours.isSubscriber = true;
-                        this.hasCours = true;
+                    if (user.cours != undefined)
+                        if (user.cours.find(x => x == cours.id)) {
+                            cours.isSubscriber = true;
+                            this.hasCours = true;
 
-                    } else {
-                        cours.isSubscriber = false;
-                    }
+                        } else {
+                            cours.isSubscriber = false;
+                        }
                     console.log(cours + " : " + cours.isSubscriber);
                 }
             );

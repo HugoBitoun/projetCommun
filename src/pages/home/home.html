@@ -1,26 +1,32 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Home</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <div *ngFor="let message of listMessages">
-    <div>
-      <ion-card class="my-5 round">
-        <ion-card-title
-                class="{{getMessageColor(getUser(message.idUser))}} text-capitalize py-2">
-          <ion-icon class="m-1" name="{{getMessageIcon(getUser(message.idUser))}}"></ion-icon>
-          {{getUserName(message.idUser)}} {{getUserLastName(message.idUser)}}
-          | {{convertDate(message.date)}} <br> {{message.intitule}}
-        </ion-card-title>
-        <ion-card-content>{{message.message}}</ion-card-content>
-      </ion-card>
+
+    <ion-title text-uppercase>
+        <div class="text-primary">Fil d'actualité</div>
+    </ion-title>
+    <ion-title>Vos actualités en direct !</ion-title>
+
+    <div *ngFor="let message of listMessages">
+        <div *ngIf="getUser(message.idUser)!=undefined">
+            <ion-card class="my-5 round">
+                <ion-card-title
+                        class="{{getMessageColor(getUser(message.idUser))}} text-capitalize py-2">
+                    <ion-icon class="m-1" name="{{getMessageIcon(getUser(message.idUser))}}"></ion-icon>
+                    {{getUser(message.idUser).name}} {{getUser(message.idUser).lastName}}
+                    | {{convertDate(message.date)}} <br> {{message.intitule}}
+                </ion-card-title>
+                <ion-card-content>{{message.message}}</ion-card-content>
+            </ion-card>
+        </div>
     </div>
-  </div>
 </ion-content>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
