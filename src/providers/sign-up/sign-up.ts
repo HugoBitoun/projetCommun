@@ -60,6 +60,7 @@ export class SignUpProvider {
           prof: false,
           admin: false,
           isAdminAsso : false,
+          prof:false,
         },
         canCreateNbAsso : 0,
         associations: []
@@ -72,9 +73,11 @@ export class SignUpProvider {
         name: user.name,
         lastName: user.lastName,
         roles: {          
-          student: false,
-          prof: true,
-          admin: false
+
+          student: true,
+          admin: false,
+          prof:true,
+
         },
         associations: []
       };

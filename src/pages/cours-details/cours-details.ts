@@ -58,6 +58,7 @@ export class CoursDetailsPage {
         this.loader = this.loadingCtrl.create({
             content: "Patientez un peu !"
         });
+        this.loader.setDuration(500);
         this.loader.present();
         this.getMessages();
     }
@@ -81,7 +82,7 @@ export class CoursDetailsPage {
                 });
                 this.getMessagesUser();
             });
-            this.loader.dismissAll();
+            //this.loader.dismissAll();
         });
     }
 
@@ -163,18 +164,19 @@ export class CoursDetailsPage {
         });
     }
 
-    getUser(id){
-        return this.listUsers.find(x => x.uid == id);
+    getUser(id) {
+        if (this.listUsers.find(x => x.uid == id) != undefined)
+            return this.listUsers.find(x => x.uid == id);
     }
 
-    getUserName(id) {
-       // console.log("coucou " + id);
-        return this.listUsers.find(x => x.uid == id).name;
-    }
+    /* getUserName(id) {
+        // console.log("coucou " + id);
+         return this.listUsers.find(x => x.uid == id).name;
+     }
 
-    getUserLastName(id){
-        return this.listUsers.find(x => x.uid == id).lastName;
-    }
+     getUserLastName(id){
+         return this.listUsers.find(x => x.uid == id).lastName;
+     }*/
 
     removeMessage(message: Messages) {
         if (this.isRemove) {
@@ -224,7 +226,7 @@ export class ModalContentPageMessage {
     }
 
     valider() {
-       // console.log("cul " + this.inputMessage);
+        // console.log("cul " + this.inputMessage);
         if (this.inputMessage != undefined && this.inputMessage.length > 5 && this.inputMessage.length < 1000) {
             let values = {
                 message: this.inputMessage,
