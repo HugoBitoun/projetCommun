@@ -9,14 +9,17 @@
 
 <ion-content padding>
 
-    <ion-list>
+    <div style="text-align: center" *ngIf="myAssociationsCreate.length == 0">
+        <h1 style="color: #8c8c8c">Pas d'associations !</h1>
+    </div>
+
+    <ion-list *ngIf="myAssociationsCreate.length != 0">
     <ion-card *ngFor="let association of myAssociationsCreate" >
         <div>
             <img src="{{association.picLink}}" *ngIf="association.picLink != null">
         <ion-item-sliding  >
             <ion-item >
         <ion-card-title (click)="getAssociationPage(association)">{{association.Name}}</ion-card-title>
-        <ion-card-header (click)="getAssociationPage(association)">{{association.Description}}</ion-card-header>
             </ion-item>
             <ion-item-options side="end">
                 <button color="danger" ion-button (click)="deleteAsso(association.id)">Supprimer</button>

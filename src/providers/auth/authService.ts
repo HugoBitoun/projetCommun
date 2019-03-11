@@ -1,9 +1,9 @@
 import {User} from "../../assets/utils/User";
 import {AngularFireAuth} from "angularfire2/auth";
-import {Injectable, NgZone} from "@angular/core";
+import {Injectable} from "@angular/core";
 import "rxjs-compat/add/operator/switchMap";
 import {Observable} from "rxjs";
-import {AngularFirestore, AngularFirestoreDocument} from "angularfire2/firestore";
+import {AngularFirestore} from "angularfire2/firestore";
 import "rxjs-compat/add/observable/of";
 
 
@@ -12,7 +12,7 @@ export class AuthService {
     
     user$ : Observable<User>;  
 
-    constructor( private afAuth: AngularFireAuth, private db : AngularFirestore, private ngZone: NgZone ) {
+    constructor( private afAuth: AngularFireAuth, private db : AngularFirestore ) {
         this.user$ = this.afAuth.authState.switchMap(user => {
             if (user){
                 return this.db.doc<User>(`/users/${user.uid}`).valueChanges();
@@ -41,18 +41,7 @@ export class AuthService {
         this.afAuth.auth.signOut();
     }
 
-    public updateUserData(user){
-        const userRef: AngularFirestoreDocument<any> = this.db.doc(`/users/${user.uid}`);
-        console.log(user.uid);
-        const data : User = {
-            uid : user.uid,
-            email: user.email,
-            roles : {
-                student: true
-            }            
-        };
-        return userRef.set(data,{merge:true});
-    }
+
 
 
 }

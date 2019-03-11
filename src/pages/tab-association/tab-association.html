@@ -7,19 +7,22 @@
 
 <ion-content padding>
 
+    <div style="text-align: center" *ngIf="listAssociations.length == 0">
+        <h1 style="color: #8c8c8c">Pas d'associations !</h1>
+    </div>
+
+    <ion-list *ngIf="listAssociations.length != 0">
     <ion-card *ngFor="let association of listAssociations" >
         <div>
             <img src="{{association.picLink}}" *ngIf="association.picLink != null">
         <ion-card-title (click)="getAssociationPage(association)">
             {{association.Name}}
         </ion-card-title>
-        <ion-card-header (click)="getAssociationPage(association)">
-            {{ association.Description}}
-        </ion-card-header>
         <ion-card-content>
            <button ion-button clear icon-only (click)="unsuscribe(association)" ><ion-icon name="checkmark-circle" color="secondary" ></ion-icon></button>
         </ion-card-content>
         </div>
     </ion-card>
+    </ion-list>
 
 </ion-content>

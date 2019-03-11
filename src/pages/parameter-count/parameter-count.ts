@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { User } from '../../assets/utils/User';
-import { ParameterCountProvider } from '../../providers/parameter-count/parameter-count';
+import {UserProvider} from "../../providers/user/user";
 
 /**
  * Generated class for the ParameterCountPage page.
@@ -38,10 +38,10 @@ export class ParameterCountPage {
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public toastCtrl: ToastController, private parameterCountProvider: ParameterCountProvider,
+    public toastCtrl: ToastController, private userProvider : UserProvider,
      public formBuilder: FormBuilder) {
 
-    this.parameterCountProvider.getUser().subscribe( data => {
+    this.userProvider.getUser().subscribe( data => {
       this.name = data.name;   
       this.lastName = data.lastName;
       this.email = data.email;
@@ -68,9 +68,9 @@ export class ParameterCountPage {
   modify(user: User) {
      
     if (this.validations_form.valid) {
-        this.parameterCountProvider.modify(user).then(value => {                          
+        this.userProvider.modify(user).then(value => {
           this.toastCtrl.create({
-            message: 'Votre nom et prénom ont été bien modfiés',
+            message: 'Votre nom et prénom ont été bien modifiés',
             duration: 2000
           }).present();                    
         })
