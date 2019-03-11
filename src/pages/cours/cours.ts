@@ -144,7 +144,7 @@ export class ModalContentPage {
             });
             this.subscribeCours(this.selectedCours);
 
-        } else if (this.user.roles.prof) {
+        } else if (!this.user.roles.prof) {
             this.listCours.forEach(cours => {
                 if (cours.isSubscriber) {
                     this.subscribeCours(cours);
