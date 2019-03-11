@@ -64,7 +64,6 @@ export class HomePage {
                                         if (n1.date < n2.date) {
                                             return 1;
                                         }
-
                                         return 0;
                                     });
                                 });
@@ -96,8 +95,9 @@ export class HomePage {
             if (user.roles.student != undefined && user.roles.student) {
                 return "bg-info";
             }
-            return "bg-primary";
+
         }
+        return "bg-primary";
     }
 
     getMessageIcon(user: User): string {
@@ -111,18 +111,19 @@ export class HomePage {
             if (user.roles.student != undefined && user.roles.student) {
                 return "school";
             }
-            return "logo-snapchat";
+
         }
+        return "logo-snapchat";
     }
 
     getUserName(id) {
         // console.log("coucou " + id);
-        // if (this.listUsers != undefined)
+         if (this.listUsers != undefined)
         return this.listUsers.find(x => x.uid == id).name;
     }
 
     getUserLastName(id) {
-        //if (this.listUsers != undefined)
+        if (this.listUsers != undefined)
         return this.listUsers.find(x => x.uid == id).lastName;
     }
 

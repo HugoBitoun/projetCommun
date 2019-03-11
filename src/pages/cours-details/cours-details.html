@@ -45,7 +45,7 @@
         </ion-list>
         <ion-list *ngSwitchCase="'Messages'">
             <div *ngFor="let message of listMessages">
-                <div>
+                <div *ngIf="getUser(message.idUser)!=undefined">
                     <ion-card class="my-5 round" (click)="removeMessage(message)">
                         <ion-card-title
                                 class="{{getMessageColor(getUser(message.idUser))}} text-capitalize py-2">
