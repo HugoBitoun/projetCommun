@@ -67,6 +67,9 @@ export class AssociationsProvider {
     const ref = firebase.firestore().collection('associations');
     return ref.where('idAdminAsso', '==', id).get().then(
         data => {
+            if (data.docs == undefined){
+                return [];
+            }
           return data.docs.map( association => {
                 const asso = association.data() as Association;
                 asso.id = association.id;

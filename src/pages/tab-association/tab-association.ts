@@ -36,15 +36,19 @@ export class TabAssociationPage {
       this.listAssociations = [];
       this.userProvider.getUser().subscribe(
           data => {
+              console.log(data);
+              if (data != undefined){
               data.associations.forEach(
                   id => {
                       this.associationProvider.getAssociationsById(id).subscribe( data => {
                           console.log(this.listAssociations);
-                          if (!this.listAssociations.find(x => x.id == data.id))
-                          {this.listAssociations.push(data);}
-
+                          if (data != undefined){
+                              if (!this.listAssociations.find(x => x.id == data.id))
+                              {this.listAssociations.push(data);}
+                          }
                       })
-                  });
+                  })
+              }
               loader.dismiss();
           });
   }

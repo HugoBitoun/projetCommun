@@ -24,7 +24,6 @@ import {MyAssociationsPage} from "../pages/my-associations/my-associations";
 import {TabAssociationPage} from "../pages/tab-association/tab-association";
 import {TabAssociationCreatedPage} from "../pages/tab-association-created/tab-association-created";
 import {AddAssoPage} from "../pages/add-asso/add-asso";
-import { ParameterCountProvider } from '../providers/parameter-count/parameter-count';
 import { ParameterCountPage } from '../pages/parameter-count/parameter-count';
 import {AssociationDetailMessagePage} from "../pages/association-detail-message/association-detail-message";
 import {MessagePage} from "../pages/message/message";
@@ -95,8 +94,7 @@ import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
         UserProvider,
         SignUpProvider,
         LogOutProvider,
-        CoursProvider,
-        ParameterCountProvider
+        CoursProvider
     ]
 })
 

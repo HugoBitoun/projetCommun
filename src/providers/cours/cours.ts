@@ -1,11 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
-import {AngularFirestore, AngularFirestoreCollection} from "@angular/fire/firestore";
+import {AngularFirestore} from "@angular/fire/firestore";
 import {Cours} from "../../assets/utils/Cours";
 import * as firebase from "firebase";
 import {Messages} from "../../assets/utils/Messages";
-import {FirebaseError} from "firebase";
 
 
 /*
@@ -30,7 +29,6 @@ export class CoursProvider {
                 return data;
             })
         })
-        //return this.firestore.collection<any>('associations/').valueChanges();
     }
 
     public getCoursById(id: string): Promise<Cours> {

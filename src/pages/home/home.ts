@@ -118,18 +118,18 @@ export class HomePage {
 
     getUserName(id) {
         // console.log("coucou " + id);
-         if (this.listUsers != undefined)
-        return this.listUsers.find(x => x.uid == id).name;
+        if (this.listUsers != undefined)
+            return this.listUsers.find(x => x.uid == id).name;
     }
 
     getUserLastName(id) {
         if (this.listUsers != undefined)
-        return this.listUsers.find(x => x.uid == id).lastName;
+            return this.listUsers.find(x => x.uid == id).lastName;
     }
 
     getUser(id) {
-        // if (this.listUsers != undefined)
-        return this.listUsers.find(x => x.uid == id);
+        if (this.listUsers != undefined)
+            return this.listUsers.find(x => x.uid == id);
     }
 
     convertDate(date: firebase.firestore.Timestamp): string {

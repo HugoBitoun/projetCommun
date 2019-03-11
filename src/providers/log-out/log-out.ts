@@ -12,7 +12,7 @@ import * as firebase from 'firebase/app';
 */
 @Injectable()
 export class LogOutProvider {
-  private authState: Observable<firebase.User>
+  private authState: Observable<firebase.User>;
   private currentUser: firebase.User=null;
 
   constructor(public http: HttpClient, private afAuth: AngularFireAuth) {
@@ -33,12 +33,6 @@ export class LogOutProvider {
   logout() {
     this.afAuth.auth.signOut();
   }
-
-  isLoggedIn():boolean {
-    if (this.currentUser == null) {
-      return false;
-    }
-    return true;
-  }
+  
 
 }

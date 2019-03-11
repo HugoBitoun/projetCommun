@@ -8,7 +8,12 @@
 
 
 <ion-content padding>
+ <div style="text-align: center">
+     <img src="{{association.picLink}}" *ngIf="association.picLink!=null" style="text-align: center">
+     <br>
+     <h1 style="text-underline: #007aff">Description</h1>
+     <h1>{{association.Description}}</h1>
+ </div>
 
-  <img src="{{association.picLink}}" *ngIf="association.picLink!=null" style="text-align: center">
-  <h1>{{association.Description}}</h1>
+
 </ion-content>

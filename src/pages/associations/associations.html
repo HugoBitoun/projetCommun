@@ -19,8 +19,13 @@
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-card *ngFor="let association of listAssociations" >
+
+  <div style="text-align: center" *ngIf="listAssociations.length == 0">
+    <h1 style="color: #8c8c8c">Pas d'associations !</h1>
+  </div>
+
+  <ion-list *ngIf="listAssociations.length != 0">
+    <ion-card  *ngFor="let association of listAssociations" >
       <img src="{{association.picLink}}" *ngIf="association.picLink != null">
       <ion-item-sliding>
         <ion-item >

@@ -103,7 +103,10 @@ export class UserProvider {
         })
     }
 
-
+    public modify(user:User): any {
+        const ref = firebase.firestore().collection('users/').doc( `${this.userId}`);
+        return ref.set( user, {merge : true});
+    }
 }
 
 
