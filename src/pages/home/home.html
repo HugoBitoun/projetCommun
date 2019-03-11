@@ -8,6 +8,12 @@
 </ion-header>
 
 <ion-content padding>
+
+    <ion-title text-uppercase>
+        <div class="text-primary">Fil d'actualité</div>
+    </ion-title>
+    <ion-title>Vos actualités en direct !</ion-title>
+
     <div *ngFor="let message of listMessages">
         <div *ngIf="getUser(message.idUser)!=undefined">
             <ion-card class="my-5 round">
