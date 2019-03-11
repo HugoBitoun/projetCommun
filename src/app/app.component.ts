@@ -8,6 +8,7 @@ import {AuthPage} from "../pages/auth/auth";
 import {AssociationsPage} from "../pages/associations/associations";
 import { LogOutProvider } from '../providers/log-out/log-out';
 import {MyAssociationsPage} from "../pages/my-associations/my-associations";
+import { ParameterCountPage } from '../pages/parameter-count/parameter-count';
 import {CoursPage} from "../pages/cours/cours";
 
 
@@ -23,35 +24,41 @@ export class MyApp implements OnInit {
     user = null;
 
     constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-                public logOutProvider: LogOutProvider, public alertController: AlertController) {
-        this.initializeApp();
-        // used for an example of ngFor and navigation
-        this.pages = [
-            {title: 'Home', component: HomePage},
-            {title: 'Associations', component: AssociationsPage},
-            {title: 'Mes associations', component: MyAssociationsPage},
-            {title: 'Mes Cours', component: CoursPage}
-        ];
-    }
+                public logOutProvider: LogOutProvider) {
 
-    ngOnInit(): void {
-        this.logOutProvider.getAuthState().subscribe(
-            (user) => this.user = user);
-    }
+    this.initializeApp();
+    // used for an example of ngFor and navigation
+    this.pages = [
+        {title: 'Home', component: HomePage},
+        {title: 'Associations', component: AssociationsPage},
+        {title: 'Mes associations', component: MyAssociationsPage},
+        {title: 'Mes Cours', component: CoursPage}
+    ];
+}
+
+  ngOnInit(): void {
+    this.logOutProvider.getAuthState().subscribe(
+      (user) => this.user=user);    
+  }
+
+  parameterCount(){
+    this.nav.setRoot(ParameterCountPage);
+  }
+
+  async logout(){
+   this.logOutProvider.logout();   
+   this.nav.setRoot(AuthPage);
+  }
 
 
-    logout() {
-        this.logOutProvider.logout();
-        this.nav.setRoot(AuthPage);
-    }
+  initializeApp() {
+    this.platform.ready().then(() => {
+      this.statusBar.styleDefault();
+      //firebase.initializeApp(environment.firebase);
+      this.splashScreen.hide();
+    });
+  }
 
-    initializeApp() {
-        this.platform.ready().then(() => {
-            this.statusBar.styleDefault();
-            //firebase.initializeApp(environment.firebase);
-            this.splashScreen.hide();
-        });
-    }
 
     openPage(page) {
         // Reset the content nav to have just this page
@@ -63,5 +70,6 @@ export class MyApp implements OnInit {
         }
 
     }
+
 }
 

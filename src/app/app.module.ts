@@ -24,6 +24,8 @@ import {MyAssociationsPage} from "../pages/my-associations/my-associations";
 import {TabAssociationPage} from "../pages/tab-association/tab-association";
 import {TabAssociationCreatedPage} from "../pages/tab-association-created/tab-association-created";
 import {AddAssoPage} from "../pages/add-asso/add-asso";
+import { ParameterCountProvider } from '../providers/parameter-count/parameter-count';
+import { ParameterCountPage } from '../pages/parameter-count/parameter-count';
 import {AssociationDetailMessagePage} from "../pages/association-detail-message/association-detail-message";
 import {MessagePage} from "../pages/message/message";
 import {CoursPage, ModalContentPage} from "../pages/cours/cours";
@@ -51,7 +53,8 @@ import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
         ModalContentPage,
         CoursDetailsPage,
         ModalContentPageMessage,
-        ModifyAssoPage
+        ModifyAssoPage,
+        ParameterCountPage
     ],
     imports: [
         BrowserModule,
@@ -61,7 +64,6 @@ import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
         AngularFirestoreModule,
         AngularFireAuthModule,
         AngularFireDatabaseModule
-
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -81,7 +83,8 @@ import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
         CoursPage,
         ModalContentPage,
         CoursDetailsPage,
-        ModifyAssoPage
+        ModifyAssoPage,
+        ParameterCountPage
     ],
     providers: [
         StatusBar,
@@ -92,7 +95,8 @@ import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
         UserProvider,
         SignUpProvider,
         LogOutProvider,
-        CoursProvider
+        CoursProvider,
+        ParameterCountProvider
     ]
 })
 

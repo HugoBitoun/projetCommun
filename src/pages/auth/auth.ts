@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
 import {SignUpPage} from "../sign-up/sign-up";
 import {FormBuilder, FormGroup, Validators, FormControl} from "@angular/forms";
@@ -39,7 +39,7 @@ export class AuthPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder : FormBuilder,
-            public toastCtrl : ToastController, public aServ : AuthService) {
+            public toastCtrl : ToastController, public aServ : AuthService, public ngZone : NgZone) {
 
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
@@ -49,51 +49,43 @@ export class AuthPage {
       password: new FormControl('', Validators.compose([
         Validators.minLength(5),
         Validators.required
-      ]))
-      
+      ]))      
     });
   }
 
-
-
   ionViewDidLoad() {
     console.log('ionViewDidLoad AuthPage');
-
   }
 
   doConnection(){
-
-
       let data = this.validations_form.value;
-
       if(!data.email){
           return;
       }
-
       let credentials = {
           email : data.email,
           password: data.password
       };
-
       this.aServ.oAuthLogin(credentials).then(
           success =>{
-              this.navCtrl.setRoot(HomePage);
-              this.toastCtrl.create({
-                message: 'Bienvenue',
-                duration: 6000
-              }).present();          
-    
+            
+            this.ngZone.run(() => {
+              this.navCtrl.setRoot(HomePage);                                                                                                          
+            });
+            console.log('iwach');
+            this.toastCtrl.create({
+              message: 'Bienvenue',
+              duration: 2000
+            }).present();          
           },
           err => {
+                        
             this.toastCtrl.create({
               message: err.message,
-              duration: 6000
-            }).present();                    
-            
+              duration: 2000
+            }).present();                                
           }
       );
-
-
   }
 
   signUp(){

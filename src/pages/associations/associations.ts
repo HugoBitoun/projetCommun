@@ -10,10 +10,10 @@ import {
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
-import {User} from "../../../www/assets/utils/User";
-import {DetailAssoPage} from "../detail-asso/detail-asso";
+
 import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 import {ModifyAssoPage} from "../modify-asso/modify-asso";
+import {User} from "../../assets/utils/User";
 
 /**
  * Generated class for the AssociationsPage page.
@@ -33,6 +33,8 @@ import {ModifyAssoPage} from "../modify-asso/modify-asso";
 })
 export class AssociationsPage {
 
+
+    subscriber : boolean = false;
     listAssociations : Association[] = Array<Association>();
     user: User;
 
@@ -45,9 +47,6 @@ export class AssociationsPage {
             console.log(data);
         });
     }
-
-
-
 
     ionViewWillLoad() {
         this.update();

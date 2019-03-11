@@ -1,11 +1,10 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {AngularFirestore, AngularFirestoreDocument} from 'angularfire2/firestore';
+import {AngularFirestore} from 'angularfire2/firestore';
 import {AngularFireAuth} from 'angularfire2/auth';
 import {User} from "../../assets/utils/User";
 import {Observable} from "rxjs";
 import * as firebase from "firebase";
-import DocumentData = firebase.firestore.DocumentData;
 import {Association} from "../../assets/utils/Association";
 import {Cours} from "../../assets/utils/Cours";
 
@@ -24,6 +23,7 @@ export class UserProvider {
 
         this.userId = this.afAuth.auth.currentUser.uid;
     }
+
 
     public getUser(): Observable<User> {
         this.userId = this.afAuth.auth.currentUser.uid;
@@ -62,7 +62,6 @@ export class UserProvider {
                 return data;
             })
         })
-        //return this.firestore.collection<any>('associations/').valueChanges();
     }
 
 

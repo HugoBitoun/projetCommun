@@ -5,6 +5,7 @@ import { SignUpProvider } from '../../providers/sign-up/sign-up';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthPage } from '../auth/auth';
+import { PasswordValidator } from '../../assets/utils/password.validator';
 
 
 /**
@@ -44,11 +45,9 @@ export class SignUpPage {
       { type: 'pattern', message: 'Votre mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.' }
     ],
     'confirm_password': [
-      { type: 'required', message: 'Confirmer le mot de passe est requis' }
-    ],
-    'matching_passwords': [
+      { type: 'required', message: 'Confirmer le mot de passe est requis' },
       { type: 'validator', message: 'Les mots de passes sont déffirents attention!' }
-    ],
+    ]
   }
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -71,8 +70,7 @@ export class SignUpPage {
         Validators.minLength(6),
         Validators.required
       ])),
-      confirm_password: new FormControl('', Validators.compose([Validators.required]))
-
+      confirm_password: new FormControl('', Validators.compose([Validators.required,])),
     }, {
         validator: this.matchingPasswords('password', 'confirm_password')
       });
@@ -100,14 +98,14 @@ export class SignUpPage {
         this.signUpProvider.register(user).then(value => {                          
           this.toastCtrl.create({
             message: 'Votre compte a été crée avec succès',
-            duration: 6000
+            duration: 2000
           }).present();          
           this.navCtrl.setRoot(AuthPage);
         })
         .catch(err => {
           this.toastCtrl.create({
             message: err.message,
-            duration: 6000
+            duration: 2000
           }).present();            
         });
     }    
