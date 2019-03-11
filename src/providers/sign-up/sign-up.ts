@@ -60,7 +60,6 @@ export class SignUpProvider {
           prof: false,
           admin: false,
           isAdminAsso : false,
-          prof:false,
         },
         canCreateNbAsso : 0,
         associations: []
