@@ -5,20 +5,21 @@
   Ionic pages and navigation.
 -->
 
-
-
 <ion-content padding>
 
-    <ion-card *ngFor="let association of listAssociations" (click)="getAssociationPage(association)">
-        <ion-card-title>
+    <ion-card *ngFor="let association of listAssociations" >
+        <div>
+            <img src="{{association.picLink}}" *ngIf="association.picLink != null">
+        <ion-card-title (click)="getAssociationPage(association)">
             {{association.Name}}
         </ion-card-title>
-        <ion-card-header>
+        <ion-card-header (click)="getAssociationPage(association)">
             {{ association.Description}}
         </ion-card-header>
         <ion-card-content>
-
+           <button ion-button clear icon-only (click)="unsuscribe(association)" ><ion-icon name="checkmark-circle" color="secondary" ></ion-icon></button>
         </ion-card-content>
+        </div>
     </ion-card>
 
 </ion-content>

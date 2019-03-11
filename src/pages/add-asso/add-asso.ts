@@ -4,6 +4,7 @@ import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
 import {Association} from "../../assets/utils/Association";
+import {User} from "../../assets/utils/User";
 
 /**
  * Generated class for the AddAssoPage page.
@@ -22,6 +23,7 @@ export class AddAssoPage {
   association : Association = new Association();
   idAdminAsso : string;
   validations_form : FormGroup;
+  user : User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider: UserProvider,
@@ -30,13 +32,15 @@ export class AddAssoPage {
 
       this.userProvider.getUser().subscribe(
           data => {
+            this.user = data;
             this.idAdminAsso = data.uid;
           }
       );
 
       this.validations_form = this.formBuilder.group({
           Name : new FormControl(),
-          Description : new FormControl()
+          Description : new FormControl(),
+          picLink : new FormControl()
       })
   }
 
@@ -47,6 +51,8 @@ export class AddAssoPage {
   public buttonAddAsso(){
     this.association.idAdminAsso = this.idAdminAsso;
     this.associationProvider.addAsso(this.association);
+    this.userProvider.removeOneToNbAsso(this.user.canCreateNbAsso);
+
     this.navParams.get("parentPage").update();
     this.navCtrl.pop();
   }

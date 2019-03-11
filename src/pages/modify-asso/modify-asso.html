@@ -1,5 +1,5 @@
 <!--
-  Generated template for the AddAssoPage page.
+  Generated template for the ModifyAssoPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Ajout d'une association</ion-title>
+    <ion-title>Modifier {{ association.Name }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,7 +15,11 @@
 
 <ion-content padding>
 
-  <form class="form" [formGroup]="validations_form" (ngSubmit)="buttonAddAsso()">
+  <div>
+    <h1>Modifier {{association.Name}}</h1>
+  </div>
+
+  <form class="form" [formGroup]="validations_form" (ngSubmit)="modifyAsso()">
     <ion-list>
       <ion-item>
         <ion-label floating color ="primary">Nom association</ion-label>
@@ -29,7 +33,7 @@
         <ion-label floating color="primary">Lien image</ion-label>
         <ion-input type="text" formControlName="picLink" [(ngModel)]="association.picLink"></ion-input>
       </ion-item>
-      <button ion-button [disabled]="!validations_form.valid" color="primary">Ajouter association</button>
+      <button ion-button [disabled]="!validations_form.valid" color="primary">Modifier association</button>
     </ion-list>
   </form>
 

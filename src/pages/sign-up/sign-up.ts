@@ -41,7 +41,7 @@ export class SignUpPage {
     ],
     'password': [
       { type: 'required', message: 'Votre mot de passe est obligatoire.' },
-      { type: 'minlength', message: 'Le mot de passe doit comporter au moins 5 caractères.' },
+      { type: 'minlength', message: 'Le mot de passe doit comporter au moins 6 caractères.' },
       { type: 'pattern', message: 'Votre mot de passe doit contenir au moins une majuscule, une minuscule et un chiffre.' }
     ],
     'confirm_password': [
@@ -67,7 +67,7 @@ export class SignUpPage {
         Validators.pattern('(^[a-zA-Z0-9_.+-]+@etu.univ-paris1.fr+$)|(^[a-zA-Z0-9_.+-]+@univ-paris1.fr+$)')
       ])),
       password: new FormControl('', Validators.compose([
-        Validators.minLength(5),
+        Validators.minLength(6),
         Validators.required
       ])),
       confirm_password: new FormControl('', Validators.compose([Validators.required,])),

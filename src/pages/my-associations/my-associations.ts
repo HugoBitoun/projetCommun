@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {TabAssociationPage} from "../tab-association/tab-association";
 import {TabAssociationCreatedPage} from "../tab-association-created/tab-association-created";
-import {User} from "../../../www/assets/utils/User";
 import {UserProvider} from "../../providers/user/user";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
 
 /**
  * Generated class for the MyAssociationsPage page.
@@ -25,6 +23,7 @@ export class MyAssociationsPage {
   tab1;
   tab2;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider) {
     this.userProvider.getUser().subscribe( user => {
       if (user.roles.isAdminAsso == true){
@@ -32,6 +31,8 @@ export class MyAssociationsPage {
       } else {
         this.isAssociationCreator = false;
       }
+
+
     });
     this.tab1 = TabAssociationPage;
    this.tab2 = TabAssociationCreatedPage;
