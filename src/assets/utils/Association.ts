@@ -8,5 +8,6 @@ export class Association {
     isSubscriber? : boolean;
     idAdminAsso? : string;
     messages? : Messages[];
+    picLink? : string;
 
 }

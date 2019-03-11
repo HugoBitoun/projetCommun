@@ -1,5 +1,12 @@
 import {Component} from '@angular/core';
-import {AlertController, IonicPage, NavController, NavParams, PopoverController} from 'ionic-angular';
+import {
+    AlertController,
+    IonicPage,
+    LoadingController,
+    NavController,
+    NavParams,
+    PopoverController
+} from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
@@ -31,7 +38,8 @@ export class AssociationsPage {
 
     constructor(public navCtrl: NavController, public userProvider : UserProvider,
                 public associationProvider : AssociationsProvider,
-                public alertCtrl : AlertController) {
+                public alertCtrl : AlertController,
+                public loadingCtrl : LoadingController) {
         this.userProvider.getUser().subscribe(data => {
             this.user = data;
             console.log(data);
@@ -46,9 +54,14 @@ export class AssociationsPage {
     }
 
     update(){
+        let loader = this.loadingCtrl.create({
+            content: "Patientez un peu !"
+        });
+        loader.present();
         this.associationProvider.getAssociations().subscribe( data => {
             this.listAssociations = data;
             this.isSuscriber();
+            loader.dismiss();
         });
     }
 

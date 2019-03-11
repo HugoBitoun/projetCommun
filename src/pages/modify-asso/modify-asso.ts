@@ -27,7 +27,8 @@ export class ModifyAssoPage {
     this.association = this.navParams.get('association');
     this.validations_form = this.formBuilder.group({
         Name : new FormControl(),
-        Description : new FormControl()
+        Description : new FormControl(),
+        picLink : new FormControl()
     })
   }
 

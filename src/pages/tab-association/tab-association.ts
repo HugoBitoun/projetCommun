@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../../www/assets/utils/Association";
 import {AssociationsProvider} from "../../providers/associations/associations";
@@ -21,11 +21,18 @@ export class TabAssociationPage {
 
   listAssociations : Association[] = Array<Association>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userProvider : UserProvider, public associationProvider : AssociationsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              public userProvider : UserProvider,
+              public associationProvider : AssociationsProvider,
+              public loadingCtrl : LoadingController) {
     this.update();
   }
 
   update(){
+      let loader = this.loadingCtrl.create({
+          content: "Patientez un peu !"
+      });
+      loader.present();
       this.listAssociations = [];
       this.userProvider.getUser().subscribe(
           data => {
@@ -35,8 +42,10 @@ export class TabAssociationPage {
                           console.log(this.listAssociations);
                           if (!this.listAssociations.find(x => x.id == data.id))
                           {this.listAssociations.push(data);}
+
                       })
                   });
+              loader.dismiss();
           });
   }
 
