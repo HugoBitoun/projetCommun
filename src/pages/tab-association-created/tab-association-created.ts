@@ -38,6 +38,7 @@ export class TabAssociationCreatedPage {
           content: "Patientez un peu !"
       });
       loader.present();
+      this.myAssociationsCreate = [];
       this.userProvider.getUser().subscribe(
           data => {
               this.userCanCreateNbAsso = data.canCreateNbAsso;
@@ -45,11 +46,11 @@ export class TabAssociationCreatedPage {
                   associations => {
                       console.log(associations);
                       this.myAssociationsCreate = associations;
-                      loader.dismiss();
+
                   }
-              )
-          }
-      );
+              );
+              loader.dismiss();
+          });
   }
 
   ionViewDidLoad() {
