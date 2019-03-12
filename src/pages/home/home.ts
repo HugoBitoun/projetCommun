@@ -6,6 +6,7 @@ import {Cours} from "../../assets/utils/Cours";
 import {User} from "../../assets/utils/User";
 import {Messages} from "../../assets/utils/Messages";
 import {AssociationsProvider} from "../../providers/associations/associations";
+import {CoursDetailsPage} from "../cours-details/cours-details";
 
 @Component({
     selector: 'page-home',
@@ -36,7 +37,7 @@ export class HomePage {
      */
     ionViewWillLoad() {
         this.loader.present();
-        this.getCours();
+        this.getAllCours();
         this.getMessagesAssoSub();
     }
 
@@ -72,12 +73,24 @@ export class HomePage {
     /**
      * @description get all the cours that exists and then call a function that get the cours the user subscribed
      */
-    getCours() {
+    getAllCours() {
 
         this.coursProvider.getCours().subscribe(cours => {
             this.listCours = cours;
             this.getSubCours();
         });
+    }
+
+    /**
+     * @description Navigation to the coursDetailsPage with parameters (current cours clicked and current user)
+     * @param cours Cours
+     */
+    getCoursDetailPage(cours: Cours) {
+        this.navCtrl.push(CoursDetailsPage, {cours: cours, user: this.user});
+    }
+
+    getCours(intitule:string):Cours{
+        return this.listCours.find(x=>x.name==intitule);
     }
 
     /**
