@@ -48,7 +48,7 @@ export class HomePage {
      */
     private getMessagesAssoSub(): void {
         this.userProvider.getUser().subscribe(userData => {
-            this.listMessagesAsso = new Array();
+             this.listMessagesAsso = new Array();
                 userData.associations.forEach(idAsso => {
                     this.assoProvider.getAssociationsById(idAsso).subscribe(association => {
                         if (association != undefined){
