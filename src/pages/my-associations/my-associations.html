@@ -21,7 +21,7 @@
   <ion-tabs>
     <ion-tab tabTitle="Inscrits" tabIcon="contact" [root]="tab1" [rootParams]="navParams.get('nav')"></ion-tab>
     <ion-tab tabTitle="Crées" tabIcon="create" [root]="tab2" [rootParams]="navParams.get('nav')" *ngIf="isAssociationCreator"></ion-tab>
-    <ion-tab tabTitle="Collaborateurs" tabIcon="mail" [root]="tab3" [rootParams]="navParams.get('nav')" *ngIf="userIsCollab"></ion-tab>
+    <ion-tab tabTitle="Collaborateurs" tabIcon="people" [root]="tab3" [rootParams]="navParams.get('nav')" *ngIf="userIsCollab"></ion-tab>
   </ion-tabs>
 
 </ion-content>

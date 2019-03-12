@@ -36,7 +36,7 @@ export class TabCollabsPage {
 
 
   /**
-   * @description update or load the associations where the user is collaborator
+   * @description load data (associations were user is collab)
    * @return void
    */
   private update() : void{

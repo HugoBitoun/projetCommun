@@ -61,7 +61,6 @@ export class AssociationsPage {
      */
     private update() : void{
 
-        this.loader.present();
         this.associationProvider.getAssociations().subscribe( data => {
             this.listAssociations = data;
             this.isSuscriber();
@@ -141,7 +140,7 @@ export class AssociationsPage {
                     }
                 }
             );
-            this.loader.dismiss();
+
         });
     }
 

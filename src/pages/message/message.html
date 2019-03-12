@@ -14,11 +14,12 @@
       le : {{values.date}}
     </ion-card-title>
     <ion-card-header>
-      {{values.color}}
       {{values.message.message}}
     </ion-card-header>
     <ion-card-content>
-      <button ion-button *ngIf="values.message.idUser == idUser || isAdmin==true " (click)="removeMessage(values.message)"  color="danger">Supprimer</button>
+      <button ion-button clear icon-only *ngIf="values.message.idUser == idUser || isAdmin==true " (click)="removeMessage(values.message)">
+        <ion-icon name="trash" color="danger"></ion-icon>
+      </button>
     </ion-card-content>
   </ion-card>
 
