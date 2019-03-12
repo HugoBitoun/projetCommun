@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {AlertController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
-import {Messages} from "../../assets/utils/Messages";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {Association} from "../../assets/utils/Association";
@@ -20,32 +19,33 @@ import {User} from "../../assets/utils/User";
 })
 export class MessagePage {
 
-  listMessage : any = new Array();
-  isAdminOfAsso : boolean;
-  idUser : string;
-  association : Association;
-  isAdmin : boolean;
-  isCollab : boolean = false;
-  listUsers : User[] = new Array<User>();
+  private listMessage : any = new Array();
+  private isAdminOfAsso : boolean;
+  private idUser : string;
+  private association : Association;
+  private isAdmin : boolean;
+  private isCollab : boolean = false;
+  private listUsers : User[] = new Array<User>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userProvider : UserProvider,
-              public alertCtrl : AlertController,
-              public associationProvider : AssociationsProvider,
-              public loadingCtrl : LoadingController) {
+  constructor(private navCtrl: NavController, private navParams: NavParams,
+              private userProvider : UserProvider,
+              private alertCtrl : AlertController,
+              private associationProvider : AssociationsProvider,
+              private loadingCtrl : LoadingController) {
     this.association = this.navParams.get('association');
     this.update();
-
-
   }
 
-  update() {
+  /**
+   * @description update the data and load them
+   * @return void
+   */
+  private update() :void{
     let loader = this.loadingCtrl.create({
       content: "Patientez un peu !"
     });
     loader.present();
     this.listMessage = [];
-    console.log(this.association.id);
     this.associationProvider.getMessageAsso(this.association.id).then(
         data => {
           data.map( message => {
@@ -67,6 +67,10 @@ export class MessagePage {
     )
   }
 
+  /**
+   * @return void
+   * @description sort the list of message from the newest one to the older
+   */
   sortMessages(){
     this.listMessage.sort((n1, n2) => {
       if (n1.date > n2.date) {
@@ -81,6 +85,9 @@ export class MessagePage {
     });
   }
 
+  /**
+   * @description Ionic function that load idUser, isAdmin, isAdminAsso, isCollab
+   */
   ionViewDidLoad() {
     this.userProvider.getUser().subscribe(
         user => {
@@ -101,7 +108,11 @@ export class MessagePage {
   }
 
 
-  getMessageColor(user: User): string {
+  /**
+   * @description this function will give the color of the message according to the user roles that wrote the message
+   * @param user
+   */
+  private getMessageColor(user: User): string {
     if (user != undefined) {
       if (user.roles.admin != undefined && user.roles.admin) {
         return "bg-danger";
@@ -110,7 +121,11 @@ export class MessagePage {
     }
   }
 
-  getMessageIcon(user: User): string {
+  /**
+   * @description this function will give the icon of the message according to the user roles that wrote the message
+   * @param user
+   */
+  private getMessageIcon(user: User): string {
     if (user != undefined) {
       if (user.roles.admin != undefined && user.roles.admin) {
         return "ribbon";
@@ -119,8 +134,11 @@ export class MessagePage {
     }
   }
 
-
-  convertDate(date: firebase.firestore.Timestamp): string {
+  /**
+   * @description this function will covert the timestamp format to a writable one
+   * @param date timestamp
+   */
+  private convertDate(date: firebase.firestore.Timestamp): string {
     return date.toDate().toLocaleDateString("en-GB", {
       day: "numeric",
       month: "2-digit",
@@ -132,9 +150,10 @@ export class MessagePage {
   }
 
 
-  addMessage(){
-    console.log("coucou");
-
+  /**
+   * @description add a message to the association
+   */
+  private addMessage():void{
     const alert = this.alertCtrl.create({
       title : 'Nouveau message' ,
       inputs: [
@@ -150,7 +169,6 @@ export class MessagePage {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log("cancel");
           }
         }, {
           text: 'Ok',
@@ -168,7 +186,12 @@ export class MessagePage {
   }
 
 
-  sendMessage(text){
+  /**
+   * @return void
+   * @description send a message to adding it to the base
+   * @param text Message to send (string)
+   */
+  private sendMessage(text): void{
     let values = {
       message : text,
       idUser: this.idUser,
@@ -178,7 +201,12 @@ export class MessagePage {
     this.associationProvider.addMessageAsso(values);
   }
 
-  removeMessage(message){
+  /**
+   * @description remove one message from the association
+   * @param message Message
+   * @return void
+   */
+  private removeMessage(message):void{
     let alert = this.alertCtrl.create({
       title : 'Voulez vous vraiment supprimer le message ?',
       buttons: [

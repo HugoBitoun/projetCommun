@@ -13,7 +13,6 @@ import {Cours} from "../../assets/utils/Cours";
 import {UserProvider} from "../../providers/user/user";
 import {CoursDetailsPage} from "../cours-details/cours-details";
 import {User} from "../../assets/utils/User";
-import {Messages} from "../../assets/utils/Messages";
 
 
 /**
