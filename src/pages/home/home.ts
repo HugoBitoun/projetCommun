@@ -62,7 +62,7 @@ export class HomePage {
                                     date: this.convertDate(message.date),
                                     nameAsso: association.Name
                                 };
-                                if (!this.listMessagesAsso.find( x => x == values)){
+                                if (!this.listMessagesAsso.find(x=> x.date == values.date && x.user == values.user)){
                                     this.listMessagesAsso.push(values);
                                 }
 
