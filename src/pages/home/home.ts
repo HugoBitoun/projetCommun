@@ -197,7 +197,7 @@ export class HomePage {
     }
 
     /**
-     * @description this function will covert the timestamp format to a writable one
+     * @description this function will convert the timestamp format to a writable one
      * @param date timestamp
      */
     private convertDate(date: firebase.firestore.Timestamp): string {

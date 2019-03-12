@@ -49,7 +49,7 @@ export class CoursProvider {
     /**
      * @description Get messages from cours from firebase
      * @param id String
-     * @return cours Promise<Messages[]>
+     * @return messages Promise<Messages[]>
      */
     public getMessagesCours(id: string): Promise<Messages[]> {
         const ref = firebase.firestore().collection('cours');
