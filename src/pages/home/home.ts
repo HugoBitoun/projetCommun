@@ -62,7 +62,10 @@ export class HomePage {
                                     date: this.convertDate(message.date),
                                     nameAsso: association.Name
                                 };
-                                this.listMessagesAsso.push(values);
+                                if (!this.listMessagesAsso.find( x => x == values)){
+                                    this.listMessagesAsso.push(values);
+                                }
+
                                 this.sortList(this.listMessagesAsso);
                             })
                         })
