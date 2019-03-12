@@ -50,6 +50,7 @@ export class HomePage {
         this.userProvider.getUser().subscribe(userData => {
                 userData.associations.forEach(idAsso => {
                     this.assoProvider.getAssociationsById(idAsso).subscribe(association => {
+                        if (association != undefined){
                         association.messages.forEach(message => {
                             this.userProvider.getUserByIdAux(message.idUser).then(userMessage => {
                                 let values = {
@@ -64,6 +65,7 @@ export class HomePage {
                                 this.sortList(this.listMessagesAsso);
                             })
                         })
+                        }
                     })
                 })
             }
