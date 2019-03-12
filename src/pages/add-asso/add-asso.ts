@@ -138,7 +138,7 @@ export class ModalContentPageCollaborateur {
             }
         });
 
-        this.navParams.get('parentPage').listCollabs = [];
+        //this.navParams.get('parentPage').listCollabs = [];
         this.dismiss();
     }
 

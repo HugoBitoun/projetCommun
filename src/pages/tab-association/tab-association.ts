@@ -14,56 +14,64 @@ import {AssociationDetailMessagePage} from "../association-detail-message/associ
 
 @IonicPage()
 @Component({
-  selector: 'page-tab-association',
-  templateUrl: 'tab-association.html',
+    selector: 'page-tab-association',
+    templateUrl: 'tab-association.html',
 })
 export class TabAssociationPage {
 
-  listAssociations : Association[] = Array<Association>();
+    private listAssociations : Association[] = Array<Association>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-              public userProvider : UserProvider,
-              public associationProvider : AssociationsProvider,
-              public loadingCtrl : LoadingController) {
-    this.update();
-  }
+    constructor(private navCtrl: NavController,
+                private navParams: NavParams,
+                private userProvider : UserProvider,
+                private associationProvider : AssociationsProvider,
+                private loadingCtrl : LoadingController) {
+        this.update();
+    }
 
-  update(){
-      let loader = this.loadingCtrl.create({
-          content: "Patientez un peu !"
-      });
-      loader.present();
-      this.listAssociations = [];
-      this.userProvider.getUser().subscribe(
-          data => {
-              console.log(data);
-              if (data != undefined){
-              data.associations.forEach(
-                  id => {
-                      this.associationProvider.getAssociationsById(id).subscribe( data => {
-                          console.log(this.listAssociations);
-                          if (data != undefined){
-                              if (!this.listAssociations.find(x => x.id == data.id))
-                              {this.listAssociations.push(data);}
-                          }
-                      })
-                  })
-              }
-              loader.dismiss();
-          });
-  }
+    /**
+     * @description get the associations where the user is subscriber then load it into a list
+     * @return void
+     */
+    private update() : void{
+        let loader = this.loadingCtrl.create({
+            content: "Patientez un peu !"
+        });
+        loader.present();
+        this.listAssociations = [];
+        this.userProvider.getUser().subscribe(
+            data => {
+                if (data != undefined){
+                    data.associations.forEach(
+                        id => {
+                            this.associationProvider.getAssociationsById(id).subscribe( data => {
+                                if (data != undefined){
+                                    if (!this.listAssociations.find(x => x.id == data.id))
+                                    {this.listAssociations.push(data);}
+                                }
+                            })
+                        })
+                }
+                loader.dismiss();
+            });
+    }
 
-  unsuscribe(association : Association){
-      this.userProvider.Unsubscribe(association);
-      this.update();
-  }
+    /**
+     * @description unsubscribe the user of an association in dataBase
+     * @param association
+     * @return void
+     */
+    private unsuscribe(association : Association): void{
+        this.userProvider.Unsubscribe(association);
+        this.update();
+    }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabAssociationPage');
-  }
-
-    public getAssociationPage(association : Association){
-      console.log(association.id);
+    /**
+     * @description get the asscociation detail page and pass the association
+     * @param association
+     * @return void
+     */
+    private getAssociationPage(association : Association): void{
         this.navParams.data.push(AssociationDetailMessagePage, {association : association})
     }
 }

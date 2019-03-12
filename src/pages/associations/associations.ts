@@ -1,14 +1,13 @@
 import {Component} from '@angular/core';
 import {
     AlertController,
-    IonicPage,
+    IonicPage, Loading,
     LoadingController,
     NavController
 } from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
 import {Association} from "../../assets/utils/Association";
-
 import {AssociationDetailMessagePage} from "../association-detail-message/association-detail-message";
 import {ModifyAssoPage} from "../modify-asso/modify-asso";
 import {User} from "../../assets/utils/User";
@@ -33,12 +32,16 @@ export class AssociationsPage {
 
     private listAssociations : Association[] = Array<Association>();
     private user: User;
+    private loader : Loading;
 
     constructor(private navCtrl: NavController,
                 private userProvider : UserProvider,
                 private associationProvider : AssociationsProvider,
                 private alertCtrl : AlertController,
                 private loadingCtrl : LoadingController) {
+        this.loader = this.loadingCtrl.create({
+            content: "Patientez un peu !"
+        });
 
         this.userProvider.getUser().subscribe(data => {
             this.user = data;
@@ -57,14 +60,11 @@ export class AssociationsPage {
      * @description function that get all the associations to show to the user
      */
     private update() : void{
-        let loader = this.loadingCtrl.create({
-            content: "Patientez un peu !"
-        });
-        loader.present();
+
+        this.loader.present();
         this.associationProvider.getAssociations().subscribe( data => {
             this.listAssociations = data;
             this.isSuscriber();
-            loader.dismiss();
         });
     }
 
@@ -141,6 +141,7 @@ export class AssociationsPage {
                     }
                 }
             );
+            this.loader.dismiss();
         });
     }
 

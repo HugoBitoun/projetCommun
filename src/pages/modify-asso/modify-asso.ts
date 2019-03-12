@@ -21,17 +21,17 @@ import {User} from "../../assets/utils/User";
 })
 export class ModifyAssoPage {
 
-  association : Association;
-  validations_form : FormGroup;
-  listCollabs : any = new Array();
-  user : User;
-  collabs : string[] = new Array<string>();
+  private association : Association;
+  private validations_form : FormGroup;
+  public listCollabs : any = new Array();
+  public user : User;
+  public collabs : string[] = new Array<string>();
 
 
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              public formBuilder : FormBuilder,
-              public associationProvider : AssociationsProvider,
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private formBuilder : FormBuilder,
+              private associationProvider : AssociationsProvider,
               private modalCtrl : ModalController,
               private userProvider : UserProvider) {
     this.initialize();
@@ -45,17 +45,23 @@ export class ModifyAssoPage {
     })
   }
 
-  modifyAsso(){
+  /**
+   * @description modify the association into the base
+   * @return void Void
+   */
+  private modifyAsso(): void{
     this.association.collabs = this.collabs;
     this.associationProvider.modifyAsso(this.association);
     this.navParams.get('parentPage').update();
     this.navCtrl.pop();
   }
 
-  ionViewDidLoad() {
-  }
 
-  initialize(){
+  /**
+   * @description get the user
+   * @return void
+   */
+  private initialize(): void{
     this.userProvider.getUser().subscribe(
         data => {
           this.user = data;
@@ -63,7 +69,11 @@ export class ModifyAssoPage {
     );
   }
 
-  initializeListCollabs(){
+  /**
+   * @description initialize the listCollabs with values for each user, values.user (the user), values.checked(depending on if the user was already a collaborator)
+   * @return void
+   */
+  private initializeListCollabs(): void{
     this.listCollabs = [];
     this.userProvider.getAllUsers().subscribe( data => {
           data.forEach( user => {
@@ -85,7 +95,12 @@ export class ModifyAssoPage {
   }
 
 
-  openModalCollabo(){
+  /**
+   * @description open the modal page to modify the collaborators list
+   * @return void
+   */
+  private openModalCollabo(): void{
+    console.log(this.listCollabs);
     let modal = this.modalCtrl.create(ModalContentPageCollaborateur, {parentPage : this, listCollabs : this.listCollabs, userId : this.user.uid});
     modal.present();
   }

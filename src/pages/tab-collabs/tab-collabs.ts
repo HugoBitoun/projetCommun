@@ -19,21 +19,27 @@ import {AssociationDetailMessagePage} from "../association-detail-message/associ
 })
 export class TabCollabsPage {
 
-  listAsso : Association[] = new Array<Association>();
+  private listAsso : Association[] = new Array<Association>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private assoProvider : AssociationsProvider, private userProvider : UserProvider) {
-    console.log("salut");
+  constructor(private navCtrl: NavController, private navParams: NavParams, private assoProvider : AssociationsProvider, private userProvider : UserProvider) {
     this.update();
   }
 
-  public getAssociationPage(association : Association){
-    console.log(association.id);
+  /**
+   * @description get the association detail page
+   * @return void
+   * @param association
+   */
+  private getAssociationPage(association : Association): void{
     this.navParams.data.push(AssociationDetailMessagePage, {association : association})
   }
 
 
-
-  public update(){
+  /**
+   * @description update or load the associations where the user is collaborator
+   * @return void
+   */
+  private update() : void{
     this.listAsso = [];
     this.userProvider.getUser().subscribe( data => {
       this.assoProvider.getAssoCollab(data.uid).then( data => {
@@ -41,7 +47,7 @@ export class TabCollabsPage {
           if (data != undefined){
             if (!this.listAsso.find(x => x.id == association.id)){
               this.listAsso.push(association);}
-            }
+          }
         })
       })
     });
@@ -49,8 +55,5 @@ export class TabCollabsPage {
 
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabCollabsPage');
-  }
 
 }

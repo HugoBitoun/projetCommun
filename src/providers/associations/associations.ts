@@ -139,7 +139,7 @@ export class AssociationsProvider {
       const ref = firebase.firestore().collection('associations').doc(`${idAsso}`);
 
       return ref.get().then( data => {
-          if (data.get('collabs').length == 0){
+          if (data.get('collabs') == undefined || data.get('collabs').length == 0){
               console.log("ah bn");
               return false;
           } else {
