@@ -69,6 +69,13 @@ export class UserProvider {
         return firebase.firestore().collection('users').doc(id);
     }
 
+    public getUserByIdAux(id) : Promise<User>{
+        const ref = firebase.firestore().collection('users').doc(id);
+        return ref.get().then( data => {
+            return data.data() as User;
+        })
+    }
+
     public addOneToNbAssoAdmin(idUser){
         let nbAsso;
         this.getUserById(idUser).get().then( data => {

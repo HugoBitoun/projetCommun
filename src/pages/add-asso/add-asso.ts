@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, ModalController, NavController, NavParams, ViewController} from 'ionic-angular';
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {FormBuilder, FormControl, FormGroup} from "@angular/forms";
@@ -24,12 +24,16 @@ export class AddAssoPage {
   idAdminAsso : string;
   validations_form : FormGroup;
   user : User;
+  listCollabs : any = [];
+  collabs : string[] = new Array<string>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider: UserProvider,
               public associationProvider : AssociationsProvider,
-              public formBuilder : FormBuilder){
+              public formBuilder : FormBuilder,
+              public modalCtrl : ModalController){
 
+      this.initializeListCollabs();
       this.userProvider.getUser().subscribe(
           data => {
             this.user = data;
@@ -44,12 +48,32 @@ export class AddAssoPage {
       })
   }
 
+  initializeListCollabs(){
+      this.userProvider.getAllUsers().subscribe( data => {
+              data.forEach( user => {
+                  console.log(this.listCollabs);
+                  let values = {
+                      user : user,
+                      checked: false
+                  };
+                  this.listCollabs.push(values);
+              })
+          }
+      )
+  }
+
+  openModalCollabo(){
+
+      let modal = this.modalCtrl.create(ModalContentPageCollaborateur, {parentPage : this, listCollabs : this.listCollabs, userId : this.user.uid});
+      modal.present();
+  }
+
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AddAssoPage');
   }
 
   public buttonAddAsso(){
     this.association.idAdminAsso = this.idAdminAsso;
+    this.association.collabs = this.collabs;
     this.associationProvider.addAsso(this.association);
     this.userProvider.removeOneToNbAsso(this.user.canCreateNbAsso);
 
@@ -60,3 +84,43 @@ export class AddAssoPage {
 
 
 }
+
+@Component({
+    selector: 'page-add-asso',
+    templateUrl: 'modalCollaborateur.html',
+})
+export class ModalContentPageCollaborateur {
+
+
+
+    constructor( private viewCtrl : ViewController, private navParams : NavParams){
+    }
+
+
+
+    addCollabo(id){
+       if (this.navParams.get('listCollabs').find(x => x.user.uid == id).checked == true){
+           this.navParams.get('listCollabs').find(x => x.user.uid == id).checked = false;
+       } else {
+           this.navParams.get('listCollabs').find(x => x.user.uid == id).checked = true;
+       }
+    }
+
+    dismiss(){
+        this.viewCtrl.dismiss();
+    }
+
+    valider(){
+        this.navParams.get('parentPage').collabs = [];
+        this.navParams.get('listCollabs').forEach( values => {
+            if (values.checked==true){
+                this.navParams.get('parentPage').collabs.push(values.user.uid);
+            }
+        });
+
+        this.navParams.get('parentPage').listCollabs = [];
+        this.dismiss();
+    }
+
+}
+

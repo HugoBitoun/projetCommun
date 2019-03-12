@@ -14,6 +14,7 @@ export class User {
     canCreateNbAsso? : number;
 
 
+
     constructor(values){
         this.email = values.email;            
         this.name = values.name;

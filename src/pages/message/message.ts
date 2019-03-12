@@ -4,6 +4,7 @@ import {Messages} from "../../assets/utils/Messages";
 import {UserProvider} from "../../providers/user/user";
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {Association} from "../../assets/utils/Association";
+import {User} from "../../assets/utils/User";
 
 /**
  * Generated class for the MessagePage page.
@@ -19,11 +20,13 @@ import {Association} from "../../assets/utils/Association";
 })
 export class MessagePage {
 
-  listMessage : Messages[] = new Array<Messages>();
+  listMessage : any = new Array();
   isAdminOfAsso : boolean;
   idUser : string;
   association : Association;
   isAdmin : boolean;
+  isCollab : boolean = false;
+  listUsers : User[] = new Array<User>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider : UserProvider,
@@ -45,12 +48,37 @@ export class MessagePage {
     console.log(this.association.id);
     this.associationProvider.getMessageAsso(this.association.id).then(
         data => {
-          data.map( data => {
-            this.listMessage.push(data);
+          data.map( message => {
+            this.userProvider.getUserByIdAux(message.idUser).then( dataUser => {
+
+              let values = {
+                message : message,
+                user : dataUser,
+                date : this.convertDate(message.date),
+                color : this.getMessageColor(dataUser),
+                icon : this.getMessageIcon(dataUser)
+              };
+              this.listMessage.push(values);
+              this.sortMessages();
+            });
           });
           loader.dismiss();
         }
     )
+  }
+
+  sortMessages(){
+    this.listMessage.sort((n1, n2) => {
+      if (n1.date > n2.date) {
+        return -1;
+      }
+
+      if (n1.date < n2.date) {
+        return 1;
+      }
+
+      return 0;
+    });
   }
 
   ionViewDidLoad() {
@@ -63,9 +91,49 @@ export class MessagePage {
           } else {
             this.isAdminOfAsso = false;
           }
+          this.associationProvider.getCollab(this.association.id).then( data => {
+            if (data.find(x => x == user.uid)){
+              this.isCollab = true;
+            }
+          });
         }
     )
   }
+
+
+  getMessageColor(user: User): string {
+    if (user != undefined) {
+      if (user.roles.admin != undefined && user.roles.admin) {
+        return "bg-danger";
+      }
+      if (this.isCollab != undefined && this.isCollab) {
+        return "bg-danger";
+      }
+      return "bg-primary";
+    }
+  }
+
+  getMessageIcon(user: User): string {
+    if (user != undefined) {
+      if (user.roles.admin != undefined && user.roles.admin) {
+        return "ribbon";
+      }
+      return "logo-snapchat";
+    }
+  }
+
+
+  convertDate(date: firebase.firestore.Timestamp): string {
+    return date.toDate().toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "2-digit",
+      year: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit"
+    });
+  }
+
 
   addMessage(){
     console.log("coucou");

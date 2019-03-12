@@ -7,16 +7,22 @@
 
 <ion-content padding>
 
-  <ion-card *ngFor="let message of listMessage">
+  <ion-card *ngFor="let values of listMessage">
+    <ion-card-title class="{{values.color}} text-capitalize py-2">
+      <ion-icon class="m-1" name="{{values.icon}}"></ion-icon>
+      {{values.user.name}} {{values.user.lastName}}
+      le : {{values.date}}
+    </ion-card-title>
     <ion-card-header>
-      {{message.message}}
+      {{values.color}}
+      {{values.message.message}}
     </ion-card-header>
     <ion-card-content>
-      <button ion-button *ngIf="message.idUser == idUser || isAdmin==true" (click)="removeMessage(message)"  color="danger">Supprimer</button>
+      <button ion-button *ngIf="values.message.idUser == idUser || isAdmin==true " (click)="removeMessage(values.message)"  color="danger">Supprimer</button>
     </ion-card-content>
   </ion-card>
 
-  <ion-fab right bottom *ngIf="isAdminOfAsso">
+  <ion-fab right bottom *ngIf="isAdminOfAsso || isCollab ==true || isAdmin==true">
     <button (click)="addMessage()" ion-fab color="primary">
       <ion-icon name="add">
       </ion-icon>

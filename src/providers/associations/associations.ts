@@ -53,7 +53,8 @@ export class AssociationsProvider {
           Description : association.Description,
           idAdminAsso : association.idAdminAsso,
           messages : [],
-          picLink : association.picLink
+          picLink : association.picLink,
+          collabs : association.collabs
         }
     )
   }
@@ -115,9 +116,61 @@ export class AssociationsProvider {
       ref.update({
           Name : association.Name,
           Description : association.Description,
-          picLink : association.picLink
+          picLink : association.picLink,
+          collabs : association.collabs
       })
 
 
   }
+
+  public isCollab(id) : Promise<boolean> {
+      const ref = firebase.firestore().collection('associations/').where('collabs' , 'array-contains', `${id}`);
+      return ref.get().then( data => {
+          if (data.empty){
+              return false;
+          } else {
+              return true;
+          }
+      })
+
+  }
+
+  public isCollabToAsso(idUser, idAsso): Promise<boolean>{
+      const ref = firebase.firestore().collection('associations').doc(`${idAsso}`);
+
+      return ref.get().then( data => {
+          if (data.get('collabs').length == 0){
+              console.log("ah bn");
+              return false;
+          } else {
+              if (data.get('collabs').find(x => x == idUser)){
+                  return true;
+              } else {
+                  return false;
+              }
+
+          }
+
+      })
+  }
+
+  public getCollab(idAsso){
+      const ref = firebase.firestore().collection('associations/').doc(`${idAsso}`);
+      return ref.get().then( data => {
+          return data.get('collabs') as string[];
+      })
+
+  }
+
+    public getAssoCollab(id) : Promise<Association[]> {
+        const ref = firebase.firestore().collection('associations/').where('collabs' , 'array-contains', `${id}`);
+        return ref.get().then( data => {
+            return data.docs.map( association => {
+                let asso =  association.data() as Association;
+                asso.id = association.id;
+                return asso;
+            })
+        })
+
+    }
 }

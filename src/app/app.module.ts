@@ -23,7 +23,7 @@ import {LogOutProvider} from '../providers/log-out/log-out';
 import {MyAssociationsPage} from "../pages/my-associations/my-associations";
 import {TabAssociationPage} from "../pages/tab-association/tab-association";
 import {TabAssociationCreatedPage} from "../pages/tab-association-created/tab-association-created";
-import {AddAssoPage} from "../pages/add-asso/add-asso";
+import {AddAssoPage, ModalContentPageCollaborateur} from "../pages/add-asso/add-asso";
 import { ParameterCountPage } from '../pages/parameter-count/parameter-count';
 import {AssociationDetailMessagePage} from "../pages/association-detail-message/association-detail-message";
 import {MessagePage} from "../pages/message/message";
@@ -31,6 +31,7 @@ import {CoursPage, ModalContentPage} from "../pages/cours/cours";
 import {CoursProvider} from '../providers/cours/cours';
 import {CoursDetailsPage, ModalContentPageMessage} from "../pages/cours-details/cours-details";
 import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
+import {TabCollabsPage} from "../pages/tab-collabs/tab-collabs";
 
 
 
@@ -53,7 +54,9 @@ import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
         CoursDetailsPage,
         ModalContentPageMessage,
         ModifyAssoPage,
-        ParameterCountPage
+        ParameterCountPage,
+        ModalContentPageCollaborateur,
+        TabCollabsPage
     ],
     imports: [
         BrowserModule,
@@ -83,7 +86,9 @@ import {ModifyAssoPage} from "../pages/modify-asso/modify-asso";
         ModalContentPage,
         CoursDetailsPage,
         ModifyAssoPage,
-        ParameterCountPage
+        ParameterCountPage,
+        ModalContentPageCollaborateur,
+        TabCollabsPage
     ],
     providers: [
         StatusBar,

@@ -19,7 +19,7 @@
     <h1>Modifier {{association.Name}}</h1>
   </div>
 
-  <form class="form" [formGroup]="validations_form" (ngSubmit)="modifyAsso()">
+  <form class="form" [formGroup]="validations_form" >
     <ion-list>
       <ion-item>
         <ion-label floating color ="primary">Nom association</ion-label>
@@ -33,7 +33,10 @@
         <ion-label floating color="primary">Lien image</ion-label>
         <ion-input type="text" formControlName="picLink" [(ngModel)]="association.picLink"></ion-input>
       </ion-item>
-      <button ion-button [disabled]="!validations_form.valid" color="primary">Modifier association</button>
+      <ion-item>
+        <button ion-button (click)="openModalCollabo()">Modifier les collaborateurs</button>
+      </ion-item>
+      <button ion-button [disabled]="!validations_form.valid" (click)="modifyAsso()" color="primary">Modifier association</button>
     </ion-list>
   </form>
 
