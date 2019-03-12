@@ -28,7 +28,7 @@ import {User} from "../../assets/utils/User";
     templateUrl: 'cours.html',
 })
 export class CoursPage {
-
+    private listCoursSub: Cours[] = new Array<Cours>();
     private listCours: Cours[] = new Array<Cours>();
     private loader: Loading;
     private hasCours: Boolean;
@@ -64,6 +64,7 @@ export class CoursPage {
      * @description Get the subscribed vours from the listCours and change the isSubsribed boolean of cours to true
      */
     getSubCours() {
+        this.listCoursSub = new Array<Cours>();
         this.userProvider.getUser().subscribe(user => {
             this.hasCours = false;
             this.user = user;
@@ -73,10 +74,11 @@ export class CoursPage {
                         if (user.cours.find(x => x == cours.id)) {
                             cours.isSubscriber = true;
                             this.hasCours = true;
-
+                            this.listCoursSub.push(cours);
                         } else {
                             cours.isSubscriber = false;
-                        }}
+                        }
+                }
             );
         });
         this.loader.dismissAll();
