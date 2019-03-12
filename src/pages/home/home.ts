@@ -48,6 +48,7 @@ export class HomePage {
      */
     private getMessagesAssoSub(): void {
         this.userProvider.getUser().subscribe(userData => {
+            this.listMessagesAsso = new Array();
                 userData.associations.forEach(idAsso => {
                     this.assoProvider.getAssociationsById(idAsso).subscribe(association => {
                         association.messages.forEach(message => {
@@ -97,8 +98,9 @@ export class HomePage {
      * @description get the cours the user subscribed and store then in the this.listMessages array
      */
     getSubCours() {
-        this.listMessages = new Array<Messages>();
+
         this.userProvider.getUser().subscribe(user => {
+            this.listMessages = new Array<Messages>();
             this.hasCours = false;
             this.user = user;
             this.listCours.forEach(
