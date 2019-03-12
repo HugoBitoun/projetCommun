@@ -6,6 +6,9 @@ Pour lancer l'application :
 
 Télécharger node.js : https://nodejs.org/en/download/
 
+Installer ionic : 
+`npm install -g ionic`
+
 Executer la commande suivante a la racine du projet pour installer les dependances :
 ` npm i `
 
