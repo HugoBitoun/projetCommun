@@ -54,6 +54,7 @@ export class CoursPage {
      * @description Get all the cours available to be subscribed and store them int the this.listCours
      */
     getCours() {
+        this.listCours = new Array<Cours>();
         this.coursProvider.getCours().subscribe(cours => {
             this.listCours = cours;
             this.getSubCours();
