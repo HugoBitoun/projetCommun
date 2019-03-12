@@ -6,51 +6,55 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Connexion</ion-title>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-title>Connexion</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
 
-  <form class="form" [formGroup]="validations_form" (ngSubmit)="doConnection()">
-    <ion-list>
+    <form class="form" [formGroup]="validations_form" (ngSubmit)="doConnection()">
+        <ion-list>
 
-      <ion-item>
-        <ion-label floating color="primary">Email universitaire</ion-label>
-        <ion-input type="email" formControlName="email"></ion-input>
-      </ion-item>
-      <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.email">
-          <div class="error-message"
-            *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
-            {{ validation.message }}
-          </div>
-        </ng-container>
-      </div>
+            <ion-item>
+                <ion-label floating color="primary">Email universitaire</ion-label>
+                <ion-input type="email" formControlName="email"></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.email">
+                    <div class="error-message"
+                         *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+                        {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
 
-      <ion-item>
-        <ion-label floating color="primary">Mot de passe</ion-label>
-        <ion-input type="password" formControlName="password"></ion-input>
-      </ion-item>
-      <div class="validation-errors">
-        <ng-container *ngFor="let validation of validation_messages.password">
-          <div class="error-message"
-            *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
-            {{ validation.message }}
-          </div>
-        </ng-container>
-      </div>
+            <ion-item>
+                <ion-label floating color="primary">Mot de passe</ion-label>
+                <ion-input type="password" formControlName="password"></ion-input>
+            </ion-item>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validation_messages.password">
+                    <div class="error-message"
+                         *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+                        {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
 
-      <div padding style="text-align: center">
-        <button ion-button (click)="doConnection()">Connexion</button>
+            <div padding style="text-align: center">
+                <button ion-button>Connexion</button>
+            </div>
+        </ion-list>
+    </form>
+    <div style="text-align: center">
         <p>ou</p>
-        <button ion-button (click)="signUp()" >Inscription</button>
-      </div>
-    </ion-list>
-  </form>
-
+        <br>
+    </div>
+    <div style="text-align: center">
+        <button ion-button color="secondary" (click)="signUp()">Inscription</button>
+    </div>
 
 </ion-content>

@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Association} from "../../../www/assets/utils/Association";
+import {UserProvider} from "../../providers/user/user";
+import {User} from "../../assets/utils/User";
+
 
 /**
- * Generated class for the DetailAssoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * @description show the different elements of an association to the users
  */
-
 @IonicPage()
 @Component({
   selector: 'page-detail-asso',
@@ -16,16 +15,22 @@ import {Association} from "../../../www/assets/utils/Association";
 })
 export class DetailAssoPage {
 
-  association : Association;
+  private association : Association;
+  private collabs : User[] = new Array();
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private userProvider : UserProvider) {
     this.association = navParams.get('association');
+    this.update();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailAssoPage');
+  private update(){
+    this.collabs = [];
+    this.association.collabs.forEach( idUser => {
+      this.userProvider.getUserByIdAux(idUser).then( data => {
+        this.collabs.push(data);
+      })
+    })
   }
-
 
 }

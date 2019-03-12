@@ -1,5 +1,7 @@
 export class Messages {
-    message : string;
-    date? : Date;
-    idUser : string;
+    id:string;
+    message: string;
+    date?: firebase.firestore.Timestamp;
+    idUser: string;
+    intitule?:String;
 }

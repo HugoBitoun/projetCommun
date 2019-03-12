@@ -1,0 +1,44 @@
+<!--
+  Generated template for the CoursPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Mes cours</ion-title>
+    </ion-navbar>
+
+
+</ion-header>
+
+<ion-content padding>
+    <div *ngIf="hasCours==false" (click)="openModal()" margin-horizontal>
+        <button ion-button color="danger" text-wrap padding>{{user.name}} {{user.lastName}}, vous n'êtes inscrit(e) à aucun
+            cours !
+        </button>
+    </div>
+
+        <ion-card *ngFor="let cours of listCoursSub" margin-bottom>
+            <div (click)="getCoursDetailPage(cours)">
+                <img src="{{cours.image}}">
+                <ion-card-content text-center text-uppercase><h1>{{cours.name}}</h1></ion-card-content>
+            </div>
+        </ion-card>
+</ion-content>
+
+<!-- Il est a l'exterieur pour qu'il soit en position absolue et scroll avec l'ecran -->
+<div *ngIf="hasCours==true">
+    <ion-fab right bottom>
+        <button ion-fab color="primary" (click)="openModal()">
+            <ion-icon name="settings"></ion-icon>
+        </button>
+    </ion-fab>
+</div>
+
+

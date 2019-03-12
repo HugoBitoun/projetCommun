@@ -8,5 +8,23 @@
 
 
 <ion-content padding>
-  {{association.Description}}
+ <div style="text-align: center">
+     <img src="{{association.picLink}}" *ngIf="association.picLink!=null" style="text-align: center">
+     <br>
+     <h1 style="text-underline: #007aff">Description</h1>
+     <h1>{{association.Description}}</h1>
+     <br>
+     <div *ngIf="collabs.length>0">
+     <h1>Collaborateurs</h1>
+     <ion-list *ngFor="let user of collabs">
+         <ion-item>
+             <div style="text-align: center">
+             <ion-icon name="person"></ion-icon> <h2 style="color: darkorange; ">{{user.name}} {{user.lastName}}</h2>
+             </div>
+         </ion-item>
+     </ion-list>
+     </div>
+ </div>
+
+
 </ion-content>

@@ -12,32 +12,35 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Associations</ion-title>
+
   </ion-navbar>
+
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-card *ngFor="let association of listAssociations" (click)="getAssociationPage(association)">
-      <ion-item-sliding  >
-        <ion-item >
-      <ion-card-title>{{association.Name}}</ion-card-title>
-      <ion-card-header>
-        {{association.Description}}
-        {{association.id}}
-        <p color="danger">{{user.email}}</p>
 
-      </ion-card-header>
+  <div style="text-align: center" *ngIf="listAssociations.length == 0">
+    <h1 style="color: #8c8c8c">Pas d'associations !</h1>
+  </div>
+
+  <ion-list *ngIf="listAssociations.length != 0">
+    <ion-card  *ngFor="let association of listAssociations" >
+      <img (click)="getAssociationPage(association)"src="{{association.picLink}}" *ngIf="association.picLink != null">
+      <ion-item-sliding>
+        <ion-item >
+      <ion-card-title (click)="getAssociationPage(association)">{{association.Name}}</ion-card-title>
       <ion-card-content>
-        <ion-icon *ngIf="!association.isSubscriber" (click)="subscribe(association)" name="checkmark" type="primary"></ion-icon>
-        <ion-icon *ngIf="association.isSubscriber" (click)="subscribe(association)" name="checkmark-circle" type="secondary"></ion-icon>
+        <button icon-only ion-button clear *ngIf="!association.isSubscriber" (click)="subscribe(association)"><ion-icon name="checkmark" color="primary"></ion-icon></button>
+        <button icon-only ion-button clear *ngIf="association.isSubscriber" (click)="subscribe(association)"><ion-icon  name="checkmark-circle" color="secondary"></ion-icon></button>
       </ion-card-content>
         </ion-item>
         <ion-item-options side="end" *ngIf="user.roles.admin == true ">
-          <button color="danger" ion-button>Supprimer</button>
-          <button color="primary" ion-button>Modifier</button>
+          <button color="danger" ion-button (click)="deleteAsso(association)">Supprimer</button>
+          <button color="primary" ion-button (click)="modifyAsso(association)">Modifier</button>
         </ion-item-options>
       </ion-item-sliding>
     </ion-card>
+
   </ion-list>
 </ion-content>

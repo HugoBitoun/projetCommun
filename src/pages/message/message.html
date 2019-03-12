@@ -7,16 +7,23 @@
 
 <ion-content padding>
 
-  <ion-card *ngFor="let message of listMessage">
+  <ion-card *ngFor="let values of listMessage">
+    <ion-card-title class="{{values.color}} text-capitalize py-2">
+      <ion-icon class="m-1" name="{{values.icon}}"></ion-icon>
+      {{values.user.name}} {{values.user.lastName}}
+      le : {{values.date}}
+    </ion-card-title>
     <ion-card-header>
-      {{message.message}}
+      {{values.message.message}}
     </ion-card-header>
     <ion-card-content>
-      <ion-icon *ngIf="message.idUser == idUser" (click)="removeMessage(message)" name="close" color="danger"></ion-icon>
+      <button ion-button clear icon-only *ngIf="values.message.idUser == idUser || isAdmin==true " (click)="removeMessage(values.message)">
+        <ion-icon name="trash" color="danger"></ion-icon>
+      </button>
     </ion-card-content>
   </ion-card>
 
-  <ion-fab right bottom *ngIf="isAdminOfAsso">
+  <ion-fab right bottom *ngIf="isAdminOfAsso || isCollab ==true || isAdmin==true">
     <button (click)="addMessage()" ion-fab color="primary">
       <ion-icon name="add">
       </ion-icon>
@@ -24,3 +31,6 @@
   </ion-fab>
 
 </ion-content>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">

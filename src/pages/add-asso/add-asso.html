@@ -15,7 +15,7 @@
 
 <ion-content padding>
 
-  <form class="form" [formGroup]="validations_form" (ngSubmit)="buttonAddAsso()">
+  <form class="form" [formGroup]="validations_form" >
     <ion-list>
       <ion-item>
         <ion-label floating color ="primary">Nom association</ion-label>
@@ -25,7 +25,19 @@
         <ion-label floating color="primary">Description</ion-label>
         <ion-input type="text" formControlName="Description" [(ngModel)]="association.Description"></ion-input>
       </ion-item>
-      <button ion-button [disabled]="!validations_form.valid" color="primary">Ajouter association</button>
+      <ion-item>
+        <ion-label floating color="primary">Lien image</ion-label>
+        <ion-input type="text" formControlName="picLink" [(ngModel)]="association.picLink"></ion-input>
+      </ion-item>
+      <ion-item>
+        <div style="text-align: center">
+        <button ion-button (click)="openModalCollabo()">Ajouter collaborateurs</button>
+        </div>
+      </ion-item>
+        <br>
+      <div style="text-align: center">
+      <button ion-button [disabled]="!validations_form.valid" (click)="buttonAddAsso()" color="secondary">Ajouter association</button>
+      </div>
     </ion-list>
   </form>
 

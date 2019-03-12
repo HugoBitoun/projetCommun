@@ -1,0 +1,20 @@
+
+<ion-content>
+
+    <ion-list radio-group>
+        <ion-list-header>
+            Personnes à ajouter
+        </ion-list-header>
+
+        <ion-item *ngFor="let values of this.navParams.get('listCollabs')">
+            <ion-label *ngIf="values.user.uid != this.navParams.get('userId')">{{values.user.name}} {{values.user.lastName}}</ion-label>
+            <ion-checkbox *ngIf="values.user.uid != this.navParams.get('userId')" (ionChange)="addCollabo(values.user.uid)" checked="{{values.checked}}"></ion-checkbox>
+        </ion-item>
+    </ion-list>
+
+    <div style="text-align: center">
+    <button ion-button color="secondary" (click)="valider()">Valider</button>
+    <button ion-button color="danger" (click)="dismiss()">Annuler</button>
+    </div>
+
+</ion-content>

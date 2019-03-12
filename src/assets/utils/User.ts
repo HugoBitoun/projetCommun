@@ -7,10 +7,13 @@ export class User {
     password? : string;    
     name? : string;
     lastName? : string;
-    roles? : Roles;
+    roles : Roles;
     uid? : string;
     associations? : string[];
-    numberOfAssociations? : number;
+    cours? : string[];
+    canCreateNbAsso? : number;
+
+
 
     constructor(values){
         this.email = values.email;            
