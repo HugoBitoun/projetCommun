@@ -41,15 +41,16 @@ export class HomePage {
     getMessagesAssoSub(){
         this.userProvider.getUser().subscribe( userData => {
             userData.associations.forEach( idAsso => {
-                this.assoProvider.getMessageAsso(idAsso).then( messages => {
-                    messages.forEach( message => {
+                this.assoProvider.getAssociationsById(idAsso).subscribe( association => {
+                    association.messages.forEach( message => {
                         this.userProvider.getUserByIdAux(message.idUser).then( userMessage => {
                             let values = {
                                 message : message,
                                 user : userMessage,
                                 color : this.getMessageColor(userMessage),
                                 icon : this.getMessageIcon(userMessage),
-                                date : this.convertDate(message.date)
+                                date : this.convertDate(message.date),
+                                nameAsso : association.Name
                             };
                             console.log(values);
                             this.listMessagesAsso.push(values);

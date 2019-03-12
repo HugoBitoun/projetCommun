@@ -30,9 +30,14 @@
         <ion-input type="text" formControlName="picLink" [(ngModel)]="association.picLink"></ion-input>
       </ion-item>
       <ion-item>
+        <div style="text-align: center">
         <button ion-button (click)="openModalCollabo()">Ajouter collaborateurs</button>
+        </div>
       </ion-item>
-      <button ion-button [disabled]="!validations_form.valid" (click)="buttonAddAsso()" color="primary">Ajouter association</button>
+        <br>
+      <div style="text-align: center">
+      <button ion-button [disabled]="!validations_form.valid" (click)="buttonAddAsso()" color="secondary">Ajouter association</button>
+      </div>
     </ion-list>
   </form>
 

@@ -92,7 +92,7 @@ export class MessagePage {
             this.isAdminOfAsso = false;
           }
           this.associationProvider.getCollab(this.association.id).then( data => {
-            if (data.find(x => x == user.uid)){
+            if ( data != undefined && data.find(x => x == user.uid)){
               this.isCollab = true;
             }
           });
