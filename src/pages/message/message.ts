@@ -106,9 +106,6 @@ export class MessagePage {
       if (user.roles.admin != undefined && user.roles.admin) {
         return "bg-danger";
       }
-      if (this.isCollab != undefined && this.isCollab) {
-        return "bg-danger";
-      }
       return "bg-primary";
     }
   }

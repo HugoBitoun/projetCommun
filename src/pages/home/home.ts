@@ -5,6 +5,7 @@ import {UserProvider} from "../../providers/user/user";
 import {Cours} from "../../assets/utils/Cours";
 import {User} from "../../assets/utils/User";
 import {Messages} from "../../assets/utils/Messages";
+import {AssociationsProvider} from "../../providers/associations/associations";
 
 @Component({
     selector: 'page-home',
@@ -17,18 +18,48 @@ export class HomePage {
     user: User;
     listUsers: User[] = new Array<User>();
     listMessages: Messages[] = new Array<Messages>();
+    listMessagesAsso: any[] = new Array();
+    seg : string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider,
-                public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
+                public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController,
+                public assoProvider : AssociationsProvider) {
         this.loader = this.loadingCtrl.create({
             content: "Patientez un peu !"
         });
         this.loader.setDuration(1000);
+        this.seg = 'Cours';
     }
 
     ionViewWillLoad() {
         this.loader.present();
         this.getCours();
+        this.getMessagesAssoSub();
+        console.log(this.listMessagesAsso);
+    }
+
+    getMessagesAssoSub(){
+        this.userProvider.getUser().subscribe( userData => {
+            userData.associations.forEach( idAsso => {
+                this.assoProvider.getMessageAsso(idAsso).then( messages => {
+                    messages.forEach( message => {
+                        this.userProvider.getUserByIdAux(message.idUser).then( userMessage => {
+                            let values = {
+                                message : message,
+                                user : userMessage,
+                                color : this.getMessageColor(userMessage),
+                                icon : this.getMessageIcon(userMessage),
+                                date : this.convertDate(message.date)
+                            };
+                            console.log(values);
+                            this.listMessagesAsso.push(values);
+                            this.sortList(this.listMessagesAsso);
+                        })
+                    })
+                })
+            })
+            }
+        )
     }
 
 
@@ -56,16 +87,7 @@ export class HomePage {
                                 data.map(data => {
                                     data.intitule = cours.name;
                                     this.listMessages.push(data);
-                                    this.listMessages.sort((n1, n2) => {
-                                        if (n1.date > n2.date) {
-                                            return -1;
-                                        }
-
-                                        if (n1.date < n2.date) {
-                                            return 1;
-                                        }
-                                        return 0;
-                                    });
+                                    this.sortList(this.listMessages);
                                 });
                             });
                         } else {
@@ -81,6 +103,19 @@ export class HomePage {
     getAllUser() {
         this.userProvider.getAllUsers().subscribe(data => {
             this.listUsers = data;
+        });
+    }
+
+    sortList(liste){
+        liste.sort((n1, n2) => {
+            if (n1.date > n2.date) {
+                return -1;
+            }
+
+            if (n1.date < n2.date) {
+                return 1;
+            }
+            return 0;
         });
     }
 

@@ -38,8 +38,10 @@ export class TabCollabsPage {
     this.userProvider.getUser().subscribe( data => {
       this.assoProvider.getAssoCollab(data.uid).then( data => {
         data.forEach( association => {
-          this.listAsso.push(association);
-          console.log(association);
+          if (data != undefined){
+            if (!this.listAsso.find(x => x.id == association.id)){
+              this.listAsso.push(association);}
+            }
         })
       })
     });
