@@ -3,9 +3,7 @@ import {
     AlertController,
     IonicPage,
     LoadingController,
-    NavController,
-    NavParams,
-    PopoverController
+    NavController
 } from 'ionic-angular';
 import {AssociationsProvider} from "../../providers/associations/associations";
 import {UserProvider} from "../../providers/user/user";
@@ -33,26 +31,32 @@ import {User} from "../../assets/utils/User";
 })
 export class AssociationsPage {
 
+    private listAssociations : Association[] = Array<Association>();
+    private user: User;
 
-    subscriber : boolean = false;
-    listAssociations : Association[] = Array<Association>();
-    user: User;
+    constructor(private navCtrl: NavController,
+                private userProvider : UserProvider,
+                private associationProvider : AssociationsProvider,
+                private alertCtrl : AlertController,
+                private loadingCtrl : LoadingController) {
 
-    constructor(public navCtrl: NavController, public userProvider : UserProvider,
-                public associationProvider : AssociationsProvider,
-                public alertCtrl : AlertController,
-                public loadingCtrl : LoadingController) {
         this.userProvider.getUser().subscribe(data => {
             this.user = data;
-            console.log(data);
         });
     }
 
+    /**
+     * @description ionic function call before the view load and load/update the data
+     */
     ionViewWillLoad() {
         this.update();
     }
 
-    update(){
+    /**
+     * @return void
+     * @description function that get all the associations to show to the user
+     */
+    private update() : void{
         let loader = this.loadingCtrl.create({
             content: "Patientez un peu !"
         });
@@ -64,7 +68,12 @@ export class AssociationsPage {
         });
     }
 
-    deleteAsso(association : Association){
+    /**
+     * @description create an alert to ask user if he want to delete the association and delete it if the answer is Yes
+     * @param association (Association)
+     * @return void
+     */
+    private deleteAsso(association : Association): void{
 
         let alert = this.alertCtrl.create({
             title : 'Voulez vous vraiment supprimer' + association.Name + ' ?',
@@ -89,7 +98,13 @@ export class AssociationsPage {
 
     }
 
-    subscribe(association : Association)
+
+    /**
+     * @description allow the user to subscribe or unsubscribe to association
+     * @param association
+     * @return void
+     */
+    private subscribe(association : Association) : void
     {
 
         if (association.isSubscriber == true) {
@@ -101,28 +116,40 @@ export class AssociationsPage {
         }
     }
 
-    public getAssociationPage(association : Association){
+    /**
+     * @description get the association detail page with the association in param
+     * @param association
+     * @return void
+     */
+    private getAssociationPage(association : Association): void{
         this.navCtrl.push(AssociationDetailMessagePage, {association : association})
     }
 
 
-    isSuscriber() {
+    /**
+     * @description check and initialize the optionnal field isSubscriber in association to true if he's a subscriber
+     * @return void
+     */
+    private isSuscriber() :void {
         this.userProvider.getUser().subscribe(user => {
             this.listAssociations.forEach(
                 association => {
-                    console.log(association.id);
                     if (user.associations.find(x => x == association.id)) {
                         association.isSubscriber = true;
                     } else {
                         association.isSubscriber = false;
                     }
-                    console.log(association.isSubscriber);
                 }
             );
         });
     }
 
-    modifyAsso(association : Association){
+    /**
+     * @description push the page ModifyAssoPage
+     * @param association
+     * @return void
+     */
+    private modifyAsso(association : Association) : void{
         this.navCtrl.push(ModifyAssoPage, {association : association, parentPage : this});
     }
 

@@ -2,13 +2,10 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {Association} from "../../../www/assets/utils/Association";
 
-/**
- * Generated class for the DetailAssoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
+/**
+ * @description show the different elements of an association to the users
+ */
 @IonicPage()
 @Component({
   selector: 'page-detail-asso',
@@ -16,16 +13,13 @@ import {Association} from "../../../www/assets/utils/Association";
 })
 export class DetailAssoPage {
 
-  association : Association;
+  private association : Association;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.association = navParams.get('association');
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DetailAssoPage');
-  }
 
 
 }

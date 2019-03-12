@@ -18,8 +18,8 @@ export class HomePage {
     user: User;
     listUsers: User[] = new Array<User>();
     listMessages: Messages[] = new Array<Messages>();
-    listMessagesAsso: any[] = new Array();
-    seg : string;
+    private listMessagesAsso: any[] = new Array();
+    private seg : string;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider,
                 public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController,
@@ -31,6 +31,9 @@ export class HomePage {
         this.seg = 'Cours';
     }
 
+    /**
+     * @description when the view will load this ionic function will load the data
+     */
     ionViewWillLoad() {
         this.loader.present();
         this.getCours();
@@ -38,7 +41,12 @@ export class HomePage {
         console.log(this.listMessagesAsso);
     }
 
-    getMessagesAssoSub(){
+    /**
+     * @return void
+     * @description get the messages by association that the user has subscribe, and sort them by their dates and add to a list a values
+     * that contains the message with the user that wrote the message, the color, the date, the icon, the name of the association
+     */
+    private getMessagesAssoSub() : void{
         this.userProvider.getUser().subscribe( userData => {
             userData.associations.forEach( idAsso => {
                 this.assoProvider.getAssociationsById(idAsso).subscribe( association => {
@@ -52,7 +60,6 @@ export class HomePage {
                                 date : this.convertDate(message.date),
                                 nameAsso : association.Name
                             };
-                            console.log(values);
                             this.listMessagesAsso.push(values);
                             this.sortList(this.listMessagesAsso);
                         })
@@ -107,7 +114,11 @@ export class HomePage {
         });
     }
 
-    sortList(liste){
+    /**
+     * @description this function will sort a list of message in function of their dates, the most recently is going to be the first into the list
+     * @param liste Liste of Messages or Object with date field
+     */
+    private sortList(liste) : void {
         liste.sort((n1, n2) => {
             if (n1.date > n2.date) {
                 return -1;
@@ -120,7 +131,11 @@ export class HomePage {
         });
     }
 
-    getMessageColor(user: User): string {
+    /**
+     * @description this function will give the color of the message according to the user roles that wrote the message
+     * @param user User
+     */
+    private getMessageColor(user: User): string {
         if (user != undefined) {
             if (user.roles.admin != undefined && user.roles.admin) {
                 return "bg-danger";
@@ -136,7 +151,11 @@ export class HomePage {
         return "bg-primary";
     }
 
-    getMessageIcon(user: User): string {
+    /**
+     * @description this function will give the icon of the message according to the user roles that wrote the message
+     * @param user User
+     */
+    private getMessageIcon(user: User): string {
         if (user != undefined) {
             if (user.roles.admin != undefined && user.roles.admin) {
                 return "ribbon";
@@ -168,7 +187,11 @@ export class HomePage {
             return this.listUsers.find(x => x.uid == id);
     }
 
-    convertDate(date: firebase.firestore.Timestamp): string {
+    /**
+     * @description this function will covert the timestamp format to a writable one
+     * @param date timestamp
+     */
+    private convertDate(date: firebase.firestore.Timestamp): string {
         return date.toDate().toLocaleDateString("en-GB", {
             day: "numeric",
             month: "2-digit",

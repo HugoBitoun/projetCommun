@@ -6,12 +6,8 @@ import {MessagePage} from "../message/message";
 import {MyAssociationsPage} from "../my-associations/my-associations";
 
 /**
- * Generated class for the AssociationDetailMessagePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * @description Tab Ionic Page Parent class of DetailAssoPage and MessagePage
  */
-
 @IonicPage()
 @Component({
   selector: 'page-association-detail-message',
@@ -19,10 +15,10 @@ import {MyAssociationsPage} from "../my-associations/my-associations";
 })
 export class AssociationDetailMessagePage {
 
-  association : Association;
-  tab1 = DetailAssoPage;
-  tab2 = MessagePage;
-  navParamTabs : any;
+  private association : Association;
+  private tab1 = DetailAssoPage;
+  private tab2 = MessagePage;
+  private navParamTabs : any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
@@ -30,8 +26,6 @@ export class AssociationDetailMessagePage {
     this.navParamTabs = navParams;
   }
 
-  ionViewDidEnter() {
-  }
 
 
 }

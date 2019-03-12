@@ -20,12 +20,12 @@ import {User} from "../../assets/utils/User";
 })
 export class AddAssoPage {
 
-  association : Association = new Association();
-  idAdminAsso : string;
-  validations_form : FormGroup;
-  user : User;
-  listCollabs : any = [];
-  collabs : string[] = new Array<string>();
+  private association : Association = new Association();
+  private idAdminAsso : string;
+  private validations_form : FormGroup;
+  private user : User;
+  public listCollabs : any = [];
+  public collabs : string[] = new Array<string>();
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
               public userProvider: UserProvider,
@@ -48,7 +48,11 @@ export class AddAssoPage {
       })
   }
 
-  initializeListCollabs(){
+    /**
+     * @return void
+     * @description initialize the listCollabs for each users with values that contains a user and a field checked that is a boolean
+     */
+  private initializeListCollabs() : void{
       this.userProvider.getAllUsers().subscribe( data => {
               data.forEach( user => {
                   console.log(this.listCollabs);
@@ -62,16 +66,21 @@ export class AddAssoPage {
       )
   }
 
-  openModalCollabo(){
+    /**
+     * @description Just open the modalPageCollabo
+     */
+  private  openModalCollabo() : void{
 
       let modal = this.modalCtrl.create(ModalContentPageCollaborateur, {parentPage : this, listCollabs : this.listCollabs, userId : this.user.uid});
       modal.present();
   }
 
-  ionViewDidLoad() {
-  }
 
-  public buttonAddAsso(){
+    /**
+     * @param: no params
+     * @return: void
+     */
+  private buttonAddAsso() : void{
     this.association.idAdminAsso = this.idAdminAsso;
     this.association.collabs = this.collabs;
     this.associationProvider.addAsso(this.association);
@@ -97,8 +106,11 @@ export class ModalContentPageCollaborateur {
     }
 
 
-
-    addCollabo(id){
+    /**
+     * @description this function change the state of field checked in listCollabs that is passed in params
+     * @param id of the user that is going to be add
+     */
+    private addCollabo(id) : void{
        if (this.navParams.get('listCollabs').find(x => x.user.uid == id).checked == true){
            this.navParams.get('listCollabs').find(x => x.user.uid == id).checked = false;
        } else {
@@ -106,11 +118,19 @@ export class ModalContentPageCollaborateur {
        }
     }
 
-    dismiss(){
+    /**
+     * @return void
+     * @description Close the modal page
+     */
+    private dismiss() : void{
         this.viewCtrl.dismiss();
     }
 
-    valider(){
+    /**
+     * @return void
+     * @description checked if for each user in the listCollabs is true if  it is then the function add the user to a collabs list present in the parent page then dismiss
+     */
+    private valider() : void{
         this.navParams.get('parentPage').collabs = [];
         this.navParams.get('listCollabs').forEach( values => {
             if (values.checked==true){
