@@ -10,7 +10,7 @@
 
   <ion-list>
     <ion-card *ngFor="let association of listAsso" >
-        <img src="{{association.picLink}}" *ngIf="association.picLink != null">
+        <img (click)="getAssociationPage(association)" src="{{association.picLink}}" *ngIf="association.picLink != null">
         <ion-card-title (click)="getAssociationPage(association)">{{association.Name}}</ion-card-title>
     </ion-card>
   </ion-list>
