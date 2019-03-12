@@ -7,6 +7,7 @@ import {Observable} from "rxjs";
 import * as firebase from "firebase";
 import {Association} from "../../assets/utils/Association";
 import {Cours} from "../../assets/utils/Cours";
+import DocumentReference = firebase.firestore.DocumentReference;
 
 /*
   Generated class for the UserProvider provider.
@@ -25,6 +26,10 @@ export class UserProvider {
     }
 
 
+    /**
+     * @description get the current user that is connected
+     * @return Observable<User>
+     */
     public getUser(): Observable<User> {
         this.userId = this.afAuth.auth.currentUser.uid;
         const listAsso = this.firestore.collection<User>(`users`).doc(`${this.userId}`);
@@ -33,26 +38,50 @@ export class UserProvider {
         })
     }
 
-    public Subscribe(association: Association) {
+    /**
+     * @description add the id of an association to the user.associations list to make it subscribe
+     * @param association Association
+     * @return void
+     */
+    public Subscribe(association: Association): void {
         const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
         userRef.update({associations: firebase.firestore.FieldValue.arrayUnion(association.id)});
     }
 
+    /**
+     * @description remove the id of an association to the user.associations list to make it unsubscribe
+     * @param association Association
+     * @constructor
+     */
     public Unsubscribe(association: Association) {
         const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
         userRef.update({associations: firebase.firestore.FieldValue.arrayRemove(association.id)});
     }
 
-    public subscribeCours(cours: Cours) {
+    /**
+     * @description add the id of a cours to the user.cours list to make it subscribe
+     * @param cours Cours
+     * @return void
+     */
+    public subscribeCours(cours: Cours) : void {
         const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
         userRef.update({cours: firebase.firestore.FieldValue.arrayUnion(cours.id)});
     }
 
-    public unsubscribeCours(cours: Cours) {
+    /**
+     * @description remove the id of a cours to the user.cours list to make it unsubscribe
+     * @param cours Cours
+     * @return void
+     */
+    public unsubscribeCours(cours: Cours): void {
         const userRef = firebase.firestore().collection(`users`).doc(`${this.userId}`);
         userRef.update({cours: firebase.firestore.FieldValue.arrayRemove(cours.id)});
     }
 
+    /**
+     * @description get all the user in the database
+     * @return Observable<User[]>
+     */
     public getAllUsers(): Observable<User[]> {
         const listUsers = this.firestore.collection<User>('users');
         return listUsers.snapshotChanges().map(actions => {
@@ -65,10 +94,20 @@ export class UserProvider {
     }
 
 
-    public getUserById(id){
+    /**
+     * @description go to the document user according to the id in param into the database
+     * @param id string
+     * @return DocumentReference
+     */
+    public getUserById(id): DocumentReference{
         return firebase.firestore().collection('users').doc(id);
     }
 
+    /**
+     * @description get the data of one user according to the id
+     * @param id string
+     * @return Promise<User>
+     */
     public getUserByIdAux(id) : Promise<User>{
         const ref = firebase.firestore().collection('users').doc(id);
         return ref.get().then( data => {
@@ -76,7 +115,12 @@ export class UserProvider {
         })
     }
 
-    public addOneToNbAssoAdmin(idUser){
+    /**
+     * @description Add one to the nb association a user can create into the database if the admin delete one of his associations
+     * @param idUser string
+     * @return void
+     */
+    public addOneToNbAssoAdmin(idUser): void{
         let nbAsso;
         this.getUserById(idUser).get().then( data => {
             nbAsso = data.get('canCreateNbAsso');
@@ -85,7 +129,13 @@ export class UserProvider {
             })
         })
     }
-    public removeAssoUsers(id){
+
+    /**
+     * @description removes for all the users an associations according to the id
+     * @param id string (id of the association to remove)
+     * @return void
+     */
+    public removeAssoUsers(id): void{
         const ref = firebase.firestore().collection('users').where('associations', 'array-contains',id);
         ref.get().then( data => {
             data.docs.map( user => {
@@ -96,20 +146,35 @@ export class UserProvider {
         })
     }
 
-    public removeOneToNbAsso(nbAsso){
+    /**
+     * @description remove one to the nb Asso a user can create
+     * @return void
+     * @param nbAsso number
+     */
+    public removeOneToNbAsso(nbAsso): void{
         const ref = firebase.firestore().collection('users').doc(`${this.userId}`);
         ref.update({
             canCreateNbAsso : nbAsso-1
         })
     }
 
-    public addOneToNbAsso(nbAsso){
+    /**
+     * @description add one to the nb Asso a user can create
+     * @return void
+     * @param nbAsso number
+     */
+    public addOneToNbAsso(nbAsso):void{
         const ref = firebase.firestore().collection('users').doc(`${this.userId}`);
         ref.update({
             canCreateNbAsso : nbAsso+1
         })
     }
 
+    /**
+     * @description modify the data of one user
+     * @return any
+     * @param user User
+     */
     public modify(user:User): any {
         const ref = firebase.firestore().collection('users/').doc( `${this.userId}`);
         return ref.set( user, {merge : true});

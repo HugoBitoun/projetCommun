@@ -26,10 +26,18 @@ export class LogOutProvider {
     });
   }
 
+  /**
+   * @description get the authState
+   * @return any
+   */
   getAuthState():any{
     return this.authState;
   }
 
+  /**
+   * @description logout the current user
+   * @return void
+   */
   logout() {
     this.afAuth.auth.signOut();
   }

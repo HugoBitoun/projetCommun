@@ -22,7 +22,12 @@ export class AuthService {
         })
     }
 
-    public oAuthLogin(values){
+    /**
+     * @description Sign a user with his email and password
+     * @param values
+     * @return Promise<void>
+     */
+    public oAuthLogin(values) : Promise<void>{
         return this.afAuth.auth.signInWithEmailAndPassword(values.email,values.password)
             .then((credential)=> {                                                
                 if (credential.user.emailVerified !== true && credential.user.email !== 'admin@admin.fr') {                                        
@@ -37,7 +42,11 @@ export class AuthService {
               });
     }
 
-    public signOut(){
+    /**
+     * @description logout the user
+     * @return void
+     */
+    public signOut(): void{
         this.afAuth.auth.signOut();
     }
 

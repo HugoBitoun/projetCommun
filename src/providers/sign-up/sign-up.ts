@@ -26,7 +26,11 @@ export class SignUpProvider {
     })
   }
 
-  sendVerificationMail() {
+  /**
+   * @description send a verification email to the user who just sign up
+   * @return Promise<void>
+   */
+  public sendVerificationMail(): Promise<void> {
     return this.afAuth.auth.currentUser.sendEmailVerification()
     .then(() => {
 
@@ -35,8 +39,12 @@ export class SignUpProvider {
     });
   }
 
+  /**
+   * @description add a user to the database then send email then update table users in database
+   * @return any
+   * @param user
+   */
   public register(user: User): any {
-    console.log(user); 
     return this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password).then(value => { 
       this.sendVerificationMail(); 
       this.updateUserData(value.user, user);
@@ -46,7 +54,13 @@ export class SignUpProvider {
       });
   }
 
-  public updateUserData(userAuth, user: User) {
+  /**
+   * @description update the data into user table in function of if it's a prof or student
+   * @param userAuth
+   * @param user User
+   * @return Promise<void>
+   */
+  public updateUserData(userAuth, user: User) : Promise<void> {
     const userRef: AngularFirestoreDocument<any> = this.db.doc(`/users/${userAuth.uid}`);
     var regex1 = RegExp('@etu.univ-paris1.fr*');
     if (regex1.test(userAuth.email)) {
@@ -80,7 +94,6 @@ export class SignUpProvider {
         },
         associations: []
       };
-      console.log(data);
       return userRef.set(data, { merge: true });
     }
   }
