@@ -24,14 +24,12 @@
         </button>
     </div>
 
-    <div *ngIf="hasCours==true">
-        <ion-card *ngFor="let cours of listCours" margin-bottom>
-            <div *ngIf="cours.isSubscriber == true" (click)="getCoursDetailPage(cours)">
+        <ion-card *ngFor="let cours of listCoursSub" margin-bottom>
+            <div (click)="getCoursDetailPage(cours)">
                 <img src="{{cours.image}}">
                 <ion-card-content text-center text-uppercase><h1>{{cours.name}}</h1></ion-card-content>
             </div>
         </ion-card>
-    </div>
 </ion-content>
 
 <!-- Il est a l'exterieur pour qu'il soit en position absolue et scroll avec l'ecran -->
