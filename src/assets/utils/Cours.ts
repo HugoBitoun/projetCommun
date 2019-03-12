@@ -1,10 +1,10 @@
 import {Messages} from "./Messages";
 
 export class Cours {
-    id: String;
-    name: String;
-    description: String
+    id: string;
+    name: string;
+    description: string
     messages: Messages[];
     isSubscriber?: boolean;
-    image?: String;
+    image?: string;
 }

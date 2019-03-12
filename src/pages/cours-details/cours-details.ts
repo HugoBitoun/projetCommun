@@ -31,13 +31,13 @@ import {Keyboard} from '@ionic-native/keyboard/ngx';
 })
 export class CoursDetailsPage {
 
-    cours: Cours;
-    seg: String;
-    user: User;
-    listMessages: Messages[] = new Array<Messages>();
-    listUsers: User[] = new Array<User>();
-    loader: Loading;
-    isRemove: boolean;
+    private cours: Cours;
+    private seg: String;
+    private user: User;
+    private listMessages: Messages[] = new Array<Messages>();
+    private listUsers: User[] = new Array<User>();
+    private loader: Loading;
+    private isRemove: boolean;
 
     constructor(public navCtrl: NavController, public modalCtrl: ModalController, public navParams: NavParams, public coursProvider: CoursProvider, public loadingCtrl: LoadingController, public userProvider: UserProvider, public keyboard: Keyboard) {
         this.cours = navParams.get('cours');
@@ -51,7 +51,6 @@ export class CoursDetailsPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad CoursDetailsPage');
     }
 
     ionViewWillLoad() {
@@ -63,11 +62,13 @@ export class CoursDetailsPage {
         this.getMessages();
     }
 
+    /**
+     * @description get the messages of the cours that the user subscribed and store then in the array this.listMessages
+     */
     getMessages() {
         this.listMessages = new Array<Messages>();
         this.coursProvider.getMessagesCours(this.cours.id).then(data => {
             data.map(data => {
-                console.log(data)
                 this.listMessages.push(data);
                 this.listMessages.sort((n1, n2) => {
                     if (n1.date > n2.date) {
@@ -80,13 +81,16 @@ export class CoursDetailsPage {
 
                     return 0;
                 });
-                this.getMessagesUser();
+                this.getAllUsers();
             });
             //this.loader.dismissAll();
         });
     }
 
-    getMessagesUser(event?) {
+    /**
+     *@description get all the users to have their information in the view and store them in the this.listUsers
+     */
+    getAllUsers() {
         this.userProvider.getAllUsers().subscribe(data => {
             this.listUsers = new Array<User>();
             this.listUsers = data;
@@ -94,27 +98,26 @@ export class CoursDetailsPage {
         });
     }
 
-    /*update() {
-        this.listMessages.forEach(message => {
-            this.listUsers.forEach(user => {
-                if (user.uid == message.idUser) {
-                    message.isShowable = true;
-                    console.log(message.isShowable);
-                } else {
-                    message.isShowable = false;
-                }
-            });
-        });
-    }*/
+    /**
+     * @description function used to refresh the page when the user pull down the screen and reload the page
+     * @param refresher Refresher
+     */
     async doRefresh(refresher: Refresher) {
         this.ionViewWillLoad();
         refresher.cancel();  // Works
     }
 
+    /**
+     * @description Launch the removeMode that let the admin remove the messages wanted
+     */
     removeMode() {
         this.isRemove = !this.isRemove;
     }
 
+    /**
+     * @description Get the color for the view in function of the mode (RemoveMode of not)
+     * @return color string
+     */
     getColorNav(): string {
         if (this.isRemove) {
             return "bg-danger";
@@ -123,6 +126,11 @@ export class CoursDetailsPage {
         }
     }
 
+    /**
+     * @description Get the color of the messsage titles and Background in function of user role
+     * @param user User
+     * @return color string
+     */
     getMessageColor(user: User): string {
         if (user != undefined) {
             if (user.roles.admin != undefined && user.roles.admin) {
@@ -138,6 +146,11 @@ export class CoursDetailsPage {
         }
     }
 
+    /**
+     * @description get the icon in function of the user role
+     * @param user User
+     * @return logo string
+     */
     getMessageIcon(user: User): string {
         if (user != undefined) {
             if (user.roles.admin != undefined && user.roles.admin) {
@@ -153,6 +166,11 @@ export class CoursDetailsPage {
         }
     }
 
+    /**
+     * @description this function will covert the timestamp format to a writable one
+     * @param date timestamp
+     * @return date string
+     */
     convertDate(date: firebase.firestore.Timestamp): string {
         return date.toDate().toLocaleDateString("en-GB", {
             day: "numeric",
@@ -164,20 +182,20 @@ export class CoursDetailsPage {
         });
     }
 
-    getUser(id) {
+    /**
+     *@description get User in function of the id  for the view
+     * @param id string
+     * @return user User
+     */
+    getUser(id: string): User {
         if (this.listUsers.find(x => x.uid == id) != undefined)
             return this.listUsers.find(x => x.uid == id);
     }
 
-    /* getUserName(id) {
-        // console.log("coucou " + id);
-         return this.listUsers.find(x => x.uid == id).name;
-     }
-
-     getUserLastName(id){
-         return this.listUsers.find(x => x.uid == id).lastName;
-     }*/
-
+    /**
+     * @description In removeMode the admin can click on messages and remove then by this function
+     * @param message Message
+     */
     removeMessage(message: Messages) {
         if (this.isRemove) {
             let values = {
@@ -191,6 +209,9 @@ export class CoursDetailsPage {
         }
     }
 
+    /**
+     * @description this function open the modal page to write a message and on modal page dismiss refresh the page
+     */
     openModal() {
 
         let modal = this.modalCtrl.create(ModalContentPageMessage, {
@@ -208,10 +229,10 @@ export class CoursDetailsPage {
     templateUrl: 'modal2.html',
 })
 export class ModalContentPageMessage {
-    cours: Cours;
-    user: User;
-    selectedCours: Cours;
-    inputMessage: string;
+    private cours: Cours;
+    private user: User;
+    private selectedCours: Cours;
+    private inputMessage: string;
 
     constructor(
         public platform: Platform,
@@ -222,11 +243,12 @@ export class ModalContentPageMessage {
     ) {
         this.cours = this.params.get("cours");
         this.user = this.params.get("user");
-        console.log("openedModal() " + this.cours.name + " " + this.user.roles.prof);
     }
 
+    /**
+     * @description this function is call when the validButton is clicked and add the message in firebase with the coursProvider
+     */
     valider() {
-        // console.log("cul " + this.inputMessage);
         if (this.inputMessage != undefined && this.inputMessage.length > 5 && this.inputMessage.length < 1000) {
             let values = {
                 message: this.inputMessage,
@@ -238,6 +260,9 @@ export class ModalContentPageMessage {
         }
     }
 
+    /**
+     * @description Dismiss the modal page and return to the cour-detail-Page
+     */
     dismiss() {
         this.viewCtrl.dismiss();
     }

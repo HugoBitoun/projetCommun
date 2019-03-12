@@ -17,9 +17,12 @@ import {Messages} from "../../assets/utils/Messages";
 export class CoursProvider {
 
     constructor(public http: HttpClient, public firestore: AngularFirestore) {
-        console.log('Hello CoursProvider Provider');
     }
 
+    /**
+     * @description Get the cours from firebase
+     * @return cours Observable<Cours[]>
+     */
     public getCours(): Observable<Cours[]> {
         const listCours = this.firestore.collection<Cours>('cours');
         return listCours.snapshotChanges().map(actions => {
@@ -31,22 +34,35 @@ export class CoursProvider {
         })
     }
 
+    /**
+     * @description Get a cours by id from firebase
+     * @param id String
+     * @return Promise<Cours>
+     */
     public getCoursById(id: string): Promise<Cours> {
-        console.log(id);
         return firebase.firestore().collection('cours/').doc(id).get().then(
             data => {
                 return data.data() as Cours;
             })
     }
 
-    public getMessagesCours(id): Promise<Messages[]> {
+    /**
+     * @description Get messages from cours from firebase
+     * @param id String
+     * @return cours Promise<Messages[]>
+     */
+    public getMessagesCours(id: string): Promise<Messages[]> {
         const ref = firebase.firestore().collection('cours');
         return ref.doc(id).get().then(data => {
             return data.get('messages') as Messages[];
         })
     }
 
-    public addMessageCours(values) {
+    /**
+     * @description Add messages in the cours on firebase
+     * @param values any
+     */
+    public addMessageCours(values: any) {
         const ref = firebase.firestore().collection('cours').doc(values.idCours);
         ref.update({
             messages: firebase.firestore.FieldValue.arrayUnion({
@@ -57,13 +73,17 @@ export class CoursProvider {
         })
     }
 
-    public removeMessageCours(values) {
+    /**
+     * @description Remove message from cours on firebase
+     * @param values any
+     */
+    public removeMessageCours(values: any) {
         const ref = firebase.firestore().collection('cours').doc(values.idCours);
         ref.update({
             messages: firebase.firestore.FieldValue.arrayRemove({
                 message: values.message,
                 idUser: values.idUser,
-                date:  values.date,
+                date: values.date,
             })
         })
     }

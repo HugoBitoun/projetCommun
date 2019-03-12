@@ -30,10 +30,10 @@ import {Messages} from "../../assets/utils/Messages";
 })
 export class CoursPage {
 
-    listCours: Cours[] = new Array<Cours>();
-    loader: Loading;
-    hasCours: Boolean;
-    user: User;
+    private listCours: Cours[] = new Array<Cours>();
+    private loader: Loading;
+    private hasCours: Boolean;
+    private user: User;
 
     constructor(public navCtrl: NavController, public navParams: NavParams, public coursProvider: CoursProvider,
                 public userProvider: UserProvider, public modalCtrl: ModalController, public loadingCtrl: LoadingController) {
@@ -41,8 +41,6 @@ export class CoursPage {
     }
 
     ionViewDidLoad() {
-        console.log('ionViewDidLoad CoursPage');
-
     }
 
     ionViewWillLoad() {
@@ -53,6 +51,9 @@ export class CoursPage {
         this.getCours();
     }
 
+    /**
+     * @description Get all the cours available to be subscribed and store them int the this.listCours
+     */
     getCours() {
         this.coursProvider.getCours().subscribe(cours => {
             this.listCours = cours;
@@ -60,15 +61,15 @@ export class CoursPage {
         });
     }
 
-
+    /**
+     * @description Get the subscribed vours from the listCours and change the isSubsribed boolean of cours to true
+     */
     getSubCours() {
         this.userProvider.getUser().subscribe(user => {
             this.hasCours = false;
             this.user = user;
-            console.log(user.roles.prof);
             this.listCours.forEach(
                 cours => {
-                    console.log(user.cours);
                     if (user.cours != undefined)
                         if (user.cours.find(x => x == cours.id)) {
                             cours.isSubscriber = true;
@@ -76,22 +77,24 @@ export class CoursPage {
 
                         } else {
                             cours.isSubscriber = false;
-                        }
-                    console.log(cours + " : " + cours.isSubscriber);
-                }
+                        }}
             );
         });
         this.loader.dismissAll();
     }
 
+    /**
+     * @description Navigation to the coursDetailsPage with parameters (current cours clicked and current user)
+     * @param cours Cours
+     */
     getCoursDetailPage(cours: Cours) {
-        console.log(cours.name);
         this.navCtrl.push(CoursDetailsPage, {cours: cours, user: this.user});
     }
 
+    /**
+     * @description Open modal page with parameters listCours and current user. On modal page dismiss reload this page
+     */
     openModal() {
-        console.log("openModal() " + this.listCours);
-        console.log("user " + this.user.roles.prof);
         let modal = this.modalCtrl.create(ModalContentPage, {
             list: this.listCours, user: this.user
         });
@@ -107,9 +110,9 @@ export class CoursPage {
     templateUrl: 'modal.html',
 })
 export class ModalContentPage {
-    listCours: Cours[] = new Array<Cours>();
-    user: User;
-    selectedCours: Cours;
+    private listCours: Cours[] = new Array<Cours>();
+    private user: User;
+    private selectedCours: Cours;
 
     constructor(
         public platform: Platform,
@@ -119,27 +122,41 @@ export class ModalContentPage {
     ) {
         this.listCours = this.params.get("list");
         this.user = this.params.get("user");
-        console.log("openedModal() " + this.listCours + " " + this.user.roles.prof);
     }
 
     ionViewWillLoad() {
 
     }
 
+    /**
+     * @description Select the cours clicked when the user is a prof store it in the this.selectedCours
+     * @param cours Cours
+     */
     select(cours) {
         this.selectedCours = cours;
     }
 
+    /**
+     * @description Unsubsribe to the cours in parameter with the userProvider
+     * @param cours Cours
+     */
     unsubscribeCours(cours: Cours) {
         this.userProvider.unsubscribeCours(cours);
         cours.isSubscriber = true;
     }
 
+    /**
+     * @description Current user Subscribe to the cours in parameter with the userProvider
+     * @param cours Cours
+     */
     subscribeCours(cours: Cours) {
         this.userProvider.subscribeCours(cours);
         cours.isSubscriber = true;
     }
 
+    /**
+     * @description Dismiss the modal page and call subscribe and unsubscribe to the chosen cours with the provider and then dismiss the modalPage
+     */
     dismiss() {
         if (this.selectedCours != undefined) {
             this.listCours.forEach(cours => {
