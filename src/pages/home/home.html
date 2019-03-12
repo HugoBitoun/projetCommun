@@ -27,7 +27,7 @@
         <ion-list *ngSwitchCase="'Cours'">
             <div *ngFor="let message of listMessages">
                 <div *ngIf="getUser(message.idUser)!=undefined">
-                    <ion-card class="my-5 round">
+                    <ion-card class="my-5 round" (click)="getCoursDetailPage(getCours(message.intitule))">
                         <ion-card-title
                                 class="{{getMessageColor(getUser(message.idUser))}} text-capitalize py-2">
                             <ion-icon class="m-1" name="{{getMessageIcon(getUser(message.idUser))}}"></ion-icon>
