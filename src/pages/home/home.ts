@@ -48,11 +48,11 @@ export class HomePage {
      */
     private getMessagesAssoSub(): void {
         this.userProvider.getUser().subscribe(userData => {
-             this.listMessagesAsso = new Array();
                 userData.associations.forEach(idAsso => {
                     this.assoProvider.getAssociationsById(idAsso).subscribe(association => {
                         if (association != undefined){
                         association.messages.forEach(message => {
+                            this.listMessagesAsso = new Array();
                             this.userProvider.getUserByIdAux(message.idUser).then(userMessage => {
                                 let values = {
                                     message: message,
