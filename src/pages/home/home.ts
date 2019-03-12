@@ -89,14 +89,15 @@ export class HomePage {
         this.navCtrl.push(CoursDetailsPage, {cours: cours, user: this.user});
     }
 
-    getCours(intitule:string):Cours{
-        return this.listCours.find(x=>x.name==intitule);
+    getCours(intitule: string): Cours {
+        return this.listCours.find(x => x.name == intitule);
     }
 
     /**
      * @description get the cours the user subscribed and store then in the this.listMessages array
      */
     getSubCours() {
+        this.listMessages = new Array<Messages>();
         this.userProvider.getUser().subscribe(user => {
             this.hasCours = false;
             this.user = user;
@@ -187,6 +188,7 @@ export class HomePage {
         }
         return "logo-snapchat";
     }
+
     /**
      * @description this function get the user for the view
      * @param id string
